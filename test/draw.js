@@ -2,18 +2,28 @@
 function draw() {
   var ctx = canvas.getContext('2d');
   
-  ctx.globalCompositeOperation = 'destination-over';
+  //ctx.globalCompositeOperation = 'destination-over';
   ctx.clearRect(0, 0, 300, 300); // clear canvas
+  
+  let horizon = 70;
+  // draw sky
+  ctx.fillStyle = 'rgba(150, 180, 255, 1)';
+  ctx.fillRect(0,0,300,horizon);
+
+  // draw background
+  ctx.fillStyle = 'rgba(195, 149, 101, 1)';
+  ctx.fillRect(0,horizon,300,300);
+
    
   var time = new Date();
-  for (var j = -2; j < 3; j++) { // rows
+  for (var j = 2; j > -3; j--) { // rows
       for (var i = -1; i < 1; i++) { // columns
           ctx.save();
           
           let scaler = 1 - 0.1 * j + 0.1 * i;
           ctx.scale(scaler, scaler);
           ctx.translate(i*130 + 15*j, -30*j + 5*i);
-          ctx.drawImage(holeFg, 150, 150);
+          ctx.drawImage(holeBg, 150, 150);
 
           // draw professor
           ctx.save();
@@ -24,19 +34,10 @@ function draw() {
 
           ctx.restore();
           
-          ctx.drawImage(holeBg, 150, 150);
+          ctx.drawImage(holeFg, 150, 150);
           ctx.restore();
       }
   }
-  let horizon = 70;
-  // draw sky
-  ctx.fillStyle = 'rgba(150, 180, 255, 1)';
-  ctx.fillRect(0,0,300,horizon);
-
-  // draw background
-  ctx.fillStyle = 'rgba(195, 149, 101, 1)';
-  ctx.fillRect(0,horizon,300,300);
-
   window.requestAnimationFrame(draw);
 }
 
