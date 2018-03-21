@@ -1,0 +1,6 @@
+html, body { margin:0px; padding:0px; }
+.fullscreen{ position:fixed; overflow:hidden; border:none;
+         top:0px; left:0px; bottom:0px; right:0px;
+         padding:0; margin:0; width:100%; height:100%; }
+         
+
