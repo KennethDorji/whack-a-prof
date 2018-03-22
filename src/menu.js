@@ -13,8 +13,6 @@ function doMenu() {
     gameState.currentState = States.MENU;
     var intervalM = setInterval(watch(gameState, "currentState", (oldval, newval) => {
         if (oldval != newval) {
-            var nextState = 'menu';
-            var nextAction = doMenu;
             clearInterval(intervalM);
             switch(newval) {
                 case States.PLAYING:
@@ -29,6 +27,10 @@ function doMenu() {
                     nextState = 'quit';
                     nextAction = doQuit;
                     break;
+                default:
+                    nextState = 'menu';
+                    nextAction = doMenu;
+                    break;
             }
 
             transitionFrom('menu', () => {
@@ -37,6 +39,6 @@ function doMenu() {
             });});
 
         }
-    }));
+    }), WatchInterval);
 
 }

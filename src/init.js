@@ -7,7 +7,11 @@
  *
  */
 
-var States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, "GAMEOVER":4, "WINNER":5});
+var States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, 
+                            "GAMEOVER":4, "WINNER":5, "HELP":6, "QUIT":7});
+
+var TransitionDelay = 250;
+var WatchInterval   = 30;
 
 var gameState = {
     resourcesTotal:0,
@@ -31,13 +35,28 @@ watch = (obj, prop, handler) => {
     };
 }
 
-loadScript = (src, routine) => {
+/*
+ * loads a script dynamically then optionally executes callback
+ * NOTE: the callback should depend only on methods defined here (init.js) or in the script loaded,
+ *       don't rely on things defined in other dynamically loaded scripts
+ */
+loadScript = (src, callback) => {
     var script = document.createElement('script');
-    script.onload = routine;
+    gameState.resourcesTotal++;
+    script.onload = () => {
+        gameState.resourcesLoaded++;
+        if (callback) {
+            callback();
+        }
+    }
     script.src = src;
     document.head.appendChild(script);
 }
 
+
+/*
+ * executes callback after all dynamic resources are loaded
+ */
 waitForLoading = (callback) => {
     var intervalH = setInterval(watch(gameState, "resourcesLoaded", (oldval, newval) => {
         console.log(newval + "/" + gameState.resourcesTotal);
@@ -48,30 +67,50 @@ waitForLoading = (callback) => {
             console.log("done loading");
             callback();
         }
-    }), 50);
+    }), WatchInterval);
 }
 
+
+/*
+ * Transition functions control the CSS visibility of iframes, 
+ * and then optionally runs a callback after the fade is complete.
+ *
+ * this works using the rules in main.css:
+ * an element having fading="fade-out" will have its opacity reduced to 0%
+ * an element having fading="fade-in" will have its opacity increased to 100%
+ * an element having class="hidden" will not be displayed.
+ */
 transitionFrom = (id, callback) => {
     var element = document.getElementById(id);
     element.setAttribute('fading', 'fade-out');
     setTimeout(() => {
         element.classList.add('hidden');
         element.removeAttribute('fading');
-        callback();
-    }, 500);
+        if (callback) {
+            callback();
+        }
+    }, TransitionDelay);
 }
 
 transitionTo = (id, callback) => {
     var element = document.getElementById(id);
     element.setAttribute('fading', 'fade-in');
+    element.classList.remove('hidden');
     setTimeout(() => {
-        element.classList.remove('hidden');
         element.removeAttribute('fading');
-        setTimeout(callback, 500);
-    }, 500);
+        if (callback) {
+            callback();
+        }
+    }, TransitionDelay);
 }
 
-createIFrame = (id) => {
+/*
+ * create a new (initially hidden) fullscreen iframe with a specified id
+ * there must exist a file in the root folder called id.html (i.e. menu.html if id='menu')
+ *
+ * then optionally runs a callback after its loaded.
+ */
+createIFrame = (id, callback) => {
     var element = document.createElement('iframe');
     gameState.resourcesTotal++;
     element.src = id + '.html';
@@ -80,12 +119,15 @@ createIFrame = (id) => {
     element.classList.add('fullscreen');
     element.onload = () => {
         gameState.resourcesLoaded++;
+        if (callback) {
+            callback();
+        }
     }
     document.body.appendChild(element);
 }
 
 /*
- * This is the javascript entrypoint
+ * This is the javascript entrypoint from index.html body.onload()
  *
  */
 init = () => {
