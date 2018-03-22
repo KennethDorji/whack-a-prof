@@ -1,76 +1,108 @@
-var States = Object.freeze({"LOADING":0, "MENU":1, "PLAYING":2, "GAMEOVER":3, "WINNER":4});
+/*
+ * init.js
+ *
+ * global variables
+ * javascript entrypoint
+ * basic functions required during initialization
+ *
+ */
+
+var States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, "GAMEOVER":4, "WINNER":5});
 
 var gameState = {
     resourcesTotal:0,
     resourcesLoaded:0,
-    currentState:States.LOADING
+    currentState:States.LOADING,
+    highScore:0,
+    currentScore:0
 };
 
 // Set a watcher for a specific property of an object
 // to be called like so:
 // var intervalH = setInterval(watch(myobj, "prop", myhandler), timeout);
-function watch(obj, prop, handler) {
+watch = (obj, prop, handler) => {
     var currval = obj[prop];
-    function callback() {
-        if (obj[prop] !=currval) {
+    return () => {
+        if (obj[prop] != currval) {
             var temp = currval;
             currval = obj[prop];
             handler(temp, currval);
         }
-    }
-    return callback;
+    };
 }
 
-function loadScript(src, routine) {
+loadScript = (src, routine) => {
     var script = document.createElement('script');
     script.onload = routine;
     script.src = src;
     document.head.appendChild(script);
 }
 
-function init() {
-    console.log("init()");
-    var intervalH = setInterval(watch(gameState, "resourcesLoaded", function(oldval, newval) {
+waitForLoading = (callback) => {
+    var intervalH = setInterval(watch(gameState, "resourcesLoaded", (oldval, newval) => {
         console.log(newval + "/" + gameState.resourcesTotal);
 
-        // are we done?
+        // are we done loading? then go to title
         if (newval == gameState.resourcesTotal) {
             clearInterval(intervalH);
             console.log("done loading");
-            var loading = document.getElementById("loading");
-            // fade out loading screen
-            loading.setAttribute('fading', 'fade-out');
-            setTimeout(function() {
-                // hide loading screen
-                loading.classList.add("hidden");
-                loading.removeAttribute('fading');
-
-                // set menu gamestate and display menu
-                // .....
-                gameState.currentState = States.MENU;
-
-                console.log(gameState);
-            }, 500);
+            callback();
         }
-    }), 100);
+    }), 50);
+}
 
-    loadScript("src/sprites.js", function() { 
-        spritesInit(); 
-    });
+transitionFrom = (id, callback) => {
+    var element = document.getElementById(id);
+    element.setAttribute('fading', 'fade-out');
+    setTimeout(() => {
+        element.classList.add('hidden');
+        element.removeAttribute('fading');
+        callback();
+    }, 500);
+}
 
-    loadScript("src/music.js", function() {
-        musicInit();
-    });
-    
-    loadScript("src/sounds.js", function() {
-        soundsInit();
-    });
+transitionTo = (id, callback) => {
+    var element = document.getElementById(id);
+    element.setAttribute('fading', 'fade-in');
+    setTimeout(() => {
+        element.classList.remove('hidden');
+        element.removeAttribute('fading');
+        setTimeout(callback, 500);
+    }, 500);
+}
 
-    loadScript("src/menu.js", function() {
-        menuInit();
-    });
+createIFrame = (id) => {
+    var element = document.createElement('iframe');
+    gameState.resourcesTotal++;
+    element.src = id + '.html';
+    element.id  = id;
+    element.classList.add('hidden');
+    element.classList.add('fullscreen');
+    element.onload = () => {
+        gameState.resourcesLoaded++;
+    }
+    document.body.appendChild(element);
+}
 
-    loadScript("src/engine.js", function() {
-        engineInit();
-    });
+/*
+ * This is the javascript entrypoint
+ *
+ */
+init = () => {
+    console.log("init()");
+
+    loadScript("src/title.js",   () => { titleInit();   });
+    loadScript("src/sprites.js", () => { spritesInit(); });
+    loadScript("src/mallet.js",  () => { malletInit();  });
+    loadScript("src/music.js",   () => { musicInit();   });
+    loadScript("src/sounds.js",  () => { soundsInit();  });
+    loadScript("src/menu.js",    () => { menuInit();    });
+    loadScript("src/engine.js",  () => { engineInit();  });
+    loadScript('src/score.js',   () => { scoreInit();   });
+
+    waitForLoading(() => {
+        transitionFrom('loading', () => {
+        transitionTo('title', () => { 
+        doTitle(); 
+    });});});
 }
