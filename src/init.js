@@ -7,24 +7,31 @@
  *
  */
 
-var States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, 
+const States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, 
                             "GAMEOVER":4, "WINNER":5, "HELP":6, "QUIT":7});
 
-var TransitionDelay = 250;
-var WatchInterval   = 30;
+const TransitionDelay = 250;
+const WatchInterval   = 30;
 
 var gameState = {
     resourcesTotal:0,
     resourcesLoaded:0,
     currentState:States.LOADING,
     highScore:0,
-    currentScore:0
+    currentScore:0,
+    malletPosition:-1.0
 };
 
-// Set a watcher for a specific property of an object
-// to be called like so:
-// var intervalH = setInterval(watch(myobj, "prop", myhandler), timeout);
-watch = (obj, prop, handler) => {
+/*
+ * Set a watcher for a specific property of an object
+ *
+ * to be called like so:
+ * var intervalH = setInterval(watchProperty(myobj, "prop", myhandler), timeout);
+ *
+ * then to unwatch:
+ * clearInterval(intervalH);
+ */
+watchProperty = (obj, prop, handler) => {
     var currval = obj[prop];
     return () => {
         if (obj[prop] != currval) {
@@ -58,7 +65,7 @@ loadScript = (src, callback) => {
  * executes callback after all dynamic resources are loaded
  */
 waitForLoading = (callback) => {
-    var intervalH = setInterval(watch(gameState, "resourcesLoaded", (oldval, newval) => {
+    var intervalH = setInterval(watchProperty(gameState, "resourcesLoaded", (oldval, newval) => {
         console.log(newval + "/" + gameState.resourcesTotal);
 
         // are we done loading? then go to title
@@ -120,7 +127,7 @@ createIFrame = (id, callback) => {
     element.onload = () => {
         gameState.resourcesLoaded++;
         if (callback) {
-            callback();
+            callback(element);
         }
     }
     document.body.appendChild(element);

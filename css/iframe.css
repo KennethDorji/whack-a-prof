@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Fredericka+the+Great|Sacramento");
+@import url("https://fonts.googleapis.com/css?family=Homemade+Apple|Fredericka+the+Great|Amatic+SC");
 .loader .outer { position:relative; }
 .loader .inner {
   position:absolute;
@@ -6,6 +6,7 @@
   left:50%;
   transform:translate(-50%, -50%);
 }
+canvas { position:absolute; top:0; left:0; }
 h1 { font-size: 3em;
      font-weight: normal;
      letter-spacing: .2em;
@@ -15,7 +16,8 @@ h1 { font-size: 3em;
  }
 
 h2 { font-size: 2.5em;
-     font-family:"Sacramento";
+     font-weight: normal;
+     font-family:"Homemade Apple";
      color: #EEEEDD;
-     text-shadow: 3px 3px #446644;
+     text-shadow: .05em .05em .15em #223322;
  }
