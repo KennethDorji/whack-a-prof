@@ -19,18 +19,36 @@ waitForTitle = (delay, callback) => {
 
 doTitle = () => {
     gameState.currentState = States.TITLE;
-    tCtx.globalAlpha = 0.5;
-    var i = 0;
-    var limit = Math.min(tCtx.canvas.width/2, tCtx.canvas.height/2);
 
-    window.requestAnimationFrame(loop = () => {
-        tCtx.clearRect(0,0, tCtx.canvas.width, tCtx.canvas.height); 
-        tCtx.fillRect(i, i, tCtx.canvas.width-2*i, tCtx.canvas.height-2*i);
-        i++;
-        if (i < limit) {
+    tCtx.font = "50pt Homemade Apple";
+    tCtx.lineWidth = 1;
+    tCtx.lineJoin  = "round";
+    tCtx.strokeStyle = "#EEEEDD";
+    dashLen = 500; 
+    dashOffset = dashLen,
+    dashSpeed = 40, 
+    x = 100, 
+    i = 0;
+
+    txt = "Title Screen Animation";
+    (loop = () => {
+
+        tCtx.setLineDash([dashLen - dashOffset, dashOffset - dashSpeed]);
+        dashOffset -= dashSpeed;
+
+        tCtx.strokeText(txt[i], x, 200);
+
+        if (dashOffset > 0) {
             window.requestAnimationFrame(loop);
+        } else {
+            dashOffset = dashLen;
+            x += tCtx.measureText(txt[i++]).width;
+            tCtx.rotate(-0.0025 + Math.random() * 0.005);
+
+            if (i < txt.length) window.requestAnimationFrame(loop);
         }
-    });
+
+    })();
 
     waitForTitle(1000, () => {
         transitionFrom('title', () => {

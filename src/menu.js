@@ -12,7 +12,7 @@ function waitForMenu(callback) {
 function doMenu() {
     gameState.currentState = States.MENU;
     
-    transitionTo('mallet', () => { doMallet(); });
+    transitionTo('mallet', () => { enableMallet(); });
 
     var intervalM = setInterval(watchProperty(gameState, "currentState", (oldval, newval) => {
         if (oldval != newval) {

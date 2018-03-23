@@ -122,6 +122,7 @@ createIFrame = (id, callback) => {
     gameState.resourcesTotal++;
     element.src = id + '.html';
     element.id  = id;
+    //element.setAttribute('allowTransparency', 'true');
     element.classList.add('hidden');
     element.classList.add('fullscreen');
     element.onload = () => {
@@ -139,6 +140,11 @@ createIFrame = (id, callback) => {
  */
 init = () => {
     console.log("init()");
+
+    window.addEventListener("mousedown", (event) => {
+        console.log(event);
+        //console.log("click: (" + event.clientX + ", " + event.clientY + ")");
+    }, false);
 
     loadScript("src/title.js",   () => { titleInit();   });
     loadScript("src/sprites.js", () => { spritesInit(); });
