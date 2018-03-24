@@ -14,15 +14,16 @@ var malletState = {
 };
 
 const MalletSprites       = 8;
-const MalletSpeed         = 400; // time in ms for swing
-const DistanceCoefficient = 200;
+const MalletSpeed         = 400;  // time in ms for swing
+const DistanceCoefficient = 200;  // less time for a "close" swing
 const HitTime             = 2000;
-const SwingOver           = 1.75;
-const BiasX               = -125;
-const BiasY               = -250;
+const SwingStart          = 0.5;
+const SwingOver           = 1.5; // how far into swing cycle to stop - upto 2
+var BiasX               = -125;   // offset from origin of mallet image to "strike location"
+var BiasY               = -250;
 
 function malletInit() {
-    console.log("malletInit()");
+    console.log("malletInit(): window.devicePixelRatio = ", window.devicePixelRatio);
     
     // load mallet iframe
     createIFrame('mallet', (element) => {
@@ -48,13 +49,15 @@ function malletInit() {
         malletState.image = new Image();
         gameState.resourcesTotal++;
         malletState.image.src = 'sprites/mallet.svg';
+        pixelRatio = window.devicePixelRatio;
+        BiasX = BiasX / pixelRatio;
+        BiasY = BiasY / pixelRatio;
         malletState.image.onload = () => {
-            console.log(malletState.image.width + " x " + malletState.image.height);
             gameState.resourcesLoaded++;
             // generate the set of sprites for mallet animation
             for (i = 0; i < MalletSprites; i++) {
                 gameState.resourcesTotal++;
-                let scaleFactor = 0.75 - 4*Math.pow(1/(MalletSprites - i + 4), 2);
+                let scaleFactor = (0.75 - 4*Math.pow(1/(MalletSprites - i + 4), 2)) / pixelRatio;
                 let rotateFactor = -Math.PI * (i + 3) / (2*MalletSprites);
                 let m = innerDoc.createElement('canvas');
                 let height = Math.ceil(malletState.image.height / 2);
@@ -82,7 +85,6 @@ function malletInit() {
 
 
 doMallet = (e) => {
-    console.log("click: " + (e.clientX-malletState.xoffset) + ", " + e.clientY);
     // trigger the mallet
     // if the mallet is already swinging, then we set the 'next' target to (x,y) and wait for current
     // swing to complete before doing next one
@@ -116,14 +118,14 @@ doMallet = (e) => {
 
                     malletState.time = Date.now();
                 } else { // no more swings queued
-                    malletState.time = null;
+                    malletState.time = null;  // reset 
                     malletState.hit  = null;
                     malletState.target.x = 0;
                     malletState.target.y = 0;
                 }
             } else { // continuing a swing
                 malletState.last = malletState.position;
-                malletState.position = (delta / limit) - 1;
+                malletState.position = (delta / limit) - 1 + SwingStart;
                 let progress = Math.abs(Math.sin(malletState.position * Math.PI/2));
                 index = Math.min(MalletSprites - Math.floor(progress * MalletSprites), MalletSprites - 1);
                 x = malletState.target.x + progress * (malletState.home.x - malletState.target.x + BiasX) + BiasX;
@@ -138,9 +140,9 @@ doMallet = (e) => {
             malletState.ctx.clearRect(0,0, malletState.ctx.canvas.width, malletState.ctx.canvas.height);
             
             if (malletState.hit) {
-               if (Date.now() - malletState.hit > HitTime) {
-                  malletState.hit = null;
-               } else {
+               if (Date.now() - malletState.hit > HitTime) { // hit circle expired
+                  malletState.hit = null;                    // reset
+               } else {                                      // draw hit circle
                   malletState.ctx.beginPath();
                   malletState.ctx.arc(malletState.target.x, malletState.target.y, 32, 0, Math.PI*2, true);
                   malletState.ctx.strokeStyle = 'red';
@@ -158,9 +160,9 @@ doMallet = (e) => {
 
 enableMallet = () => {
     console.log("enableMallet()");
-    malletState.ctx.canvas.addEventListener('click', doMallet, true);
+    malletState.ctx.canvas.addEventListener('mousedown', doMallet, true);
 }
 
 disableMallet = () => {
-    malletState.ctx.canvas.removeEventListener('click', doMallet);
+    malletState.ctx.canvas.removeEventListener('mousedown', doMallet);
 }
