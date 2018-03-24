@@ -141,11 +141,11 @@ createIFrame = (id, callback) => {
 init = () => {
     console.log("init()");
 
-    window.addEventListener("mousedown", (event) => {
-        console.log(event);
-        //console.log("click: (" + event.clientX + ", " + event.clientY + ")");
-    }, false);
+    // fixes for IOS, Retina Mac, and Samsung phone devices
+    document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
+    document.ontouchmove = (e) => { e.preventDefault(); }
 
+    // load "modules"
     loadScript("src/title.js",   () => { titleInit();   });
     loadScript("src/sprites.js", () => { spritesInit(); });
     loadScript("src/mallet.js",  () => { malletInit();  });
@@ -155,6 +155,7 @@ init = () => {
     loadScript("src/engine.js",  () => { engineInit();  });
     loadScript('src/score.js',   () => { scoreInit();   });
 
+    // begin transitioning through game states
     waitForLoading(() => {
         transitionFrom('loading', () => {
         transitionTo('title', () => { 

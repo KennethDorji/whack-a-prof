@@ -1,9 +1,10 @@
 html, body { height:100%; margin:0px; padding:0px; 
              background:radial-gradient(circle, olivedrab 5%, darkgreen 70%, black 140%);
+             overflow:hidden;
          }
 iframe { margin:0px; padding:0px; 
          }
-
+* { -webkit-tap-highlight-color:rgba(0,0,0,0); }
 @keyframes fade-out {
     0%   { opacity:1; }
     100% { opacity:0; }
