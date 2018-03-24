@@ -3,14 +3,18 @@ var malletState = {
     image:   null,
     sprites: [],
     position: -1.0,
+    last:     -1.0,
     target:  { x:0, y:0 },
     next:    { x:0, y:0 },
     home:    { x:0, y:0 },
-    time:    null
+    time:    null,
+    hit:     null
 };
 
-const MalletSprites = 10;
-const MalletSpeed   = 300; // time in ms for swing
+const MalletSprites       = 10;
+const MalletSpeed         = 400; // time in ms for swing
+const DistanceCoefficient = 200;
+const HitTime             = 1000;
 const BiasX = -30;
 const BiasY = -175;
 
@@ -42,8 +46,8 @@ function malletInit() {
             // generate the set of sprites for mallet animation
             for (i = 0; i < MalletSprites; i++) {
                 let m = innerDoc.createElement('canvas');
-                m.width = malletState.image.height*4;
-                m.height = malletState.image.height*4;
+                m.width = malletState.image.height*1;
+                m.height = malletState.image.height*1;
                 
                 let ctx = m.getContext("2d");
                 let scaleFactor = 0.75 - 4*Math.pow(1/(MalletSprites - i + 2), 2);
@@ -54,8 +58,14 @@ function malletInit() {
                 ctx.rotate(rotateFactor);
                 ctx.drawImage(malletState.image, 0, 0);
                 ctx.restore();
-
+                /*
+                var img = new Image();
+                img.src = ctx.canvas.toDataURL();
+                malletState.sprites.push(img);
+                */
+                
                 malletState.sprites.push(m);
+                
             } 
         };
         innerDoc.body.appendChild(c);
@@ -76,17 +86,20 @@ doMallet = (e) => {
     } else { // mallet resting - start a new loop
         malletState.time = Date.now();  // reset the swing start time
         malletState.position = -1.00;   // reset the position just in case
+        malletState.last = -1.00;   // reset the position just in case
         malletState.target.x = e.clientX;
         malletState.target.y = e.clientY;
 
         malletLoop = () => {
             let delta = Date.now() - malletState.time; // ms since swing started
             let index = 0;
+
             let x = malletState.home.x;
             let y = malletState.home.y;
-
-            if (delta > 2 * MalletSpeed) { // done with swing
+            let limit = MalletSpeed - (DistanceCoefficient * malletState.target.x / malletState.ctx.canvas.width);
+            if (delta > 1.33 * limit) { // done with swing
                 malletState.position = -1.0;
+                malletState.last = -1.0;
                 if (malletState.next.x != 0 && malletState.next.y != 0) { // there is another swing queued
                     malletState.target.x = malletState.next.x;
                     malletState.target.y = malletState.next.y;
@@ -96,18 +109,37 @@ doMallet = (e) => {
                     malletState.time = Date.now();
                 } else { // no more swings queued
                     malletState.time = null;
+                    malletState.hit  = null;
                     malletState.target.x = 0;
                     malletState.target.y = 0;
                 }
             } else { // continuing a swing
-                malletState.position = (delta / MalletSpeed) - 1;
+                malletState.last = malletState.position;
+                malletState.position = (delta / limit) - 1;
                 let progress = Math.abs(Math.sin(malletState.position * Math.PI/2));
                 index = Math.min(MalletSprites - Math.floor(progress * MalletSprites), MalletSprites - 1);
                 x = malletState.target.x + progress * (malletState.home.x - malletState.target.x + BiasX) + BiasX;
                 y = malletState.target.y + progress * (malletState.home.y - malletState.target.y + BiasY) + BiasY;
             }
             
+            if (malletState.last * malletState.position < 0) {
+                console.log("hit: " + malletState.target.x + ", " + malletState.target.y);
+                malletState.hit = Date.now();
+            }
+            
             malletState.ctx.clearRect(0,0, malletState.ctx.canvas.width, malletState.ctx.canvas.height);
+            
+            if (malletState.hit) {
+               if (Date.now() - malletState.hit > HitTime) {
+                  malletState.hit = null;
+               } else {
+                  malletState.ctx.beginPath();
+                  malletState.ctx.arc(malletState.target.x, malletState.target.y, 32, 0, Math.PI*2, true);
+                  malletState.ctx.strokeStyle = 'red';
+                  malletState.ctx.stroke();
+               }
+            }
+            //malletState.ctx.drawImage(malletState.sprites[index], 0, 0, 400, 400, x, y, 0, 0, 400, 400);
             malletState.ctx.drawImage(malletState.sprites[index], x, y);
             if (malletState.time) {
                 window.requestAnimationFrame(malletLoop);
@@ -119,9 +151,9 @@ doMallet = (e) => {
 
 enableMallet = () => {
     console.log("enableMallet()");
-    malletState.ctx.canvas.addEventListener('mousedown', doMallet);
+    malletState.ctx.canvas.addEventListener('click', doMallet, true);
 }
 
 disableMallet = () => {
-    window.removeEventListener('click', doMallet);
+    malletState.ctx.canvas.removeEventListener('click', doMallet);
 }
