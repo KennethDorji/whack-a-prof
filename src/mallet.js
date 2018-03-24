@@ -8,15 +8,18 @@ var malletState = {
     next:    { x:0, y:0 },
     home:    { x:0, y:0 },
     time:    null,
-    hit:     null
+    hit:     null,
+    xoffset: 0,
+    yoffset: 0
 };
 
-const MalletSprites       = 10;
+const MalletSprites       = 8;
 const MalletSpeed         = 400; // time in ms for swing
 const DistanceCoefficient = 200;
-const HitTime             = 1000;
-const BiasX = -30;
-const BiasY = -175;
+const HitTime             = 2000;
+const SwingOver           = 1.75;
+const BiasX               = -125;
+const BiasY               = -250;
 
 function malletInit() {
     console.log("malletInit()");
@@ -25,12 +28,18 @@ function malletInit() {
     createIFrame('mallet', (element) => {
         element.setAttribute("style", "z-index:999");
         var innerDoc = element.contentDocument || element.contentWindow.document;
-
         var c = innerDoc.createElement('canvas');  // the full-screen canvas
         
         malletState.ctx = c.getContext("2d");
+        if (document.body.clientWidth > document.body.clientHeight) {
+            malletState.xoffset = Math.floor((document.body.clientWidth - document.body.clientHeight)/2);
+            c.setAttribute("style", "left:" + malletState.xoffset);
+            c.classList.add("bordered"); 
+            c.width = document.body.clientHeight;
+        } else {
 
-        c.width = document.body.clientWidth;
+            c.width = document.body.clientWidth;
+        }
         c.height = document.body.clientHeight;
         
         malletState.home.x = c.width;
@@ -42,29 +51,28 @@ function malletInit() {
         malletState.image.onload = () => {
             console.log(malletState.image.width + " x " + malletState.image.height);
             gameState.resourcesLoaded++;
-
             // generate the set of sprites for mallet animation
             for (i = 0; i < MalletSprites; i++) {
-                let m = innerDoc.createElement('canvas');
-                m.width = malletState.image.height*1;
-                m.height = malletState.image.height*1;
-                
-                let ctx = m.getContext("2d");
-                let scaleFactor = 0.75 - 4*Math.pow(1/(MalletSprites - i + 2), 2);
+                gameState.resourcesTotal++;
+                let scaleFactor = 0.75 - 4*Math.pow(1/(MalletSprites - i + 4), 2);
                 let rotateFactor = -Math.PI * (i + 3) / (2*MalletSprites);
-                ctx.save();
-                ctx.translate(15-Math.sqrt(i)*2, 25+Math.sqrt(i+1)*75);
+                let m = innerDoc.createElement('canvas');
+                let height = Math.ceil(malletState.image.height / 2);
+                let width = Math.ceil(malletState.image.width / 2);
+                let diagonal = Math.ceil(Math.sqrt(malletState.image.height*malletState.image.height +
+                                         malletState.image.width*malletState.image.width) / 2);
+                m.width =  Math.ceil(2*diagonal*scaleFactor); 
+                m.height = 0.8*m.width;
+                let ctx = m.getContext("2d");
+
                 ctx.scale(scaleFactor, scaleFactor);
+                ctx.translate(diagonal, diagonal*0.75);
                 ctx.rotate(rotateFactor);
+                ctx.translate(-width, -height);
                 ctx.drawImage(malletState.image, 0, 0);
-                ctx.restore();
-                /*
-                var img = new Image();
-                img.src = ctx.canvas.toDataURL();
-                malletState.sprites.push(img);
-                */
                 
                 malletState.sprites.push(m);
+                gameState.resourcesLoaded++;
                 
             } 
         };
@@ -74,20 +82,20 @@ function malletInit() {
 
 
 doMallet = (e) => {
-    console.log("click: " + e.clientX + ", " + e.clientY);
+    console.log("click: " + (e.clientX-malletState.xoffset) + ", " + e.clientY);
     // trigger the mallet
     // if the mallet is already swinging, then we set the 'next' target to (x,y) and wait for current
     // swing to complete before doing next one
     // if the mallet is resting, we activate a new loop to swing it to (x,y)
     
     if (malletState.time) { // mallet active - don't start new loop, just change the next target
-        malletState.next.x = e.clientX;
+        malletState.next.x = e.clientX - malletState.xoffset;
         malletState.next.y = e.clientY; 
     } else { // mallet resting - start a new loop
         malletState.time = Date.now();  // reset the swing start time
         malletState.position = -1.00;   // reset the position just in case
         malletState.last = -1.00;   // reset the position just in case
-        malletState.target.x = e.clientX;
+        malletState.target.x = e.clientX - malletState.xoffset;
         malletState.target.y = e.clientY;
 
         malletLoop = () => {
@@ -97,7 +105,7 @@ doMallet = (e) => {
             let x = malletState.home.x;
             let y = malletState.home.y;
             let limit = MalletSpeed - (DistanceCoefficient * malletState.target.x / malletState.ctx.canvas.width);
-            if (delta > 1.33 * limit) { // done with swing
+            if (delta > SwingOver * limit) { // done with swing
                 malletState.position = -1.0;
                 malletState.last = -1.0;
                 if (malletState.next.x != 0 && malletState.next.y != 0) { // there is another swing queued
@@ -139,7 +147,6 @@ doMallet = (e) => {
                   malletState.ctx.stroke();
                }
             }
-            //malletState.ctx.drawImage(malletState.sprites[index], 0, 0, 400, 400, x, y, 0, 0, 400, 400);
             malletState.ctx.drawImage(malletState.sprites[index], x, y);
             if (malletState.time) {
                 window.requestAnimationFrame(malletLoop);
