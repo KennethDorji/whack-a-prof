@@ -22,6 +22,8 @@ var gameState = {
     malletPosition:-1.0
 };
 
+var mousePosition = { x:0, y:0 };
+
 /*
  * Set a watcher for a specific property of an object
  *
