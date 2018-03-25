@@ -167,6 +167,11 @@ enableMallet = () => {
         e.preventDefault();
         doMallet(doHit, e.clientX, e.clientY);
     }, true);
+    
+    malletState.ctx.canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        doMallet(doHit, e.clientX, e.clientY);
+    }, true);
 
     malletState.ctx.canvas.addEventListener('mousemove', (e) => {
         mousePosition.x = e.clientX;
