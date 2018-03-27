@@ -149,11 +149,12 @@ init = () => {
 
     // load "modules"
     loadScript("src/title.js",   () => { titleInit();   });
+    loadScript("src/sounds.js",  () => { soundsInit();  });
     loadScript("src/sprites.js", () => { spritesInit(); });
-    loadScript("src/mallet.js",  () => { malletInit();  });
     loadScript("src/music.js",   () => { musicInit();   });
     loadScript("src/sounds.js",  () => { soundsInit();  });
     loadScript("src/menu.js",    () => { menuInit();    });
+    loadScript("src/mallet.js",  () => { malletInit();  });
     loadScript("src/engine.js",  () => { engineInit();  });
     loadScript('src/score.js',   () => { scoreInit();   });
 

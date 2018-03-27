@@ -11,7 +11,8 @@ var malletState = {
     hit:     null,
     xoffset: 0,
     yoffset: 0,
-    swoosh: null
+    swoosh: null,
+    hits:[]
 };
 
 const MalletSprites       = 8;
@@ -54,8 +55,13 @@ function malletInit() {
         pixelRatio = window.devicePixelRatio;
         BiasX = BiasX / pixelRatio;
         BiasY = BiasY / pixelRatio;
-        malletState.swoosh = new Audio('sounds/swoosh.mp3');
-        malletState.swoosh.load();
+        malletState.swoosh = loadSound('sounds/swoosh.mp3');
+        malletState.hits.push(
+                loadSound('sounds/jab.mp3'),
+                loadSound('sounds/left-hook.mp3'),
+                loadSound('sounds/right-cross.mp3'),
+                loadSound('sounds/right-hook.mp3')
+                );
         malletState.image.onload = () => {
             gameState.resourcesLoaded++;
             // generate the set of sprites for mallet animation
@@ -159,6 +165,8 @@ doMallet = (callback, clientX, clientY) => {
 
 doHit = (x, y) => {
     console.log("hit: " + x, ", " + y);
+    var soundIndex = Math.floor(Math.random() * malletState.hits.length);
+    malletState.hits[soundIndex].play();
 }
 
 enableMallet = () => {

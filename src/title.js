@@ -30,7 +30,7 @@ doTitle = () => {
     x = 100, 
     i = 0;
 
-    txt = "Title Screen Animation";
+    txt = " Title Screen Animation";
     (loop = () => {
 
         tCtx.setLineDash([dashLen - dashOffset, dashOffset - dashSpeed]);
@@ -50,7 +50,7 @@ doTitle = () => {
 
     })();
 
-    waitForTitle(1000, () => {
+    waitForTitle(8000, () => {
         transitionFrom('title', () => {
         transitionTo('menu', () => { 
         doMenu(); 
