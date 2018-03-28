@@ -1,0 +1,30 @@
+﻿Video Guide (of the steps listed below) = https://www.youtube.com/watch?v=RBlobCRJig8
+
+
+Steps on how to Setup a Repository on your Local Machine
+Step 1: Navigate to a folder on your computer where you would like to keep a copy of the repository.
+        E.g. - cd into your Documents folder
+Step 2: Run SVN checkout command to create a copy of the repository on your local machine.
+Command: 
+svn co svn+ssh://your_username@146.245.252.151/users1/st/sheliu/group2repo
+   * Alternative Linux Machines:
+      * 146.245.252.152
+      * 146.245.252.31
+      * 146.245.252.34
+      * 146.245252.35
+      * 146.245.252.41
+
+
+SVN Commands
+add - If you create a new file in the SVN repo on your local machine, you must run this command to add the file to the queue for the next svn commit.
+Command: svn add ‘filename’
+        For example: svn add hello_world.html
+delete - If you want to remove a certain file, use this command. USE WITH CAUTION!
+Command: svn delete ‘filename’
+For example: svn delete hello_world.html
+commit - Commits your changes to the remote repository.
+Command: svn commit -m “your message”
+For example: svn commit -m “Added a new file, index.html”
+update - Updates your working copy by bringing changes from the remote repository.
+Command: svn update ‘repository_name’
+For example: svn update group2repo
