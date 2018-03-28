@@ -1,0 +1,50 @@
+Video Guide (of the steps listed below) = https://www.youtube.com/watch?v=RBlobCRJig8
+
+
+Steps on how to Setup a Repository on your Local Machine
+Purpose: Allows you to work on a local copy of the project.
+Step 1: Navigate to a folder on your computer where you would like to keep a copy of the repository.
+        E.g. - cd into your Documents folder
+Step 2: Run SVN checkout command to create a copy of the repository on your local machine.
+Command: 
+svn co svn+ssh://your_username@146.245.252.151/users1/st/sheliu/group2repo
+   > Alternative Linux Machines:
+      - 146.245.252.152
+      - 146.245.252.31
+      - 146.245.252.34
+      - 146.245252.35
+      - 146.245.252.41
+
+
+Setup Authorized SSH Keys (Optional)
+Purpose: If you would like to setup a seamless way of getting access to your WEB account without having to input your password on select commands, then this is what you want to setup.
+Step 1: Run ssh-keygen on your machine (in the Terminal), and just hit enter when asked for a password.  This will generate both a private and a public key.
+* Private Key path = ~/.ssh/id_rsa
+* Public Key path  = ~/.ssh/id_rsa.pub
+Step 2: In a new tab, connect to the remote WEB server with your credentials. 
+Step 3: Copy and paste the contents of the public key file (id_rsa.pub) from your local machine into ~/.ssh/authorized_keys on the remote server. 
+
+
+SVN Commands
+add - If you create a new file in the SVN repo on your local machine, you must run this command to add the file to the queue for the next svn commit.
+Command: svn add 'filename'
+        For example: svn add hello_world.html
+delete - If you want to remove a certain file, use this command. USE WITH CAUTION!
+Command: svn delete 'filename'
+For example: svn delete hello_world.html
+commit - Commits your changes to the remote repository.
+Command: svn commit -m "your message"
+For example: svn commit -m "Added a new file, index.html"
+update - Updates your working copy by bringing changes from the remote repository.
+Command: svn update 'repository_name'
+For example: svn update group2repo
+log - Shows log messages from the repository. If no arguments are supplied, svn log shows the log messages for all files and directories inside (and including) the current working directory of your working copy. You can refine the results by specifying a path, one or more revisions, or any combination of the two. The default revision range for a local path is BASE:1.
+Command: svn log 'repository_name'
+Command (with refinement): svn log -r start_commit:end_commit 'repository_name'
+For example: svn log group2repo
+                  svn log -r 1:5 group2repo (Shows you the log from commit 1 to 5)
+
+
+For QA Members Only
+Backup Command - svnadmin hotcopy 'repository_path' 'backup_path'
+For example: svnadmin hotcopy /users1/st/sheliu/group2repo /users1/st/sheliu/repo_backup
