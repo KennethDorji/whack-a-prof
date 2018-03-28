@@ -2,7 +2,6 @@ Username: sheliu
 Password: cisc3140group2
 Command: ssh sheliu@146.245.252.151 
 
-
 Alternative Linux Machines:
 - 146.245.252.152
 - 146.245.252.31
