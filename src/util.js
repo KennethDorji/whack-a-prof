@@ -8,6 +8,23 @@ class Util {
     static poisson(lambda) {
         return 
     }
+
+    static loadImage(url) {
+        var image = new Image();
+        return new Promise((resolve, reject) => {
+            image.onerror = () => {
+                reject("Failed to load image " + url);
+            }
+            image.onload = () => {
+                resolve(image);
+            }
+            image.src = url;
+        });
+    }
+
+    static getProperty(obj, property, defaultValue = null) {
+        return obj && obj[property] ? obj[property] : defaultValue;
+    }
 }
 
 class Coord {

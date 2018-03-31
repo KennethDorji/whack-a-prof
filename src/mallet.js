@@ -17,6 +17,8 @@
  *
  */
 
+"use strict";
+
 class Mallet extends Layer {
 
     constructor(options) {
@@ -53,22 +55,18 @@ class Mallet extends Layer {
         var self = this;
         return new Promise((resolve, reject) => {
             var i = 0;
-            self.image = new Image();
-            self.image.onerror = () => {
-                reject("Failed to load mallet image " + self.image.src);
-            }
-            self.image.onload = () => {
+            Util.loadImage('sprites/mallet.svg').then(image => {
                 var frames = self.frames;
                 for (i = 0; i < frames; i++) {
                     // scale and rotate to desired position in swing
                     let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2)) / self.pixelRatio;
                     let rotateFactor = -Math.PI * (i + 3) / (2 * frames);
                     var m = self.innerDoc.createElement('canvas');
-                    let height = Math.ceil(self.image.height / 2);
-                    let width = Math.ceil(self.image.width / 2);
+                    let height = Math.ceil(image.height / 2);
+                    let width = Math.ceil(image.width / 2);
                     let diagonal = Math.ceil(Math.sqrt(
-                          self.image.height * self.image.height +
-                          self.image.width * self.image.width) / 2);
+                          image.height * image.height +
+                          image.width * image.width) / 2);
                     m.width =  Math.ceil(2 * diagonal * scaleFactor); 
                     m.height = 0.8 * m.width;
                     // draw sprite and append to sprite array
@@ -78,14 +76,13 @@ class Mallet extends Layer {
                     ctx.translate(diagonal, diagonal*0.75);
                     ctx.rotate(rotateFactor);
                     ctx.translate(-width, -height);
-                    ctx.drawImage(self.image, 0, 0);
+                    ctx.drawImage(image, 0, 0);
                     
                     self.sprites.push(m);
                 }
                 console.log("Mallet.generateSprites() done.");
                 resolve();
-            }
-            self.image.src = 'sprites/mallet.svg';
+            }, reason => reject(reason));
         });
     }
 
@@ -126,7 +123,12 @@ class Mallet extends Layer {
                 var y = self.homeTarget.y;
                 var progress = 1;
                 var delta = 0;
-                var malletLoop = () => { // don't allocate new variables in loop
+
+                // this is the animation loop for the mallet swing
+                // if there is a queued next swing, it will continue to draw that one too
+                // then once the animation is over it will resolve the promise
+
+                const malletLoop = () => { // don't allocate new variables in loop
                     delta = window.performance.now() - self.startTime; // ms since swing started
                     if (delta > self.donePos * self.speed) { // done with swing
                         self.currPos = self.lastPos = -1.0;
@@ -169,7 +171,7 @@ class Mallet extends Layer {
     enable(callback = null) {
         var self = this;
         self.callback = callback;
-        var swingHandler = (e) => {
+        const swingHandler = (e) => {
             e.preventDefault();
             self.swing(new Coord(e.clientX, e.clientY));
         };
