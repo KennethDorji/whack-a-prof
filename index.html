@@ -9,14 +9,20 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     </head>
     <body onload="init();">
-        <svg class="hidden" xmlns="http://www.w3.org/2000/svg">
-            <defs id="svgDefs">
-                <!-- Sprites will be loaded here via AJAX -->
-            </defs>
-        </svg>
-		<iframe id="loading" class="fullscreen" src="loading.html">
-			Your Browser does not support IFrames.
-        </iframe>
+        <div id="loading" class="fullscreen">
+            <div class="contaner">
+                <div class="centered">
+                  <h1 style="color:#EEEEDD;">Loading...</h1>
+                </div>
+            </div>
+        </div>
+        <iframe id="error" class="fullscreen hidden" src="error.html"></iframe>
+
         <!-- Additional iframes will be loaded here via AJAX -->
+        <script type="text/javascript" src="src/util.js" defer></script>
+        <script type="text/javascript" src="src/layer.js" defer></script>
+        <script type="text/javascript" src="src/sound.js" defer></script>
+        <script type="text/javascript" src="src/title.js" defer></script>
+        <script type="text/javascript" src="src/mallet.js" defer></script>
     </body>
 </html>

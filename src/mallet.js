@@ -1,200 +1,205 @@
-var malletState = {
-    ctx:     null,
-    image:   null,
-    sprites: [],
-    position: -1.0,
-    last:     -1.0,
-    target:  { x:0, y:0 },
-    next:    { x:0, y:0 },
-    home:    { x:0, y:0 },
-    time:    null,
-    hit:     null,
-    xoffset: 0,
-    yoffset: 0,
-    swoosh: null,
-    hits:[]
-};
+/*
+ * mallet.js
+ *
+ * implementation of the mallet:
+ * a 'fullscreen' IFrame element containing a canvas element
+ *
+ * init():  initialize
+ *
+ * swing(target):  swing the mallet to (x,y) coordinates 
+ *                 and run action(x,y) when it hits
+ *
+ * setAction(function):  sets the action to perform on hit                   
+ *
+ * enable():   captures the mouse / touchscreen / keyboard to trigger the mallet
+ *
+ * disable():  un-captures the above
+ *
+ */
 
-const MalletSprites       = 8;
-const MalletSpeed         = 300;  // time in ms for swing
-const DistanceCoefficient = 0;  // less time for a "close" swing
-const HitTime             = 2000;
-const SwingStart          = 0.5;
-const SwingOver           = 1.5; // how far into swing cycle to stop - upto 2
-var BiasX               = -125;   // offset from origin of mallet image to "strike location"
-var BiasY               = -250;
+class Mallet extends Layer {
 
-function malletInit() {
-    console.log("malletInit(): window.devicePixelRatio = ", window.devicePixelRatio);
-    
-    // load mallet iframe
-    createIFrame('mallet', (element) => {
-        element.setAttribute("style", "z-index:999");
-        var innerDoc = element.contentDocument || element.contentWindow.document;
-        var c = innerDoc.createElement('canvas');  // the full-screen canvas
-        
-        malletState.ctx = c.getContext("2d");
-       
-        if (document.body.clientWidth > document.body.clientHeight) {
-            malletState.xoffset = Math.floor((document.body.clientWidth - document.body.clientHeight)/2);
-            c.setAttribute("style", "left:" + malletState.xoffset);
-            c.classList.add("bordered"); 
-            c.width = document.body.clientHeight;
-        } else {
-
-            c.width = document.body.clientWidth;
-        }
-        c.height = document.body.clientHeight;
-        
-        malletState.home.x = c.width;
-        malletState.home.y = 0;
-
-        malletState.image = new Image();
-        gameState.resourcesTotal++;
-        malletState.image.src = 'sprites/mallet.svg';
-        pixelRatio = window.devicePixelRatio;
-        BiasX = BiasX / pixelRatio;
-        BiasY = BiasY / pixelRatio;
-        malletState.swoosh = loadSound('sounds/swoosh.mp3');
-        malletState.hits.push(
-                loadSound('sounds/jab.mp3'),
-                loadSound('sounds/left-hook.mp3'),
-                loadSound('sounds/right-cross.mp3'),
-                loadSound('sounds/right-hook.mp3')
-                );
-        malletState.image.onload = () => {
-            gameState.resourcesLoaded++;
-            // generate the set of sprites for mallet animation
-            for (i = 0; i < MalletSprites; i++) {
-                gameState.resourcesTotal++;
-                let scaleFactor = (0.75 - 4 * Math.pow(1 / (MalletSprites - i + 4), 2)) / pixelRatio;
-                let rotateFactor = -Math.PI * (i + 3) / (2 * MalletSprites);
-                let m = innerDoc.createElement('canvas');
-                let height = Math.ceil(malletState.image.height / 2);
-                let width = Math.ceil(malletState.image.width / 2);
-                let diagonal = Math.ceil(Math.sqrt(malletState.image.height * malletState.image.height +
-                                         malletState.image.width * malletState.image.width) / 2);
-                m.width =  Math.ceil(2 * diagonal * scaleFactor); 
-                m.height = 0.8 * m.width;
-                let ctx = m.getContext("2d");
-                ctx.imageSmoothingEnabled = false;
-                ctx.scale(scaleFactor, scaleFactor);
-                ctx.translate(diagonal, diagonal*0.75);
-                ctx.rotate(rotateFactor);
-                ctx.translate(-width, -height);
-                ctx.drawImage(malletState.image, 0, 0);
-                
-                malletState.sprites.push(m);
-                gameState.resourcesLoaded++;
-                
-            } 
-        };
-        innerDoc.body.appendChild(c);
-    });
-}
-
-
-doMallet = (callback, clientX, clientY) => {
-    // trigger the mallet
-    // if the mallet is already swinging, then we set the 'next' target to (x,y) and wait for current
-    // swing to complete before doing next one
-    // if the mallet is resting, we activate a new loop to swing it to (x,y)
-    
-    if (malletState.time) { // mallet active - don't start new loop, just change the next target
-        malletState.next.x = clientX - malletState.xoffset;
-        malletState.next.y = clientY; 
-    } else { // mallet resting - start a new loop
-        malletState.swoosh.play();
-        malletState.time = window.performance.now();  // reset the swing start time
-        malletState.position = -1.00;   // reset the position just in case
-        malletState.last = -1.00;   // reset the position just in case
-        malletState.target.x = clientX - malletState.xoffset;
-        malletState.target.y = clientY;
-        var index = 0;
-        var x = malletState.home.x;
-        var y = malletState.home.y;
-        var limit = MalletSpeed - (DistanceCoefficient * malletState.target.x / malletState.ctx.canvas.width);
-        var progress = 1;
-        var delta = 0;
-        malletLoop = () => { // don't allocate new variables in loop
-            delta = window.performance.now() - malletState.time; // ms since swing started
-
-            if (delta > SwingOver * limit) { // done with swing
-                malletState.position = -1.0;
-                malletState.last = -1.0;
-                if (malletState.next.x != 0 && malletState.next.y != 0) { // there is another swing queued
-                    malletState.swoosh.play();
-                    malletState.target.x = malletState.next.x;
-                    malletState.target.y = malletState.next.y;
-                    limit = MalletSpeed - (DistanceCoefficient * malletState.target.x / malletState.ctx.canvas.width);
-                    malletState.next.x = 0;
-                    malletState.next.y = 0;
-
-                    malletState.time = window.performance.now();
-                } else { // no more swings queued
-                    malletState.time = null;  // reset 
-                    malletState.hit  = null;
-                    malletState.target.x = 0;
-                    malletState.target.y = 0;
-                }
-            } else { // continuing a swing
-                malletState.ctx.clearRect(x, y, malletState.sprites[index].width, malletState.sprites[index].height);
-                malletState.last = malletState.position;
-                malletState.position = (delta / limit) - 1 + SwingStart;
-                progress = Math.abs(Math.sin(malletState.position * Math.PI/2));
-                index = Math.min(MalletSprites - Math.floor(progress * MalletSprites), MalletSprites - 1);
-                x = malletState.target.x + progress * (malletState.home.x - malletState.target.x + BiasX) + BiasX;
-                y = malletState.target.y + progress * (malletState.home.y - malletState.target.y + BiasY) + BiasY;
-            }
-            
-            if (malletState.last * malletState.position < 0) { // we "hit" 
-                malletState.hit = window.performance.now();
-                if (callback) {
-                    callback(malletState.target.x, malletState.target.y);
-                }
-            }
-            
-            malletState.ctx.drawImage(malletState.sprites[index], x, y);
-            if (malletState.time) {
-                window.requestAnimationFrame(malletLoop);
-            }
-        };
-        window.requestAnimationFrame(malletLoop);
+    constructor(options) {
+        // generate underlying layer
+        super({ 
+            id:'mallet', 
+            hasCanvas:true, 
+            squareCanvas:true,
+            classes: ['hidden', 'fullscreen']
+        });
+        this.swingSound   = new Sound('sounds/swoosh.mp3');
+        this.hitSound     = new Sound([
+                'sounds/jab.mp3',
+                'sounds/left-hook.mp3',
+                'sounds/right-cross.mp3',
+                'sounds/right-hook.mp3']);
+        this.sprites      = [];
+        this.currPos      = -1.0;
+        this.lastPos      = -1.0;
+        this.currTarget   = new Coord(0, 0);
+        this.nextTarget   = new Coord(0, 0);
+        this.homeTarget   = new Coord(this.size.x, 0);
+        this.bias         = new Coord(-125, -250).scaleBy(this.pixelRatio);
+        this.startTime    = null;
+        this.swooshSound  = null;
+        this.hitSounds    = [];
+        this.frames       = options && options.frames  ? options.frames  : 8;
+        this.speed        = options && options.speed   ? options.speed   : 300;
+        this.donePos      = options && options.done    ? options.done    : 1.5;
+        this.initPos      = options && options.initial ? options.initial : 0.5;
     }
-}
 
-doHit = (x, y) => {
-    console.log("hit: " + x, ", " + y);
-    var soundIndex = Math.floor(Math.random() * malletState.hits.length);
-    malletState.hits[soundIndex].play();
-}
+    generateSprites() {
+        var self = this;
+        return new Promise((resolve, reject) => {
+            var i = 0;
+            self.image = new Image();
+            self.image.onerror = () => {
+                reject("Failed to load mallet image " + self.image.src);
+            }
+            self.image.onload = () => {
+                var frames = self.frames;
+                for (i = 0; i < frames; i++) {
+                    // scale and rotate to desired position in swing
+                    let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2)) / self.pixelRatio;
+                    let rotateFactor = -Math.PI * (i + 3) / (2 * frames);
+                    var m = self.innerDoc.createElement('canvas');
+                    let height = Math.ceil(self.image.height / 2);
+                    let width = Math.ceil(self.image.width / 2);
+                    let diagonal = Math.ceil(Math.sqrt(
+                          self.image.height * self.image.height +
+                          self.image.width * self.image.width) / 2);
+                    m.width =  Math.ceil(2 * diagonal * scaleFactor); 
+                    m.height = 0.8 * m.width;
+                    // draw sprite and append to sprite array
+                    let ctx = m.getContext("2d");
+                    ctx.imageSmoothingEnabled = false;
+                    ctx.scale(scaleFactor, scaleFactor);
+                    ctx.translate(diagonal, diagonal*0.75);
+                    ctx.rotate(rotateFactor);
+                    ctx.translate(-width, -height);
+                    ctx.drawImage(self.image, 0, 0);
+                    
+                    self.sprites.push(m);
+                }
+                console.log("Mallet.generateSprites() done.");
+                resolve();
+            }
+            self.image.src = 'sprites/mallet.svg';
+        });
+    }
 
-enableMallet = () => {
-    console.log("enableMallet()");
-    malletState.ctx.canvas.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        doMallet(doHit, e.clientX, e.clientY);
-    }, true);
-    
-    malletState.ctx.canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        doMallet(doHit, e.clientX, e.clientY);
-    }, true);
+    loadSounds() {
+        var self = this;
+        return Promise.all([
+                self.swingSound.load(),
+                self.hitSound.load()]);
+    }
 
-    malletState.ctx.canvas.addEventListener('mousemove', (e) => {
-        mousePosition.x = e.clientX;
-        mousePosition.y = e.clientY;
-    }, true);    
-    window.addEventListener('keydown', (e) => {
-        e.preventDefault();
-        if (e.keyCode == 32) { // spacebar
-            doMallet(doHit, mousePosition.x, mousePosition.y);
-        }
-    }, true);
-    
-}
+    init() {
+        var self = this;
+        return new Promise((resolve, reject) => {
+            super.init().then(() => {
+                console.log("Mallet.init()");
+                return Promise.all([ // load in parallel
+                        self.generateSprites(),
+                        self.loadSounds()
+                ]);   
+            }).then(resolve, reason => reject(reason));
+        });
+    }
 
-disableMallet = () => {
-    malletState.ctx.canvas.removeEventListener('mousedown', doMallet);
-    malletState.ctx.canvas.removeEventListener('keydown', doMallet);
+    swing(target) {
+        console.log("swing: "+target.x+", "+target.y);
+        var self = this;
+        return new Promise((resolve, reject) => {
+            if (self.startTime) { // a swing is already in progress
+                this.nextTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
+            } else {   // no swing already
+                self.swingSound.play();
+                self.startTime = window.performance.now();  // reset the swing start time
+                self.currPos = self.lastPos = -1;
+                this.currTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
+                var index = 0;
+                var pos = new Coord(self.homeTarget.x, self.homeTarget.y);
+                var x = self.homeTarget.x;
+                var y = self.homeTarget.y;
+                var progress = 1;
+                var delta = 0;
+                var malletLoop = () => { // don't allocate new variables in loop
+                    delta = window.performance.now() - self.startTime; // ms since swing started
+                    if (delta > self.donePos * self.speed) { // done with swing
+                        self.currPos = self.lastPos = -1.0;
+                        if (self.nextTarget.x != 0 && self.nextTarget.y != 0) { // there is another swing queued
+                            self.swingSound.play();
+                            self.currTarget.copy(self.nextTarget);
+                            self.nextTarget.setTo(0,0);
+                            self.startTime = window.performance.now();
+                        } else { // no more swings queued
+                            self.startTime = null;  // reset 
+                            self.currTarget.setTo(0, 0);
+                            resolve();
+                        }
+                    } else { // continuing a swing
+                        self.ctx.clearRect(x, y, self.sprites[index].width, self.sprites[index].height);
+                        self.lastPos = self.currPos;
+                        self.currPos = (delta / self.speed) - 1 + self.initPos;
+                        progress = Math.abs(Math.sin(self.currPos * Math.PI/2));
+                        index = Math.min(self.frames - Math.floor(progress * self.frames), self.frames - 1);
+                        x = self.currTarget.x + progress * (self.homeTarget.x - self.currTarget.x + self.bias.x) + self.bias.x;
+                        y = self.currTarget.y + progress * (self.homeTarget.y - self.currTarget.y + self.bias.y) + self.bias.y;
+                    }
+                    if (self.lastPos * self.currPos < 0) { // we "hit" 
+                        self.hitSound.play();
+                        self.hitTime = window.performance.now();
+                        if (self.callback) {
+                            self.callback(self.currTarget.x, self.currTarget.y);
+                        }
+                    }
+                    self.ctx.drawImage(self.sprites[index], x, y);
+                    if (self.startTime) {
+                        window.requestAnimationFrame(malletLoop);
+                    }
+                };
+                malletLoop();
+            }
+        });
+    }
+
+    enable(callback = null) {
+        var self = this;
+        self.callback = callback;
+        var swingHandler = (e) => {
+            e.preventDefault();
+            self.swing(new Coord(e.clientX, e.clientY));
+        };
+        self.canvas.addEventListener('mousedown', swingHandler, true); 
+        //self.canvas.addEventListener('touchstart', swingHandler, true);
+
+        self.canvas.addEventListener('mousemove', (e) => {
+            mousePosition.setTo(e.clientX, e.clientY);
+        }, true);    
+
+        window.addEventListener('keydown', (e) => {
+            e.preventDefault();
+            switch (e.keyCode) {
+                case 32: // spacebar
+                    self.swing(mousePosition);
+                    break;
+                case 27: // escape
+                    //doPause();
+                    break;
+                default:
+                    break;
+            }
+        }, true);
+    }
+
+    disable() {
+        // stub
+    }
+
+    setAction(action) {
+        // stub
+    }
 }

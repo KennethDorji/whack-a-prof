@@ -7,78 +7,32 @@
  *
  */
 
+"use strict";
+
 const States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, 
                             "GAMEOVER":4, "WINNER":5, "HELP":6, "QUIT":7});
 
 const TransitionDelay = 250;
 const WatchInterval   = 30;
 
-var gameState = {
+// S contains the game meta state
+var S = {
     resourcesTotal:0,
     resourcesLoaded:0,
     currentState:States.LOADING,
     highScore:0,
-    currentScore:0,
-    malletPosition:-1.0
+    currentScore:0
 };
 
-var mousePosition = { x:0, y:0 };
-
-/*
- * Set a watcher for a specific property of an object
- *
- * to be called like so:
- * var intervalH = setInterval(watchProperty(myobj, "prop", myhandler), timeout);
- *
- * then to unwatch:
- * clearInterval(intervalH);
- */
-watchProperty = (obj, prop, handler) => {
-    var currval = obj[prop];
-    return () => {
-        if (obj[prop] != currval) {
-            var temp = currval;
-            currval = obj[prop];
-            handler(temp, currval);
-        }
-    };
-}
-
-/*
- * loads a script dynamically then optionally executes callback
- * NOTE: the callback should depend only on methods defined here (init.js) or in the script loaded,
- *       don't rely on things defined in other dynamically loaded scripts
- */
-loadScript = (src, callback) => {
-    var script = document.createElement('script');
-    gameState.resourcesTotal++;
-    script.onload = () => {
-        gameState.resourcesLoaded++;
-        if (callback) {
-            callback();
-        }
-    }
-    script.src = src;
-    document.head.appendChild(script);
-}
-
-
-/*
- * executes callback after all dynamic resources are loaded
- */
-waitForLoading = (callback) => {
-    var intervalH = setInterval(watchProperty(gameState, "resourcesLoaded", (oldval, newval) => {
-        console.log(newval + "/" + gameState.resourcesTotal);
-
-        // are we done loading? then go to title
-        if (newval == gameState.resourcesTotal) {
-            clearInterval(intervalH);
-            console.log("done loading");
-            callback();
-        }
-    }), WatchInterval);
-}
-
+// L contains the full-screen layers
+var L = {
+    mallet:null,
+    title:null,
+    menu:null,
+    hud:null,
+    won:null,
+    lost:null
+};
 
 /*
  * Transition functions control the CSS visibility of iframes, 
@@ -89,79 +43,70 @@ waitForLoading = (callback) => {
  * an element having fading="fade-in" will have its opacity increased to 100%
  * an element having class="hidden" will not be displayed.
  */
-transitionFrom = (id, callback) => {
-    var element = document.getElementById(id);
-    element.setAttribute('fading', 'fade-out');
-    setTimeout(() => {
-        element.classList.add('hidden');
-        element.removeAttribute('fading');
-        if (callback) {
-            callback();
-        }
-    }, TransitionDelay);
+var fadeFrom = (id) => {
+    console.log("fadeFrom("+id+")");
+    return new Promise((resolve, reject) => {
+        var element = document.getElementById(id);
+        element.setAttribute('fading', 'fade-out');
+        setTimeout(() => {
+            element.classList.add('hidden');
+            element.removeAttribute('fading');
+            resolve();
+        }, TransitionDelay);
+    });
 }
 
-transitionTo = (id, callback) => {
-    var element = document.getElementById(id);
-    element.setAttribute('fading', 'fade-in');
-    element.classList.remove('hidden');
-    setTimeout(() => {
-        element.removeAttribute('fading');
-        if (callback) {
-            callback();
-        }
-    }, TransitionDelay);
+var fadeTo = (id) => {
+    console.log("fadeTo(" + id + ")");
+    return new Promise((resolve, reject) => {
+        var element = document.getElementById(id);
+        element.setAttribute('fading', 'fade-in');
+        element.classList.remove('hidden');
+        setTimeout(() => {
+            element.removeAttribute('fading');
+            resolve();
+        }, TransitionDelay);
+    });
 }
 
-/*
- * create a new (initially hidden) fullscreen iframe with a specified id
- * there must exist a file in the root folder called id.html (i.e. menu.html if id='menu')
- *
- * then optionally runs a callback after its loaded.
- */
-createIFrame = (id, callback) => {
-    var element = document.createElement('iframe');
-    gameState.resourcesTotal++;
-    element.src = id + '.html';
-    element.id  = id;
-    //element.setAttribute('allowTransparency', 'true');
-    element.classList.add('hidden');
-    element.classList.add('fullscreen');
-    element.onload = () => {
-        gameState.resourcesLoaded++;
-        if (callback) {
-            callback(element);
-        }
-    }
-    document.body.appendChild(element);
+var doError = (message) => {
+    console.log("doError(" + message + ")");
+    var eframe = document.getElementById("error");
+    var element  = eframe.contentDocument || eframe.contentWindow.document;
+    var err = element.createElement('p');
+    err.innerHTML = message;
+    element.getElementById('cause').appendChild(err);
+    eframe.classList.remove('hidden');
+    throw "Fatal, cannot continue.";
 }
 
 /*
  * This is the javascript entrypoint from index.html body.onload()
  *
  */
-init = () => {
+var init = () => {
     console.log("init()");
 
     // fixes for IOS, Retina Mac, and Samsung phone devices
-    document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
+    //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
     document.ontouchmove = (e) => { e.preventDefault(); }
 
-    // load "modules"
-    loadScript("src/title.js",   () => { titleInit();   });
-    loadScript("src/sounds.js",  () => { soundsInit();  });
-    loadScript("src/sprites.js", () => { spritesInit(); });
-    loadScript("src/music.js",   () => { musicInit();   });
-    loadScript("src/sounds.js",  () => { soundsInit();  });
-    loadScript("src/menu.js",    () => { menuInit();    });
-    loadScript("src/mallet.js",  () => { malletInit();  });
-    loadScript("src/engine.js",  () => { engineInit();  });
-    loadScript('src/score.js',   () => { scoreInit();   });
+    L.title = new Title();
+//    L.menu = new Menu();
+    L.mallet = new Mallet();
 
-    // begin transitioning through game states
-    waitForLoading(() => {
-        transitionFrom('loading', () => {
-        transitionTo('title', () => { 
-        doTitle(); 
-    });});});
+    // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
+    Promise.all([
+            L.title.init(),
+            L.mallet.init()
+    ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
+    .catch(reason => doError(reason))
+    .then(() => fadeFrom('loading'))
+    .then(() => L.title.fadeIn())
+    .then(() => L.title.start())
+    .then(() => L.title.fadeOut())
+    // menu will go here instead of mallet
+    .then(() => L.mallet.fadeIn())
+    .then(() => L.mallet.enable())
+    .catch(reason => doError(reason)); 
 }
