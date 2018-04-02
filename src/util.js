@@ -13,7 +13,7 @@ class Util {
         var image = new Image();
         return new Promise((resolve, reject) => {
             image.onerror = () => {
-                reject("Failed to load image " + url);
+                reject(`Failed to load image: ${url}`);
             }
             image.onload = () => {
                 resolve(image);
@@ -24,6 +24,12 @@ class Util {
 
     static getProperty(obj, property, defaultValue = null) {
         return obj && obj[property] ? obj[property] : defaultValue;
+    }
+
+    static cartesian(a, b, ...c) {
+      const _f = (a, b) => [].concat(...a.map(a => b.map(b => [].concat(a, b))));
+      const _cart = (a, b, ...c) => b ? _cart(_f(a, b), ...c) : a;
+      return _cart(a, b, ...c);
     }
 }
 

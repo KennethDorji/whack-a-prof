@@ -45,10 +45,10 @@ class Mallet extends Layer {
         this.startTime    = null;
         this.swooshSound  = null;
         this.hitSounds    = [];
-        this.frames       = options && options.frames  ? options.frames  : 8;
-        this.speed        = options && options.speed   ? options.speed   : 300;
-        this.donePos      = options && options.done    ? options.done    : 1.5;
-        this.initPos      = options && options.initial ? options.initial : 0.5;
+        this.frames       = Util.getProperty(options, 'frames',  8);
+        this.speed        = Util.getProperty(options, 'speed',   300);
+        this.donePos      = Util.getProperty(options, 'done',    1.5);
+        this.initPos      = Util.getProperty(options, 'initial', 0.5);
     }
 
     generateSprites() {
@@ -107,7 +107,7 @@ class Mallet extends Layer {
     }
 
     swing(target) {
-        console.log("swing: "+target.x+", "+target.y);
+        console.log(`swing: ${target.x}, ${target.y}`);
         var self = this;
         return new Promise((resolve, reject) => {
             if (self.startTime) { // a swing is already in progress

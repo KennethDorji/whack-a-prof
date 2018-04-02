@@ -65,6 +65,7 @@ class Hole {
                         //
                         if (self.isHit === false) { // beware javascript truthiness issues
                             // if there is a punishment for not hitting someone, apply it here
+                            A.miss();
                         }
 
                         if (self.nextOccupant) {
@@ -92,7 +93,7 @@ class Hole {
                     if (self.isHit) {
                         // definitely use shocked if hit
                         self.sprite = A.sprites.shock;
-                    } else if () {
+                    } else if (true) {
                         // definitely use smirk if ...
                         self.sprite = A.sprites.smirk;
                     } else {
@@ -119,9 +120,12 @@ class Hole {
     }
 
     hit() {
-        self.isHit = true;
-        var actorHit = self.currOccupant; // occupant may change before we can calc score
-        // raise score, etc
+        if (self.currOccupant) {
+            self.isHit = true;
+            var A = self.currOccupant; // occupant may change before we can calc score
+            // raise score, etc
+            A.hit();
+        }
     }
      
 }    

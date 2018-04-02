@@ -30,9 +30,9 @@ var mousePosition = new Coord(0, 0);
 class Layer {
     constructor (options) {
         this.id         = options.id;
-        this.classes    = options && options.classes ? options.classes : null;
-        this.style      = options && options.style ? options.style : null;
-        this.delay      = options && options.delay ? options.delay : 250;
+        this.classes    = Util.getProperty(options, 'classes', null);
+        this.style      = Util.getProperty(options, 'style',   null);
+        this.delay      = Util.getProperty(options, 'delay',   250);
         this.hasCanvas  = options && options.hasCanvas ? true : false;
         this.innerDoc   = null;
         this.iframe     = null;
@@ -113,7 +113,7 @@ class Layer {
         return new Promise((resolve, reject) => {
             self.iframe = document.createElement('iframe');
             self.iframe.id = self.id;
-            self.iframe.src = self.id + '.html';
+            self.iframe.src = `${self.id}.html`;
             self.classes.forEach(c => self.iframe.classList.add(c));
             if (self.style) {
                 self.iframe.setAttribute("style", self.style);

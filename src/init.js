@@ -34,6 +34,7 @@ var L = {
     lost:null
 };
 
+
 /*
  * Transition functions control the CSS visibility of iframes, 
  * and then optionally runs a callback after the fade is complete.
@@ -44,7 +45,7 @@ var L = {
  * an element having class="hidden" will not be displayed.
  */
 var fadeFrom = (id) => {
-    console.log("fadeFrom("+id+")");
+    console.log(`fadeFrom(${id})`);
     return new Promise((resolve, reject) => {
         var element = document.getElementById(id);
         element.setAttribute('fading', 'fade-out');
@@ -57,7 +58,7 @@ var fadeFrom = (id) => {
 }
 
 var fadeTo = (id) => {
-    console.log("fadeTo(" + id + ")");
+    console.log(`fadeTo(${id})`);
     return new Promise((resolve, reject) => {
         var element = document.getElementById(id);
         element.setAttribute('fading', 'fade-in');
@@ -70,7 +71,7 @@ var fadeTo = (id) => {
 }
 
 var doError = (message) => {
-    console.log("doError(" + message + ")");
+    console.log(`doError(${message})`);
     var eframe = document.getElementById("error");
     var element  = eframe.contentDocument || eframe.contentWindow.document;
     var err = element.createElement('p');
@@ -94,11 +95,12 @@ var init = () => {
     L.title = new Title();
 //    L.menu = new Menu();
     L.mallet = new Mallet();
-
+    L.game = new Game();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
             L.title.init(),
-            L.mallet.init()
+            L.mallet.init(),
+            L.game.init(),
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
     .then(() => fadeFrom('loading'))
