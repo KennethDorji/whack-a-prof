@@ -9,7 +9,7 @@ class Hole {
     constructor(options) {
         this.game = options.game;
         this.coordinate = options.coordinate || new Coord(0, 0);
-        this.size = options.size || new Coord(266, 266);
+        this.size = options.size || new Coord(200 * L.overallScale, 200 * L.overallScale);
         this.hitColor = options.hitColor || "rgba(255,60,60,0.5)";
         this.delay = options.delay || 10000;
         this.currOccupant = null;
@@ -28,9 +28,10 @@ class Hole {
                 w > h ? (w - h) / 2 : 0,
                 h > w ? (h - w) / 2 : 0
             );
-            self.size.scaleBy(1/window.devicePixelRatio);
+
+            //self.size.scaleBy(1/window.devicePixelRatio);
             self.coordinate.scaleBy(dim).offsetBy(offset);
-            console.log(`Hole.init(): loc: ${self.coordinate.x}, ${self.coordinate.y}`);
+            console.log(`Hole.init(): size: ${self.size.x}, ${self.size.y} ofs: ${offset.x}, ${offset.y} loc: ${self.coordinate.x}, ${self.coordinate.y}`);
             self.canvas = self.container.createElement('canvas');
             self.canvas.height = self.size.y;
             self.canvas.width  = self.size.x;
@@ -43,7 +44,6 @@ class Hole {
     }
 
     occupy(actor) {
-        console.log('Hole.occupy()');
         var self = this;
         return new Promise((resolve, reject) => {
             // if the hole is already occupied, queue up the next one else start a new one
@@ -157,7 +157,6 @@ class Hole {
         let self = this;
         const hLoop = () => {
             let delay = Util.uniform(self.delay);
-            console.log(`delay: ${delay}`);
             if (S.currentState === States.PLAYING) {   
                 setTimeout(() => {
                     let A = cast.getRandom();

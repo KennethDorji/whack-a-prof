@@ -41,7 +41,7 @@ class Mallet extends Layer {
         this.currTarget   = new Coord(0, 0);
         this.nextTarget   = new Coord(0, 0);
         this.homeTarget   = new Coord(this.size.x, 0);
-        this.bias         = new Coord(-125, -250).scaleBy(1/this.pixelRatio);
+        this.bias         = new Coord(-125, -250).scaleBy(L.overallScale);
         this.startTime    = null;
         this.swooshSound  = null;
         this.hitSounds    = [];
@@ -59,7 +59,7 @@ class Mallet extends Layer {
                 var frames = self.frames;
                 for (i = 0; i < frames; i++) {
                     // scale and rotate to desired position in swing
-                    let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2))/self.pixelRatio;
+                    let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2))*L.overallScale;
                     let rotateFactor = -Math.PI * (i + 3) / (2 * frames);
                     var m = self.innerDoc.createElement('canvas');
                     let height = Math.ceil(image.height / 2);

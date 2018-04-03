@@ -49,13 +49,9 @@ class Actor {
             let m = self.container.createElement('canvas');
             let ctx = m.getContext('2d');
             let scale = window.devicePixelRatio;
-            m.width = image.width;
-            m.height = image.height;
-            if (scale > 1) {
-                m.width = image.width / scale;
-                m.height = image.height / scale;
-                ctx.scale(1/scale, 1/scale);
-            }
+            m.width = image.width * L.overallScale;
+            m.height = image.height * L.overallScale;
+            ctx.scale(L.overallScale, L.overallScale);
             ctx.drawImage(image, 0, 0);
             return m;
         }

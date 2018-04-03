@@ -28,7 +28,7 @@ class Title extends Layer {
             console.log("Title.start()");
             S.currentState = States.TITLE;
             
-            self.ctx.font = "50pt Homemade Apple";
+            self.ctx.font = `${Math.floor(50 * L.overallScale)}pt Homemade Apple`;
             self.ctx.lineWidth = 1;
             self.ctx.strokeStyle = "#EEEEDD";
             var txt = " Title Screen Animation",

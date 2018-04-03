@@ -26,6 +26,8 @@ var S = {
 
 // L contains the full-screen layers
 var L = {
+    trueSize:0,
+    overallScale:0,
     mallet:null,
     title:null,
     menu:null,
@@ -92,6 +94,9 @@ var init = () => {
     //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
     document.ontouchmove = (e) => { e.preventDefault(); }
 
+    L.trueSize = Math.min(document.body.clientWidth, document.body.clientHeight);
+    L.overallScale = L.trueSize / 960;
+    console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
 //    L.menu = new Menu();
     L.mallet = new Mallet();
