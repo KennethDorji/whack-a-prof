@@ -9,7 +9,7 @@ class Hole {
     constructor(options) {
         this.game = options.game;
         this.coordinate = options.coordinate || new Coord(0, 0);
-        this.size = options.size || new Coord(200 * L.overallScale, 200 * L.overallScale);
+        this.size = options.size || 200 * L.overallScale;
         this.hitColor = options.hitColor || "rgba(255,60,60,0.5)";
         this.delay = options.delay || 10000;
         this.currOccupant = null;
@@ -29,12 +29,11 @@ class Hole {
                 h > w ? (h - w) / 2 : 0
             );
 
-            //self.size.scaleBy(1/window.devicePixelRatio);
             self.coordinate.scaleBy(dim).offsetBy(offset);
-            console.log(`Hole.init(): size: ${self.size.x}, ${self.size.y} ofs: ${offset.x}, ${offset.y} loc: ${self.coordinate.x}, ${self.coordinate.y}`);
+            console.log(`Hole.init(): size: ${self.size} ofs: ${offset.x}, ${offset.y} loc: ${self.coordinate.x}, ${self.coordinate.y}`);
             self.canvas = self.container.createElement('canvas');
-            self.canvas.height = self.size.y;
-            self.canvas.width  = self.size.x;
+            self.canvas.height = self.size;
+            self.canvas.width  = self.size;
             self.ctx = self.canvas.getContext('2d');
             self.ctx.fillStyle = self.hitColor;
             self.canvas.style.transform = 'translate(' + self.coordinate.x + 'px, ' + self.coordinate.y + 'px)';
@@ -108,15 +107,15 @@ class Hole {
                             self.currOccupant = null;
                             self.nextOccupant = null;
                             // clear existing
-                            self.ctx.clearRect(0, 0, self.size.x, self.size.y);
+                            self.ctx.clearRect(0, 0, self.size, self.size);
                             return resolve();
                         }
                     } else if (delta > lingerLimit) { 
                         // lower back down
-                        self.currPos = self.size.y - Math.floor(self.size.y*Math.cos(Math.PI * (lingerLimit - delta) / (A.duration.lower*2)));
+                        self.currPos = self.size - Math.floor(self.size*Math.cos(Math.PI * (lingerLimit - delta) / (A.duration.lower*2)));
                     } else if (delta < A.duration.raise) { 
                         // still rising
-                        self.currPos = self.size.y - Math.floor(self.size.y*Math.sin(Math.PI * delta / (2*A.duration.raise)));
+                        self.currPos = self.size - Math.floor(self.size*Math.sin(Math.PI * delta / (2*A.duration.raise)));
                     } else {
                         // lingering
                         // no change to currPos
@@ -125,14 +124,14 @@ class Hole {
                 
 
                     // clear existing
-                    self.ctx.clearRect(0, 0, self.size.x, self.size.y);
+                    self.ctx.clearRect(0, 0, self.size, self.size);
                     // draw sprite
                     self.ctx.drawImage(self.sprite, 0, self.currPos);
                     //self.ctx.drawImage(self.sprite, 0, 0);
                     // have we been hit?  apply a color overlay
                     if (self.isHit) {
                         self.ctx.globalCompositeOperation = "source-atop";
-                        self.ctx.fillRect(0, 0, self.size.x, self.size.y);
+                        self.ctx.fillRect(0, 0, self.size, self.size);
                         self.ctx.globalCompositeOperation = "source-over";
                     }
                     window.requestAnimationFrame(holeLoop);

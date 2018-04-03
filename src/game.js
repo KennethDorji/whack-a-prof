@@ -35,7 +35,6 @@ class Game extends Layer {
           classes:['hidden', 'fullscreen']
       });
     let self = this;
-    let holeSize = new Coord(200, 200);
     const charStats = Util.cartesian(Characters, [1,2,3,4]).map(ch => ({
         id:ch.join('/'),
         hit:CharacterStats[ch[0]].hit,
@@ -46,7 +45,6 @@ class Game extends Layer {
     self.holes = HoleLocations.map(loc => new Hole({
         game: self,
         coordinate: loc,
-        size: holeSize,
     }));
   }
 

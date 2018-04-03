@@ -89,6 +89,10 @@ var doError = (message) => {
  */
 var init = () => {
     console.log("init()");
+    document.ontouchmove = (e) => {
+        e.preventDefault();
+        return false;
+    }
 
     // fixes for IOS, Retina Mac, and Samsung phone devices
     //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
