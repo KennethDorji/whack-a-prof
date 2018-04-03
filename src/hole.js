@@ -20,7 +20,14 @@ class Hole {
         var self = this;
         self.container = container;
         return new Promise((resolve, reject) => {
-            self.coordinate.scaleBy(self.game.width);
+            let w = self.game.width;
+            let h = self.game.height;
+            let dim = Math.min(self.game.width, self.game.height);
+            let offset = new Coord(
+                w > h ? (w - h) / 2 : 0,
+                h > w ? (h - w) / 2 : 0
+            );
+            self.coordinate.scaleBy(dim).offsetBy(offset).scaleBy(1/window.devicePixelRatio);
             console.log(`Hole.init(): loc: ${self.coordinate.x}, ${self.coordinate.y}`);
             self.canvas = self.container.createElement('canvas');
             self.canvas.height = self.size.y;
@@ -145,7 +152,6 @@ class Hole {
     
     start(cast) {
         console.log("Hole.start()");
-        // the parameter lambda refers to the average delay to next occupant
         let self = this;
         const hLoop = () => {
             let delay = Util.uniform(self.delay);
