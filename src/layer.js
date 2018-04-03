@@ -45,7 +45,7 @@ class Layer {
             this.offset = new Coord(0,0);
             if (this.squareCanvas) {
                 if (width > height) {
-                    this.offset.setTo(Math.floor((width - height) / 2), 0);
+                    this.offset.setTo(this.pixelRatio * Math.floor((width - height) / 2), 0);
                     this.size.setTo(height, height);
                 } else {
                     this.offset.setTo(0, height - width);
@@ -63,13 +63,9 @@ class Layer {
             self.canvas = self.innerDoc.createElement('canvas');
             if (self.squareCanvas) {
                 if (width > height) { // landscape
-                    // center canvas horizontally
-                    self.canvas.style.left = self.offset.x;
                     self.canvas.width = height;
                     self.canvas.height = height;
                 } else { // portrait
-                    // bottom justify canvas
-                    self.canvas.style.top = self.offset.y;
                     self.canvas.width = width;
                     self.canvas.height = width;
                 }
@@ -78,6 +74,7 @@ class Layer {
                 self.canvas.height = height;
                 // this.offset doesn't need change
             }
+            self.canvas.style.transform = `translate(${self.offset.x}px, ${self.offset.y}px)`;
             self.ctx = self.canvas.getContext("2d");
             self.innerDoc.body.appendChild(self.canvas);
             resolve();

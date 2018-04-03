@@ -41,7 +41,7 @@ class Mallet extends Layer {
         this.currTarget   = new Coord(0, 0);
         this.nextTarget   = new Coord(0, 0);
         this.homeTarget   = new Coord(this.size.x, 0);
-        this.bias         = new Coord(-75, -250).scaleBy(this.pixelRatio);
+        this.bias         = new Coord(-75, -250);//.scaleBy(this.pixelRatio);
         this.startTime    = null;
         this.swooshSound  = null;
         this.hitSounds    = [];
