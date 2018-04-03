@@ -76,6 +76,7 @@ class Layer {
                 // this.offset doesn't need change
             }
             self.canvas.style.transform = `translate(${self.offset.x}px, ${self.offset.y}px)`;
+            self.canvas.classList.add('bordered');
             self.ctx = self.canvas.getContext("2d");
             self.innerDoc.body.appendChild(self.canvas);
             resolve();

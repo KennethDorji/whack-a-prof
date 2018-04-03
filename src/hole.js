@@ -8,24 +8,26 @@
 class Hole {
     constructor(options) {
         this.game = options.game;
-        this.container  = this.game.container;
         this.coordinate = options.coordinate;
         this.size = options.size;
-        this.hitColor = options.hitColor;
+        this.hitColor = options.hitColor || "rgba(255,60,60,0.5)";
+        this.delay = options.delay || 1000;
         this.currOccupant = null;
         this.nextOccupant = null;
     }
 
-    init() {
+    init(container) {
         var self = this;
+        self.container = container;
         return new Promise((resolve, reject) => {
+            console.log(`Hole.init(): loc: ${self.coordinate.x}, ${self.coordinate.y}`);
             self.canvas = self.container.createElement('canvas');
             self.canvas.height = self.size.y;
             self.canvas.width  = self.size.x;
             self.ctx = self.canvas.getContext('2d');
             self.ctx.fillStyle = self.hitColor;
             self.canvas.style.transform = 'translate(' + self.coordinate.x + 'px, ' + self.coordinate.y + 'px)';
-            self.container.appendChild(self.canvas);
+            self.container.body.appendChild(self.canvas);
             resolve();
         });
     }
@@ -86,13 +88,14 @@ class Hole {
                         self.currPos = Math.round(A.height*Math.cos(Math.PI * delta / A.duration.raise));
                     } else {
                         // lingering
+                        // no change to currPos
 
                     }
 
                     // pick which sprite to use - base, smirk, or shock
                     if (self.isHit) {
                         // definitely use shocked if hit
-                        self.sprite = A.sprites.shock;
+                        self.sprite = A.sprites.hit;
                     } else if (true) {
                         // definitely use smirk if ...
                         self.sprite = A.sprites.smirk;
@@ -127,5 +130,19 @@ class Hole {
             A.hit();
         }
     }
-     
+    
+    start() {
+        // the parameter lambda refers to the average delay to next occupant
+        let self = this;
+        const holeLoop = () => {
+            let delay = Util.poisson(self.delay);
+            if (S.currentState === States.PLAYING) {   
+                setTimeout(() => {
+                    self.occupy(cast.getRandom())
+                        .then(() => holeLoop());
+                }, delay);
+            }
+        }
+        holeLoop();
+    } 
 }    

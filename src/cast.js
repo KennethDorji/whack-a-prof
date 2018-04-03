@@ -23,6 +23,8 @@ class Cast {
     }
 
     init(container) {
+        console.log('Cast.init()');
+        console.log(container);
         let self = this;
         return Promise.all(self.actors.map(A => A.init(container)));
     }
