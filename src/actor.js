@@ -54,7 +54,7 @@ class Actor {
             if (scale > 1) {
                 m.width = image.width / scale;
                 m.height = image.height / scale;
-                ctx.scale(scale, scale);
+                ctx.scale(1/scale, 1/scale);
             }
             ctx.drawImage(image, 0, 0);
             return m;
