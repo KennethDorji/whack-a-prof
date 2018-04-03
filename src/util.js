@@ -6,7 +6,14 @@ class Util {
     }
 
     static poisson(lambda) {
-        return 
+        const L = Math.exp(-lambda);
+        let k = 0;
+        let p = 1;
+        do {
+            k = k + 1;
+            p = p * Math.random();
+        } while (p > L);
+        return k - 1;
     }
 
     static loadImage(url) {

@@ -64,7 +64,9 @@ class Game extends Layer {
   }
 
   start() {
+      console.log('Game.start()');
+      S.currentState = States.PLAYING;
       let self = this;
-      self.holes.forEach(hole => hole.start());
+      self.holes.forEach(hole => hole.start(self.cast));
   }
 }

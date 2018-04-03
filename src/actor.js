@@ -22,9 +22,9 @@ class Actor {
         }
 
         this.duration = {
-            raise:  options.raise || 200,
-            linger: options.linger || 1000,
-            lower:  options.lower || 200
+            raise:  options.raise || 500,
+            linger: options.linger || 500,
+            lower:  options.lower || 300
         }
 
         this.imageUrl = {

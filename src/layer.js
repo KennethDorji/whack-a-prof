@@ -37,19 +37,19 @@ class Layer {
         this.innerDoc   = null;
         this.iframe     = null;
         this.pixelRatio = window.devicePixelRatio || 1;
+        this.width = document.body.clientWidth;
+        this.height = document.body.clientHeight;
         if (this.hasCanvas) {
             this.squareCanvas = options && options.squareCanvas ? true : false;
-            let width = document.body.clientWidth;
-            let height = document.body.clientHeight;
-            this.size = new Coord(width, height);
+            this.size = new Coord(this.width, this.height);
             this.offset = new Coord(0,0);
             if (this.squareCanvas) {
-                if (width > height) {
-                    this.offset.setTo(Math.floor((width - height) / 2), 0);
-                    this.size.setTo(height, height);
+                if (this.width > this.height) {
+                    this.offset.setTo(Math.floor((this.width - this.height) / 2), 0);
+                    this.size.setTo(this.height, this.height);
                 } else {
-                    this.offset.setTo(0, height - width);
-                    this.size.setTo(width, width);
+                    this.offset.setTo(0, this.height - this.width);
+                    this.size.setTo(this.width, this.width);
                 } 
             }
             console.log(`created ${this.size.x}x${this.size.y} canvas element at (${this.offset.x}, ${this.offset.y})`); 

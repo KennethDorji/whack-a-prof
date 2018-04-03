@@ -8,10 +8,10 @@
 class Hole {
     constructor(options) {
         this.game = options.game;
-        this.coordinate = options.coordinate;
-        this.size = options.size;
+        this.coordinate = options.coordinate || new Coord(0, 0);
+        this.size = options.size || new Coord(266, 266);
         this.hitColor = options.hitColor || "rgba(255,60,60,0.5)";
-        this.delay = options.delay || 1000;
+        this.delay = options.delay || 10000;
         this.currOccupant = null;
         this.nextOccupant = null;
     }
@@ -20,6 +20,7 @@ class Hole {
         var self = this;
         self.container = container;
         return new Promise((resolve, reject) => {
+            self.coordinate.scaleBy(self.game.width);
             console.log(`Hole.init(): loc: ${self.coordinate.x}, ${self.coordinate.y}`);
             self.canvas = self.container.createElement('canvas');
             self.canvas.height = self.size.y;
@@ -33,6 +34,7 @@ class Hole {
     }
 
     occupy(actor) {
+        console.log('Hole.occupy()');
         var self = this;
         return new Promise((resolve, reject) => {
             // if the hole is already occupied, queue up the next one else start a new one
@@ -41,13 +43,18 @@ class Hole {
             } else {
                 // start a new occupancy
                 self.currOccupant = actor;
-
-                var A, delta, raiseLimit, lingerLimit, lowerLimit;
+                self.nextOccupant = null;
+                let A = null;
+                let delta = 0;
+                let raiseLimit = 0;
+                let lingerLimit = 0;
+                let lowerLimit = 0;
 
                 const reset = () => {
+                    delta = 0;
                     A = self.currOccupant;
                     self.startTime = window.performance.now();
-                    self.currPos = self.lastPos = 1;
+                    self.currPos = self.lastPos = self.size.y;
                     self.isHit = false;
                     raiseLimit  = A.duration.raise;
                     lingerLimit = raiseLimit + A.duration.linger;
@@ -62,7 +69,19 @@ class Hole {
                 
                 const holeLoop = () => {
                     delta = window.performance.now() - self.startTime;
-                    if (delta > lowerLimit) { 
+                    
+                    // pick which sprite to use - base, smirk, or shock
+                    if (self.isHit) {
+                        // definitely use shocked if hit
+                        self.sprite = A.sprites.hit;
+                    } else if (true) {
+                        // definitely use smirk if ...
+                        self.sprite = A.sprites.base;
+                    } else {
+                        // pick randomly?
+                    }
+                    let height = self.sprite.height;
+                    if (delta > lowerLimit) {
                         // done with occupation 
                         //
                         if (self.isHit === false) { // beware javascript truthiness issues
@@ -78,36 +97,29 @@ class Hole {
                         } else {
                             // end occupation
                             self.currOccupant = null;
-                            resolve();
+                            self.nextOccupant = null;
+                            // clear existing
+                            self.ctx.clearRect(0, 0, self.size.x, self.size.y);
+                            return resolve();
                         }
                     } else if (delta > lingerLimit) { 
                         // lower back down
-                        self.currPos = -Math.round(A.height*Math.cos(Math.PI * (lingerLimit - delta) / A.duration.lower));
+                        self.currPos = self.size.y - Math.floor(self.size.y*Math.cos(Math.PI * (lingerLimit - delta) / (A.duration.lower*2)));
                     } else if (delta < A.duration.raise) { 
                         // still rising
-                        self.currPos = Math.round(A.height*Math.cos(Math.PI * delta / A.duration.raise));
+                        self.currPos = self.size.y - Math.floor(self.size.y*Math.sin(Math.PI * delta / (2*A.duration.raise)));
                     } else {
                         // lingering
                         // no change to currPos
 
                     }
-
-                    // pick which sprite to use - base, smirk, or shock
-                    if (self.isHit) {
-                        // definitely use shocked if hit
-                        self.sprite = A.sprites.hit;
-                    } else if (true) {
-                        // definitely use smirk if ...
-                        self.sprite = A.sprites.smirk;
-                    } else {
-                        // pick randomly?
-                    }
+                
 
                     // clear existing
                     self.ctx.clearRect(0, 0, self.size.x, self.size.y);
                     // draw sprite
                     self.ctx.drawImage(self.sprite, 0, self.currPos);
-
+                    //self.ctx.drawImage(self.sprite, 0, 0);
                     // have we been hit?  apply a color overlay
                     if (self.isHit) {
                         self.ctx.globalCompositeOperation = "source-atop";
@@ -131,18 +143,20 @@ class Hole {
         }
     }
     
-    start() {
+    start(cast) {
+        console.log("Hole.start()");
         // the parameter lambda refers to the average delay to next occupant
         let self = this;
-        const holeLoop = () => {
-            let delay = Util.poisson(self.delay);
+        const hLoop = () => {
+            let delay = Util.uniform(self.delay);
+            console.log(`delay: ${delay}`);
             if (S.currentState === States.PLAYING) {   
                 setTimeout(() => {
-                    self.occupy(cast.getRandom())
-                        .then(() => holeLoop());
+                    let A = cast.getRandom();
+                    self.occupy(A).then(() => hLoop());
                 }, delay);
             }
         }
-        holeLoop();
+        hLoop();
     } 
 }    

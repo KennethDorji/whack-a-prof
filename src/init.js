@@ -110,5 +110,7 @@ var init = () => {
     // menu will go here instead of mallet
     .then(() => L.mallet.fadeIn())
     .then(() => L.mallet.enable())
+    .then(() => L.game.fadeIn())
+    .then(() => L.game.start())
     .catch(reason => doError(reason)); 
 }
