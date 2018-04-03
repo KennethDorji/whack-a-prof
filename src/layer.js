@@ -45,13 +45,14 @@ class Layer {
             this.offset = new Coord(0,0);
             if (this.squareCanvas) {
                 if (width > height) {
-                    this.offset.setTo(this.pixelRatio * Math.floor((width - height) / 2), 0);
+                    this.offset.setTo(Math.floor((width - height) / 2), 0);
                     this.size.setTo(height, height);
                 } else {
                     this.offset.setTo(0, height - width);
                     this.size.setTo(width, width);
                 } 
             }
+            console.log(`created ${this.size.x}x${this.size.y} canvas element at (${this.offset.x}, ${this.offset.y})`); 
         }
     }
     
