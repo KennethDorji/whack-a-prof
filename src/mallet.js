@@ -41,11 +41,11 @@ class Mallet extends Layer {
         this.currTarget   = new Coord(0, 0);
         this.nextTarget   = new Coord(0, 0);
         this.homeTarget   = new Coord(this.size.x, 0);
-        this.bias         = new Coord(-75, -250);//.scaleBy(this.pixelRatio);
+        this.bias         = new Coord(-125, -250).scaleBy(1/this.pixelRatio);
         this.startTime    = null;
         this.swooshSound  = null;
         this.hitSounds    = [];
-        this.frames       = Util.getProperty(options, 'frames',  8);
+        this.frames       = Util.getProperty(options, 'frames',  11);
         this.speed        = Util.getProperty(options, 'speed',   300);
         this.donePos      = Util.getProperty(options, 'done',    1.5);
         this.initPos      = Util.getProperty(options, 'initial', 0.5);
@@ -59,7 +59,7 @@ class Mallet extends Layer {
                 var frames = self.frames;
                 for (i = 0; i < frames; i++) {
                     // scale and rotate to desired position in swing
-                    let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2)) / self.pixelRatio;
+                    let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2))/self.pixelRatio;
                     let rotateFactor = -Math.PI * (i + 3) / (2 * frames);
                     var m = self.innerDoc.createElement('canvas');
                     let height = Math.ceil(image.height / 2);
@@ -107,8 +107,8 @@ class Mallet extends Layer {
     }
 
     swing(target) {
-        console.log(`swing: ${target.x}, ${target.y}`);
         var self = this;
+        console.log(`swing: ${target.x - self.offset.x}, ${target.y - self.offset.y}`);
         return new Promise((resolve, reject) => {
             if (self.startTime) { // a swing is already in progress
                 this.nextTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
@@ -117,12 +117,12 @@ class Mallet extends Layer {
                 self.startTime = window.performance.now();  // reset the swing start time
                 self.currPos = self.lastPos = -1;
                 this.currTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
-                var index = 0;
-                var pos = new Coord(self.homeTarget.x, self.homeTarget.y);
-                var x = self.homeTarget.x;
-                var y = self.homeTarget.y;
-                var progress = 1;
-                var delta = 0;
+                let index = 0;
+                let pos = new Coord(self.homeTarget.x, self.homeTarget.y);
+                let x = self.homeTarget.x;
+                let y = self.homeTarget.y;
+                let progress = 1;
+                let delta = 0;
 
                 // this is the animation loop for the mallet swing
                 // if there is a queued next swing, it will continue to draw that one too
