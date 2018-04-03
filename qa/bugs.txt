@@ -1,2 +1,0 @@
-- Mallet doesn't come down in the position where the player clicks
-- Canvas seems to be offset to the left side of the browser
