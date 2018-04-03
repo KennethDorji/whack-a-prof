@@ -9,25 +9,27 @@
 
 class Cast {
     constructor(actorStats = []) {
-        this.actors = [];
-        this.totalLikelihood = 0;
+        let self = this;
+        self.actors = [];
+        self.pool = [];
+        self.totalLikelihood = 0;
         actorStats.forEach(A => {
-            console.log(A);
-            this.totalLikelihood += A.likelihood;
-            this.actors.push(new Actor(A));
+            self.totalLikelihood += A.likelihood;
+            self.actors.push(new Actor(A));
         });
-
+        self.actors.forEach(A => {
+            self.pool.push(...Array(A.likelihood).fill(A));
+        });
     }
 
     init(container) {
         let self = this;
-        console.log(container);
         return Promise.all(self.actors.map(A => A.init(container)));
     }
 
     getRandom() {
-
-
+        let self = this;
+        return self.pool[Util.uniform(self.pool.length)];
     }
 
 }

@@ -12,6 +12,7 @@ class Actor {
         console.log(options);
         this.id = options.id;
         
+        this.sprites = {};
 
         this.likelihood = options.likelihood || 1;
        

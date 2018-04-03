@@ -36,7 +36,7 @@ class Game extends Layer {
     let self = this;
     return new Promise((resolve, reject) => {
         super.init().then(() => {
-            return self.cast.init(self.container);
+            return self.cast.init(self.innerDoc);
                 
         }).then(resolve, reason => reject(reason));
     });
