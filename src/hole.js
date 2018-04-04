@@ -134,7 +134,9 @@ class Hole {
                         self.ctx.fillRect(0, 0, self.size, self.size);
                         self.ctx.globalCompositeOperation = "source-over";
                     }
-                    window.requestAnimationFrame(holeLoop);
+                    if (S.currentState === States.PLAYING) {
+                        window.requestAnimationFrame(holeLoop);
+                    }
                 }
 
                 holeLoop();

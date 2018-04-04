@@ -189,7 +189,7 @@ class Mallet extends Layer {
                     self.swing(mousePosition);
                     break;
                 case 27: // escape
-                    //doPause();
+                    L.game.pause();
                     break;
                 default:
                     break;

@@ -15,7 +15,8 @@ iframe { margin:0px; padding:0px; overflow:hidden;
     100% { opacity:1; }
 }
 
-#error  { background-color:rgba(0,0,0,0.8); z-index:999;}
+#error  { color:#EEEEDD; background-color:rgba(0,0,0,0.8); z-index:999;}
+#loading{ color:#EEEEDD; }
 #mallet { z-index:998; }
 #menu   { z-index:997; }
 #game   { z-index:995; }

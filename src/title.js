@@ -35,7 +35,7 @@ class Title extends Layer {
                 dashLen = 500,
                 dashOffset = dashLen,
                 dashSpeed = 40, 
-                x = 100, 
+                x = 100 * L.overallScale, 
                 i = 0;
             var loop = () => {
                 self.ctx.setLineDash(

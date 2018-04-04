@@ -10,7 +10,7 @@
 "use strict";
 
 const States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3, 
-                            "GAMEOVER":4, "WINNER":5, "HELP":6, "QUIT":7});
+                            "GAMEOVER":4, "WINNER":5, "HELP":6, "QUIT":7, "PAUSED":8});
 
 const TransitionDelay = 250;
 const WatchInterval   = 30;
@@ -46,10 +46,10 @@ var L = {
  * an element having fading="fade-in" will have its opacity increased to 100%
  * an element having class="hidden" will not be displayed.
  */
-var fadeFrom = (id) => {
+const fadeFrom = (id) => {
     console.log(`fadeFrom(${id})`);
     return new Promise((resolve, reject) => {
-        var element = document.getElementById(id);
+        let element = document.getElementById(id);
         element.setAttribute('fading', 'fade-out');
         setTimeout(() => {
             element.classList.add('hidden');
@@ -59,10 +59,10 @@ var fadeFrom = (id) => {
     });
 }
 
-var fadeTo = (id) => {
+const fadeTo = (id) => {
     console.log(`fadeTo(${id})`);
     return new Promise((resolve, reject) => {
-        var element = document.getElementById(id);
+        let element = document.getElementById(id);
         element.setAttribute('fading', 'fade-in');
         element.classList.remove('hidden');
         setTimeout(() => {
@@ -72,13 +72,12 @@ var fadeTo = (id) => {
     });
 }
 
-var doError = (message) => {
+const doError = (message) => {
     console.log(`doError(${message})`);
-    var eframe = document.getElementById("error");
-    var element  = eframe.contentDocument || eframe.contentWindow.document;
-    var err = element.createElement('p');
+    let eframe = document.getElementById("error");
+    let err = document.createElement('p');
     err.innerHTML = message;
-    element.getElementById('cause').appendChild(err);
+    document.getElementById('error_cause').appendChild(err);
     eframe.classList.remove('hidden');
     throw "Fatal, cannot continue.";
 }
@@ -87,7 +86,7 @@ var doError = (message) => {
  * This is the javascript entrypoint from index.html body.onload()
  *
  */
-var init = () => {
+const init = () => {
     console.log("init()");
     document.ontouchmove = (e) => {
         e.preventDefault();
