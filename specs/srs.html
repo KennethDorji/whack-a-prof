@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Reference to Google Fonts, Bootstrap, local CSS file -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            padding-top: 50px;
+            background: #536976; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #292E49, #536976); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #292E49, #536976); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        #myBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 20px; /* Place the button at the bottom of the page */
+            right: 30px; /* Place the button 30px from the right */
+            z-index: 99; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: red; /* Set a background color */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 15px; /* Some padding */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 18px; /* Increase font size */
+        }
+
+        #myBtn:hover {
+            background-color: #555; /* Add a dark-grey background on hover */
+        }
+
+        /*In Footer Section*/
+        #list_of_names {
+            list-style-type: none;
+        }
+    </style>
+
+    <script>
+        // When the user scrolls down 1500px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 1500 || document.documentElement.scrollTop > 1500) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+
+    <!--Scripts used for Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+
+    <title>SRS - Group 2</title>
+</head>
+
+<body>
+<!--Heading-->
+<div class="container jumbotron text-center">
+    <h1>Software Requirements Specification</h1>
+    <h3>for CISC 3140 Whack-A-Prof</h3>
+</div>
+
+<!--Table of Contents-->
+<!--Note: "&emsp;" is a tab space in HTML-->
+<div class="container jumbotron">
+    <h1 class="text-center">Table of Contents</h1>
+    <hr>
+    <h2><a href="#revision_history">Revision History</a></h2>
+    <hr>
+    <!--Section 1-->
+    <h3><a href="#section_1">1. Introduction</a></h3>
+    <h5>
+        <a href="#section_1_1">1.1&emsp; Purpose</a><br>
+        <a href="#section_1_2">1.2&emsp;Document Conventions</a><br>
+        <a href="#section_1_3">1.3&emsp;Intended Audience and Reading Suggestions</a><br>
+        <a href="#section_1_4">1.4&emsp;Project Scope</a><br>
+        <a href="#section_1_5">1.5&emsp;References</a>
+    </h5>
+    <hr>
+    <!--Section 2-->
+    <h3><a href="#section_2">2. Overall Description</a></h3>
+    <h5>
+        <a href="#section_2_1">2.1&emsp; Product Perspective</a><br>
+        <a href="#section_2_2">2.2&emsp;Product Functions</a><br>
+        <a href="#section_2_3">2.3&emsp;User Classes and Characteristics</a><br>
+        <a href="#section_2_4">2.4&emsp;Operating Environment</a><br>
+        <a href="#section_2_5">2.5&emsp;Design and Implementation Constraints</a><br>
+        <a href="#section_2_6">2.6&emsp;User Documentation</a><br>
+        <a href="#section_2_7">2.7&emsp;Assumptions and Dependencies</a>
+    </h5>
+    <hr>
+    <!--Section 3-->
+    <h3><a href="#section_3">3. External Interface Requirements</a></h3>
+    <h5>
+        <a href="#section_3_1">3.1&emsp; User Interfaces</a><br>
+        <a href="#section_3_2">3.2&emsp;Hardware Interfaces</a><br>
+        <a href="#section_3_3">3.3&emsp;Software Interfaces</a><br>
+        <a href="#section_3_4">3.4&emsp;Communications Interfaces</a>
+    </h5>
+    <hr>
+    <!--Section 4-->
+    <h3><a href="#section_4">4. System Features</a></h3>
+    <h5>
+        <a href="#section_4_1">4.1&emsp; System Feature 1</a><br>
+        <a href="#section_4_2">4.2&emsp;System Feature 2 (and so on)</a><br>
+
+    </h5>
+    <hr>
+    <!--Section 5-->
+    <h3><a href="#section_5">5. Other Nonfunctional Requirements</a></h3>
+    <h5>
+        <a href="#section_5_1">5.1&emsp; Performance Requirements</a><br>
+        <a href="#section_5_2">5.2&emsp;Safety Requirements</a><br>
+        <a href="#section_5_3">5.3&emsp;Security Requirements</a><br>
+        <a href="#section_5_4">5.4&emsp;Software Quality Attributes</a><br>
+        <a href="#section_5_5">5.5&emsp;Business Rules</a>
+    </h5>
+    <hr>
+    <!--Section 6-->
+    <h3><a href="#section_6">6. Other Requirements</a></h3>
+    <hr>
+    <h3><a href="#appendix_a">Appendix A: Glossary</a></h3>
+    <hr>
+    <h3><a href="#appendix_b">Appendix B: Analysis Models</a></h3>
+    <hr>
+    <h3><a href="#appendix_c">Appendix C: To Be Determined List</a></h3>
+    <hr>
+</div>
+
+<!--Revision History Table-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="revision_history">Revision History</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Reason For Changes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Jacob Segarra</th>
+            <td>3/8/18</td>
+            <td>Added content for various parts of section <a href="#section_1">1</a>, <a href="#section_2">2</a>, and
+                <a href="#section_3">3</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Ruslan Radetskiy</th>
+            <td>3/18/18</td>
+            <td>Added section <a href="#section_2_2">2.2</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Arsenii Lyzenko</th>
+            <td>3/20/18</td>
+            <td>Added content for various parts of section <a href="#section_2">2</a> and <a href="#section_3">3</a>
+                with minor fixes.
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Ruslan Radetskiy</th>
+            <td>3/27/18</td>
+            <td>Added section <a href="#section_2_4">2.4</a> and edited section <a href="#section_2_5">2.5</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Aleksandra Churnosova</th>
+            <td>3/27/18</td>
+            <td>Added sections <a href="#section_5_2">5.2</a> and <a href="#section_5_4">5.4</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Arsenii Lyzenko</th>
+            <td>3/27/18</td>
+            <td>Edited section <a href="#section_2_3">2.3</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Jacob Segarra</th>
+            <td>3/27/18</td>
+            <td>Completed all empty subsections of section <a href="#section_1">1</a>. Added a reference to describe the
+                gameplay of Whack-A-Prof. Cleaned up some unnecessary text.
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Aleksandra Churnosova</th>
+            <td>4/04/18</td>
+            <td>Added section <a href="#section_3_1">3.1</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--Section 1 - Introduction-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="section_1">Introduction</h1>
+    <h4 id="section_1_1">1.1&emsp;Purpose</h4>
+    <p class="container">
+        The purpose of this document is to provide a description of the CISC 3140 group project,
+        the Whack-A-Prof game. This document will cover the games features, where and how it will run, an overview
+        of the game window, and desired graphics for the game.
+    </p><br>
+    <h4 id="section_1_2">1.2&emsp;Document Conventions</h4>
+    <p class="container">
+        This document may contain terms that may be unfamiliar. Refer to the glossary (Appendix A) for terms and their
+        respective definitions.
+    </p><br>
+    <h4 id="section_1_3">1.3&emsp;Intended Audience and Reading Suggestions</h4>
+    <p class="container">
+        This SRS is intended for all members of Group 2. Members of the graphics team may want to refer to section 3 to
+        view how the game window should look.
+    </p><br>
+    <h4 id="section_1_4">1.4&emsp;Project Scope</h4>
+    <p class="container">
+        The Whack-A-Prof game is a browser based game that has the play style similar to that of Whack-A-Mole. The game
+        play of Whack-A-Mole is described by the Wikipedia page in <a href="#section_1_5">References</a>.
+    </p><br>
+    <h4 id="section_1_5">1.5&emsp;References</h4>
+    <p class="container">
+        <a href="https://en.wikipedia.org/wiki/Whack-A-Mole">Whack-A-Mole gameplay</a>
+    </p>
+</div>
+
+<!--Section 2 - Overall Description-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="section_2">Overall Description</h1>
+    <h4 id="section_2_1">2.1&emsp;Product Perspective</h4>
+    <p class="container">
+        The Whack-A-Prof game is the self-contained product.
+    </p><br>
+    <h4 id="section_2_2">2.2&emsp;Product Functions</h4>
+    <ul>
+        <li>Animation for hammer when it is going down to hit something and then coming back up.</li>
+        <li>Animation for any target that is hit (Blood splatter for the trustees).</li>
+        <li>8 holes for targets to come out of.</li>
+        <li>A button for the user to start the game.</li>
+        <li>A key dedicated to pausing the game and another key for restarting.</li>
+        <li>Keep track of user’s score.</li>
+    </ul>
+    <br>
+    <h4 id="section_2_3">2.3&emsp;User Classes and Characteristics</h4>
+    <p class="container">
+        The Whack-A-Prof game will use Player class only. There will not be Administrator class.
+    </p><br>
+    <h4 id="section_2_4">2.4&emsp;Operating Environment</h4>
+    <p class="container">
+        Minimum Versions:
+    <ul>
+        <li><b>Chrome:</b> 65.0.3325.181 (Windows, Mac, Linux), 65.0.3325.152(iOS), 65.0.3325.109(Android)</li>
+        <li><b>FireFox:</b> 58.0</li>
+        <li><b>Internet Explorer:</b> 11(Windows 7 and up)</li>
+        <li><b>Safari:</b> 11.0</li>
+    </ul>
+    </p><br>
+    <h4 id="section_2_5">2.5&emsp;Design and Implementation Constraints</h4>
+    <p class="container">
+        The Whack-A-Prof game should run in a internet browser (i.e. - Google Chrome, Mozilla Firefox, etc.). The game
+        is to
+        be coded in Javascript, the animations to be made in CSS, and the window should be built in HTML5 canvas. Sounds
+        will uses HTML5 audio. Screen size should be 800 by 600 pixels.
+    </p>
+    <h4 id="section_2_6">2.6&emsp;User Documentation</h4>
+    <h4 id="section_2_7">2.7&emsp;Assumptions and Dependencies</h4>
+</div>
+
+<!--Section 3 - External Interface Requirements-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="section_3">External Interface Requirements</h1>
+    <h4 id="section_3_1">3.1&emsp;User Interfaces</h4>
+    <p class="container">
+        The game over screen should have the "Final score" sign as the first line with the
+        actual score below it. Below the score number should be the breakdown of the points earned. Each next line below
+        the score should have the image of the character with number of points it's worth to the
+        right of the image followed by "X" (multiplied by) the number of times the character was hit. Do not
+        calculate.<br>
+        List the characters from highest worth to lowest.<br><br>
+        <b>Example:</b>
+    </p>
+    <p class="text-center">
+        Final Score<br>
+        85<br>
+        the image of&emsp;Trustee&emsp;10 X 5<br>
+        the image of&emsp;Professor&emsp;5 X 7
+    </p>
+    <h4 id="section_3_2">3.2&emsp;Hardware Interfaces</h4>
+    <p class="container">
+        The Whack-A-Prof game is going to run in a web browser so it should be able to run on most modern hardware
+        devices including desktops, laptops, and mobile devices. All user input should come from mouse clicks, keyboard
+        strokes, or screen touches (only on hardware where this applies). There is no other special hardware
+        requirements to run the game.
+    </p><br>
+    <h4 id="section_3_3">3.3&emsp;Software Interfaces</h4>
+    <p class="container">
+        The game will run on a user’s local machine in their desired web browser. Most common browsers include Google
+        Chrome, Mozilla Firefox, and Safari.
+    </p><br>
+    <h4 id="section_3_4">3.4&emsp;Communications Interfaces</h4>
+</div>
+
+<!--Section 4 - System Features-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="section_4">System Features</h1>
+    <h4 id="section_4_1">4.1&emsp; System Feature 1</h4>
+    <h4 id="section_4_2">4.2&emsp;System Feature 2 (and so on)</h4>
+</div>
+
+<!--Section 5 - Other Nonfunctional Requirements-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="section_5">Other Nonfunctional Requirements</h1>
+    <h4 id="section_5_1">5.1&emsp; Performance Requirements</h4>
+    <h4 id="section_5_2">5.2&emsp;Safety Requirements</h4>
+    <p class="container">
+        The game should warn the user to take a break after every two hours of continuous playing to prevent eye strain.
+    </p>
+    <h4 id="section_5_3">5.3&emsp;Security Requirements</h4>
+    <h4 id="section_5_4">5.4&emsp;Software Quality Attributes</h4>
+    <p class="container">
+        <b>Maintainability</b> - All code should be fully documented. Each function should be commented with
+        pre-conditions and post-conditions. All program files should include comments concerning authorship and date of
+        last change.<br>
+        <b>Reliability</b> - The game should not crash, unless as the result of an operating system error.
+    </p>
+    <h4 id="section_5_5">5.5&emsp;Business Rules</h4>
+</div>
+
+<!--Section 6 - Other Requirements-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="section_6">Other Requirements</h1>
+    <div class="container">
+        <b>Point System</b><br>
+        <ul>
+            <li>Trustees = 10</li>
+            <li>Professors = 5</li>
+            <li>Department Head = 8</li>
+        </ul>
+    </div>
+</div>
+
+<!--Appendix A - Glossary-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="appendix_a">Appendix A: Glossary</h1>
+</div>
+
+<!--Appendix B - Analysis Models-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="appendix_b">Appendix B: Analysis Models</h1>
+</div>
+
+<!--Appendix C - To Be Determined List-->
+<div class="container jumbotron">
+    <h1 class="text-center" id="appendix_c">Appendix C: To Be Determined List</h1>
+</div>
+
+<!--Button that appears once the user scrolls 1500px down the screen-->
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+<!--Bottom of Page-->
+<footer>
+    <div class="container jumbotron text-center">
+        <h3>
+            Version 1.0 approved<br><br>
+            <div class="container">
+                Prepared by Group 2 Specifications:<br>
+                <ul id="list_of_names">
+                    <li>Aleksandra Churnosova</li>
+                    <li>Arsenii Lyzenko</li>
+                    <li>Jacob Segarra</li>
+                    <li>Mohammad Haque</li>
+                    <li>Ruslan Radetskiy</li>
+                </ul>
+                <br></div>
+            CISC 3140 - Group 2<br>
+            Thursday, March 8, 2018
+        </h3>
+    </div>
+</footer>
+
+<!--Core Scripts used for Bootstrap-->
+<script src="bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
