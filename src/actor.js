@@ -44,23 +44,29 @@ class Actor {
     }
 
     generateSprites() {
+        // to fix an Android rendering bug, instead of each sprite
+        // being its own canvas, we draw each sprite onto one canvas with a 
+        // predefined offset for each.
         let self = this;
-        const generateOne = (image) => {
-            let m = self.container.createElement('canvas');
-            let ctx = m.getContext('2d');
-            let scale = window.devicePixelRatio;
-            m.classList.add('hidden');
-            m.width = image.width * L.overallScale;
-            m.height = image.height * L.overallScale;
+        let m = self.container.createElement('canvas');
+        let ctx = m.getContext('2d');
+        m.width = Math.ceil(200 * 2 * L.overallScale) + 10;
+        m.height = Math.ceil(200 * 2 * L.overallScale) + 10;
+        m.classList.add('hidden');
+        m.style['image-rendering'] = 'pixelated';
+        self.container.body.appendChild(m);
+        self.sprites = m;
+        const generateOne = (image, dx, dy) => {
+            ctx.save();
             ctx.scale(L.overallScale, L.overallScale);
+            ctx.translate(dx, dy);
             ctx.drawImage(image, 0, 0);
-            self.container.body.appendChild(m);
-            return m;
+            ctx.restore();
         }
         return Promise.all([
-            Util.loadImage(self.imageUrl.base).then(image => self.sprites.base = generateOne(image)),
-            Util.loadImage(self.imageUrl.hit).then(image => self.sprites.hit = generateOne(image)),
-            Util.loadImage(self.imageUrl.smirk).then(image => self.sprites.smirk = generateOne(image)),
+            Util.loadImage(self.imageUrl.base).then(image => generateOne(image, 0, 0)),
+            Util.loadImage(self.imageUrl.hit).then(image => generateOne(image, 210, 0)),
+            Util.loadImage(self.imageUrl.smirk).then(image => generateOne(image, 0, 210)),
             //Util.loadImage(self.imageUrl.shock).then(image => self.sprites.shock = generateOne(image))
         ]);
                 

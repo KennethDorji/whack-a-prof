@@ -9,7 +9,7 @@ class Hole {
     constructor(options) {
         this.game = options.game;
         this.coordinate = options.coordinate || new Coord(0, 0);
-        this.size = options.size || 200 * L.overallScale;
+        this.size = options.size || Math.round(200 * L.overallScale);
         this.hitColor = options.hitColor || "rgba(255,60,60,0.5)";
         this.delay = options.delay || 10000;
         this.currOccupant = null;
@@ -49,6 +49,7 @@ class Hole {
 
             self.canvas.style.transform = `translate(${cssPos.x}px, ${cssPos.y}px) scale(${cssScale})`;
             self.canvas.style['transform-origin'] = '0 0';
+            self.canvas.style['image-rendering'] = 'pixelated';
             self.container.body.appendChild(self.canvas);
             resolve();
         });
@@ -97,15 +98,17 @@ class Hole {
                 
                 const holeLoop = () => {
                     delta = window.performance.now() - self.startTime;
-                    let sprite = A.sprites.base; 
+                    let spriteOfs = new Coord(0,0);
                     // pick which sprite to use - base, smirk, or shock
                     if (self.isHit) {
                         // definitely use shocked if hit
-                        sprite = A.sprites.hit;
+                        spriteOfs.setTo(210, 0).scaleBy(L.overallScale);;
+                        //sprite = A.sprites.hit;
                         //sprite = A.sprites.base;
                     } else if (self.isAmused) {
                         // or use smirk if amused
-                        sprite = A.sprites.smirk;
+                        //sprite = A.sprites.smirk;
+                        spriteOfs.setTo(0, 210).scaleBy(L.overallScale);
                     } else { 
                         // or just use base
                         //self.sprite = A.sprites.base;
@@ -150,7 +153,7 @@ class Hole {
                     // clear existing
                     self.clear();
                     // draw sprite 
-                    self.ctx.drawImage(sprite, 0, self.currPos);
+                    self.ctx.drawImage(A.sprites, spriteOfs.x, spriteOfs.y, self.size, self.size, 0, self.currPos, self.size, self.size);
                     // have we been hit?  apply a color overlay
                     if (self.isHit) {
                         self.ctx.globalCompositeOperation = "source-atop";
