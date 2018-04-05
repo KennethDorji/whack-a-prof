@@ -60,8 +60,17 @@ class Layer {
         let self = this;
         let width = document.body.clientWidth;
         let height = document.body.clientHeight; 
+
         return new Promise((resolve, reject) => {
             self.canvas = self.innerDoc.createElement('canvas');
+            
+            if (self.pixelRatio !== 1) {
+                self.canvas.style.width = `${width}px`;
+                self.canvas.style.height = `${height}px`;
+                width = width * self.pixelRatio;
+                height = height * self.pixelRatio;
+            }
+                
             if (self.squareCanvas) {
                 if (width > height) { // landscape
                     self.canvas.width = height;

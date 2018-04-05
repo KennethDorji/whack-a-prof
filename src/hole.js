@@ -42,6 +42,11 @@ class Hole {
             self.canvas.width  = self.size;
             self.ctx = self.canvas.getContext('2d');
             self.ctx.fillStyle = self.hitColor;
+            if (window.devicePixelRatio !== 1) {
+                let scaled = Math.round(self.size / window.devicePixelRatio);
+                self.canvas.style.width = `${scaled}px`;
+                self.canvas.style.height = `${scaled}px`;
+            }
             self.canvas.style.transform = 'translate(' + self.coordinate.x + 'px, ' + self.coordinate.y + 'px)';
             self.container.body.appendChild(self.canvas);
             resolve();

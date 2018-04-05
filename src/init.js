@@ -97,7 +97,7 @@ const init = () => {
     //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
     document.ontouchmove = (e) => { e.preventDefault(); }
 
-    L.trueSize = Math.min(document.body.clientWidth, document.body.clientHeight);
+    L.trueSize = window.devicePixelRatio * Math.min(document.body.clientWidth, document.body.clientHeight);
     L.overallScale = L.trueSize / 960;
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
