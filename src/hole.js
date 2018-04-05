@@ -50,7 +50,7 @@ class Hole {
             }
             cssPos.offsetBy(offset);
 
-            self.canvas.style.transform = `scale(${cssScale}) translate(${cssPos.x}px, ${cssPos.y}px)`;
+            self.canvas.style.transform = `translate(${cssPos.x}px, ${cssPos.y}px) scale(${cssScale})`;
             self.canvas.style['transform-origin'] = '0 0';
             self.container.body.appendChild(self.canvas);
             resolve();

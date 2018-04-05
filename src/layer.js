@@ -83,7 +83,8 @@ class Layer {
             self.height = height;    
             self.canvas.width = width;
             self.canvas.height = height;
-            self.canvas.style.transform = `scale(${cssScale}) translate(${self.offset.x}px, ${self.offset.y}px)`;
+            self.canvas.style.transform = `translate(${self.offset.x}px, ${self.offset.y}px) scale(${cssScale})`;
+            self.canvas.style['transform-origin'] = '0px 0px 0px';
             self.ctx = self.canvas.getContext("2d");
             self.innerDoc.body.appendChild(self.canvas);
             resolve();
