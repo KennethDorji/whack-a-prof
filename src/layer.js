@@ -73,17 +73,17 @@ class Layer {
             }
             if (self.pixelRatio !== 1) {
                 
-                self.canvas.style.width = `${width}px`;
-                self.canvas.style.height = `${height}px`;
+                //self.canvas.style.width = `${width}px`;
+                //self.canvas.style.height = `${height}px`;
                 width = width * self.pixelRatio;
                 height = height * self.pixelRatio;
             }
+            let cssScale = 1 / self.pixelRatio;
             self.width = width;
             self.height = height;    
-	    self.canvas.width = width;
-	    self.canvas.height = height;
-            self.canvas.style.transform = `translate(${self.offset.x}px, ${self.offset.y}px)`;
-            self.canvas.classList.add('bordered');
+            self.canvas.width = width;
+            self.canvas.height = height;
+            self.canvas.style.transform = `scale(${cssScale}) translate(${self.offset.x}px, ${self.offset.y}px)`;
             self.ctx = self.canvas.getContext("2d");
             self.innerDoc.body.appendChild(self.canvas);
             resolve();
@@ -124,6 +124,7 @@ class Layer {
             if (self.style) {
                 self.iframe.setAttribute("style", self.style);
             }
+            self.iframe.classList.add('accelerated');
             self.iframe.onload = () => {
                 self.innerDoc = self.iframe.contentDocument || self.iframe.contentWindow.document;
                 if (self.hasCanvas) {

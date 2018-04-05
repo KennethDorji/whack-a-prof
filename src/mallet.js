@@ -178,14 +178,19 @@ class Mallet extends Layer {
             self.swing(new Coord(e.clientX, e.clientY));
         };
         self.canvas.addEventListener('mousedown', swingHandler, true); 
-        //self.canvas.addEventListener('touchstart', swingHandler, true);
 
         self.canvas.addEventListener('mousemove', (e) => {
             mousePosition.setTo(e.clientX, e.clientY);
-        }, true);    
+        }, true);  
 
-        window.addEventListener('keydown', (e) => {
-            e.preventDefault();
+        self.canvas.setAttribute('tabindex', 0);
+
+        self.canvas.addEventListener('mouseover', (e) => {
+            self.canvas.focus();
+        });
+
+        self.canvas.addEventListener('keydown', (e) => {
+            console.log(`key hit: ${e.keyCode}`);
             switch (e.keyCode) {
                 case 32: // spacebar
                     self.swing(mousePosition);
@@ -197,6 +202,7 @@ class Mallet extends Layer {
                     break;
             }
         }, true);
+        self.canvas.focus();
     }
 
     disable() {
