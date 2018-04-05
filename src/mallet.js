@@ -155,7 +155,7 @@ class Mallet extends Layer {
                         self.hitSound.play();
                         self.hitTime = window.performance.now();
                         if (self.callback) {
-                            self.callback(self.currTarget.x, self.currTarget.y);
+                            self.callback(self.currTarget);
                         }
                     }
                     self.ctx.drawImage(self.sprites[index], x, y);

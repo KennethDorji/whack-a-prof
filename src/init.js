@@ -117,7 +117,7 @@ const init = () => {
     .then(() => L.title.fadeOut())
     // menu will go here instead of mallet
     .then(() => L.mallet.fadeIn())
-    .then(() => L.mallet.enable())
+    .then(() => L.mallet.enable(loc => L.game.checkHit(loc)))
     .then(() => L.game.fadeIn())
     .then(() => L.game.start())
     .catch(reason => doError(reason)); 

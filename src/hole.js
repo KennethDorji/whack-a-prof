@@ -30,7 +30,13 @@ class Hole {
             );
 
             self.coordinate.scaleBy(dim).offsetBy(offset);
-            console.log(`Hole.init(): size: ${self.size} ofs: ${offset.x}, ${offset.y} loc: ${self.coordinate.x}, ${self.coordinate.y}`);
+
+            // "hit center" is biased 2/3rd of the way down
+            self.hitCenter = new Coord(
+                Math.round(self.coordinate.x - offset.x + (self.size / 2)),
+                Math.round(self.coordinate.y - offset.y + (2*self.size/3))
+            );
+            console.log(`Hole.init(): size: ${self.size} ofs: ${offset.x}, ${offset.y} loc: ${self.coordinate.x}, ${self.coordinate.y} hit: ${self.hitCenter.x}, ${self.hitCenter.y}`);
             self.canvas = self.container.createElement('canvas');
             self.canvas.height = self.size;
             self.canvas.width  = self.size;
@@ -59,11 +65,14 @@ class Hole {
                 let lowerLimit = 0;
 
                 const reset = () => {
+                    // clear existing
+                    self.ctx.clearRect(0, 0, self.size, self.size);
                     delta = 0;
                     A = self.currOccupant;
                     self.startTime = window.performance.now();
                     self.currPos = self.lastPos = self.size.y;
                     self.isHit = false;
+                    self.isAmused = false;
                     raiseLimit  = A.duration.raise;
                     lingerLimit = raiseLimit + A.duration.linger;
                     lowerLimit  = lingerLimit + A.duration.lower;
@@ -77,18 +86,23 @@ class Hole {
                 
                 const holeLoop = () => {
                     delta = window.performance.now() - self.startTime;
-                    
+                    self.ctx.beginPath();
+                    self.ctx.closePath();
+                    let sprite = A.sprites.base; 
                     // pick which sprite to use - base, smirk, or shock
                     if (self.isHit) {
                         // definitely use shocked if hit
-                        self.sprite = A.sprites.hit;
-                    } else if (true) {
-                        // definitely use smirk if ...
-                        self.sprite = A.sprites.base;
-                    } else {
-                        // pick randomly?
+                        sprite = A.sprites.hit;
+                        //sprite = A.sprites.base;
+                    } else if (self.isAmused) {
+                        // or use smirk if amused
+                        sprite = A.sprites.smirk;
+                    } else { 
+                        // or just use base
+                        //self.sprite = A.sprites.base;
+                        
                     }
-                    let height = self.sprite.height;
+                    let height = 200;
                     if (delta > lowerLimit) {
                         // done with occupation 
                         //
@@ -125,9 +139,8 @@ class Hole {
 
                     // clear existing
                     self.ctx.clearRect(0, 0, self.size, self.size);
-                    // draw sprite
-                    self.ctx.drawImage(self.sprite, 0, self.currPos);
-                    //self.ctx.drawImage(self.sprite, 0, 0);
+                    // draw sprite 
+                    self.ctx.drawImage(sprite, 0, self.currPos);
                     // have we been hit?  apply a color overlay
                     if (self.isHit) {
                         self.ctx.globalCompositeOperation = "source-atop";
@@ -145,14 +158,30 @@ class Hole {
     }
 
     hit() {
+        let self = this;
         if (self.currOccupant) {
             self.isHit = true;
-            var A = self.currOccupant; // occupant may change before we can calc score
+            let A = self.currOccupant; // occupant may change before we can calc score
             // raise score, etc
-            A.hit();
+            S.currentScore = A.hit(S.currentScore);
+            console.log(`Hit ${A.id}`);
+            return true;
         }
+        return false;
     }
-    
+   
+    amuse() {
+        let self = this;
+        self.isAmused = true;
+        setTimeout(() => self.isAmused = false, 1000);
+    } 
+
+    shock() {
+        let self = this;
+        self.isShocked = true;
+        setTimeout(() => self.isShocked = false, 1000);
+    }
+
     start(cast) {
         console.log("Hole.start()");
         let self = this;

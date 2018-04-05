@@ -57,9 +57,9 @@ class Layer {
     }
     
     createCanvas() {
-        var self = this;
-        var width = document.body.clientWidth;
-        var height = document.body.clientHeight; 
+        let self = this;
+        let width = document.body.clientWidth;
+        let height = document.body.clientHeight; 
         return new Promise((resolve, reject) => {
             self.canvas = self.innerDoc.createElement('canvas');
             if (self.squareCanvas) {
@@ -84,7 +84,7 @@ class Layer {
     }
 
     fadeOut() {
-        var self = this;
+        let self = this;
         return new Promise((resolve, reject) => {
             self.iframe.setAttribute('fading', 'fade-out');
             setTimeout(() => {
@@ -96,7 +96,7 @@ class Layer {
     }
 
     fadeIn() {
-        var self = this;
+        let self = this;
         return new Promise((resolve, reject) => {
             self.iframe.setAttribute('fading', 'fade-in');
             self.iframe.classList.remove('hidden');
@@ -108,7 +108,7 @@ class Layer {
     }
 
     init() {
-        var self = this;   // needed when referred from nested function
+        let self = this;   // needed when referred from nested function
         return new Promise((resolve, reject) => {
             self.iframe = document.createElement('iframe');
             self.iframe.id = self.id;

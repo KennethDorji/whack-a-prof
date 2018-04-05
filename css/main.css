@@ -20,6 +20,7 @@ iframe { margin:0px; padding:0px; overflow:hidden;
 #mallet { z-index:998; }
 #menu   { z-index:997; }
 #game   { z-index:995; }
+#title  { z-index:994; }
 
 .hidden { display: none; }
 .container { position:relative; height:100%; }

@@ -23,7 +23,7 @@ class Actor {
 
         this.duration = {
             raise:  options.raise || 500,
-            linger: options.linger || 500,
+            linger: options.linger || 700,
             lower:  options.lower || 300
         }
 
@@ -64,11 +64,10 @@ class Actor {
                 
     }
 
-    hit() {
-        
+    hit(score) {
     }
 
-    miss() {
+    miss(score) {
 
     } 
 }

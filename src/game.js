@@ -7,6 +7,8 @@
 
 "use strict";
 
+const HITRADIUS = 125;
+
 const Characters = ['professor', 'administrator', 'trustee'];
 
 const CharacterStats = {
@@ -36,6 +38,7 @@ class Game extends Layer {
           classes:['hidden', 'fullscreen']
       });
     let self = this;
+    self.hitRadius = HITRADIUS * L.overallScale;
     const charStats = Util.cartesian(Characters, [1,2,3,4]).map(ch => ({
         id:ch.join('/'),
         hit:CharacterStats[ch[0]].hit,
@@ -65,17 +68,60 @@ class Game extends Layer {
 
   drawHoles() {
       let self = this;
+      self.ctx.clearRect(0, 0, self.ctx.width, self.ctx.height);
       self.holes.forEach(hole => {
           self.ctx.save();
           self.ctx.translate(
               hole.coordinate.x - this.offset.x - 40*L.overallScale, 
-              hole.coordinate.y + hole.size - this.offset.y - 90*L.overallScale
+              hole.coordinate.y + hole.size - this.offset.y - 100*L.overallScale
           );
           self.ctx.scale(L.overallScale, L.overallScale); 
           self.ctx.drawImage(self.portal, 0, 0);
           self.ctx.restore();
+          self.ctx.beginPath();
+          self.ctx.arc(hole.hitCenter.x, hole.hitCenter.y, self.hitRadius, 0, 2*Math.PI);
+          self.ctx.stroke();
       });
 
+  }
+  
+
+  checkHit(loc) {
+      let self = this;
+      let hitSomeone = false;
+      self.drawHoles();
+      self.holes.some(hole => {
+          if (hole.hitCenter.distanceTo(loc) < self.hitRadius) {
+              // we hit this hole
+              if (hole.hit()) {
+                  // someone was hit - shock everyone
+                  self.shockEveryone();
+                  hitSomeone = true;
+              } else {
+                  // missed - amuse everyone
+                  self.amuseEveryone();
+              }
+              // short circuit if we know we've hit a hole
+              return true;    
+          }
+          if (!hitSomeone) {
+              self.amuseEveryone();
+          }
+      });
+  }
+
+  amuseEveryone() {
+      let self = this;
+      self.holes.forEach(hole => {
+          hole.amuse();
+      });
+  }
+
+  shockEveryone() {
+      let self = this;
+      self.holes.forEach(hole => {
+          hole.shock();
+      });
   }
 
   start() {

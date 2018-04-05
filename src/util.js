@@ -65,4 +65,9 @@ class Coord {
         this.y = this.y + other.y;
         return this;
     }
+    distanceTo(other) {
+        let dx = this.x - other.x;
+        let dy = this.y - other.y;
+        return Math.round(Math.sqrt(dx*dx + dy*dy));
+    }
 }
