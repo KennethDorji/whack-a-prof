@@ -52,7 +52,6 @@ class Layer {
                     this.size.setTo(this.width, this.width);
                 } 
             }
-            
             console.log(`created ${this.size.x}x${this.size.y} canvas element at (${this.offset.x}, ${this.offset.y})`); 
         }
     }
@@ -72,9 +71,6 @@ class Layer {
                 }
             }
             if (self.pixelRatio !== 1) {
-                
-                //self.canvas.style.width = `${width}px`;
-                //self.canvas.style.height = `${height}px`;
                 width = width * self.pixelRatio;
                 height = height * self.pixelRatio;
             }

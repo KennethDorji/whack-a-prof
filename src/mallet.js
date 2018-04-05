@@ -52,16 +52,16 @@ class Mallet extends Layer {
     }
 
     generateSprites() {
-        var self = this;
+        let self = this;
         return new Promise((resolve, reject) => {
-            var i = 0;
+            let i = 0;
             Util.loadImage('sprites/mallet.svg').then(image => {
-                var frames = self.frames;
+                let frames = self.frames;
                 for (i = 0; i < frames; i++) {
                     // scale and rotate to desired position in swing
                     let scaleFactor = (0.75 - 4 * Math.pow(1 / (frames - i + 4), 2))*L.overallScale;
                     let rotateFactor = -Math.PI * (i + 3) / (2 * frames);
-                    var m = self.innerDoc.createElement('canvas');
+                    let m = self.innerDoc.createElement('canvas');
                     let height = Math.ceil(image.height / 2);
                     let width = Math.ceil(image.width / 2);
                     let diagonal = Math.ceil(Math.sqrt(
@@ -87,17 +87,18 @@ class Mallet extends Layer {
     }
 
     loadSounds() {
-        var self = this;
+        let self = this;
         return Promise.all([
                 self.swingSound.load(),
                 self.hitSound.load()]);
     }
 
     init() {
-        var self = this;
+        let self = this;
         return new Promise((resolve, reject) => {
             super.init().then(() => {
                 console.log("Mallet.init()");
+                self.offset.scaleBy(self.pixelRatio);
                 return Promise.all([ // load in parallel
                         self.generateSprites(),
                         self.loadSounds()
@@ -107,7 +108,7 @@ class Mallet extends Layer {
     }
 
     swing(target) {
-        var self = this;
+        let self = this;
         target.scaleBy(self.pixelRatio);
         console.log(`swing: ${target.x - self.offset.x}, ${target.y - self.offset.y}`);
         return new Promise((resolve, reject) => {
@@ -170,7 +171,7 @@ class Mallet extends Layer {
     }
 
     enable(callback = null) {
-        var self = this;
+        let self = this;
         self.callback = callback;
         const swingHandler = (e) => {
             e.preventDefault();

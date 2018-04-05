@@ -87,7 +87,7 @@ const doError = (message) => {
  * 
  * Use old school function() notation so IE doesn't shit too early
  */
-init = function() => {
+var init = function() {
     console.log("init()");
     document.ontouchmove = (e) => {
         e.preventDefault();
@@ -107,15 +107,15 @@ init = function() => {
     L.game = new Game();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
-            L.title.init(),
+//            L.title.init(),
             L.mallet.init(),
             L.game.init(),
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
     .then(() => fadeFrom('loading'))
-    .then(() => L.title.fadeIn())
-    .then(() => L.title.start())
-    .then(() => L.title.fadeOut())
+//    .then(() => L.title.fadeIn())
+//    .then(() => L.title.start())
+//    .then(() => L.title.fadeOut())
     // menu will go here instead of mallet
     .then(() => L.mallet.fadeIn())
     .then(() => L.mallet.enable(loc => L.game.checkHit(loc)))
