@@ -53,8 +53,8 @@ class Actor {
         m.width = Math.ceil(200 * 2 * L.overallScale) + 10;
         m.height = Math.ceil(200 * 2 * L.overallScale) + 10;
         m.classList.add('hidden');
-        m.style['image-rendering'] = 'pixelated';
-        self.container.body.appendChild(m);
+        //m.style['image-rendering'] = 'pixelated';
+        //self.container.body.appendChild(m);
         self.sprites = m;
         const generateOne = (image, dx, dy) => {
             ctx.save();

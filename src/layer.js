@@ -48,7 +48,7 @@ class Layer {
                     this.offset.setTo(Math.floor((this.width - this.height) / 2), 0);
                     this.size.setTo(this.height, this.height);
                 } else {
-                    this.offset.setTo(0, Math.floor(this.height - this.width)/2);
+                    this.offset.setTo(0, Math.floor(this.height - this.width) / 2);
                     this.size.setTo(this.width, this.width);
                 } 
             }

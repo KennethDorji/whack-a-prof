@@ -1,5 +1,4 @@
 {
     "main":"index.html",
     "name":"Whack-a-Prof",
-    "chromium-args":"--ignore-gpu-blacklist, --disable-accelerated-2d-canvas"
 }

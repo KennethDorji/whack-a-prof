@@ -49,7 +49,7 @@ class Hole {
 
             self.canvas.style.transform = `translate(${cssPos.x}px, ${cssPos.y}px) scale(${cssScale})`;
             self.canvas.style['transform-origin'] = '0 0';
-            self.canvas.style['image-rendering'] = 'pixelated';
+            //self.canvas.style['image-rendering'] = 'pixelated';
             self.container.body.appendChild(self.canvas);
             resolve();
         });
@@ -153,7 +153,7 @@ class Hole {
                     // clear existing
                     self.clear();
                     // draw sprite 
-                    self.ctx.drawImage(A.sprites, spriteOfs.x, spriteOfs.y, self.size, self.size, 0, self.currPos, self.size, self.size);
+                    self.ctx.drawImage(self.currOccupant.sprites, spriteOfs.x, spriteOfs.y, self.size, self.size, 0, self.currPos, self.size, self.size);
                     // have we been hit?  apply a color overlay
                     if (self.isHit) {
                         self.ctx.globalCompositeOperation = "source-atop";
@@ -186,13 +186,13 @@ class Hole {
     amuse() {
         let self = this;
         self.isAmused = true;
-        setTimeout(() => self.isAmused = false, 1000);
+        setTimeout(() => self.isAmused = false, 5000);
     } 
 
     shock() {
         let self = this;
         self.isShocked = true;
-        setTimeout(() => self.isShocked = false, 1000);
+        setTimeout(() => self.isShocked = false, 5000);
     }
 
     start(cast) {
