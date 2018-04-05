@@ -49,10 +49,12 @@ class Actor {
             let m = self.container.createElement('canvas');
             let ctx = m.getContext('2d');
             let scale = window.devicePixelRatio;
+            m.classList.add('hidden');
             m.width = image.width * L.overallScale;
             m.height = image.height * L.overallScale;
             ctx.scale(L.overallScale, L.overallScale);
             ctx.drawImage(image, 0, 0);
+            self.container.body.appendChild(m);
             return m;
         }
         return Promise.all([

@@ -41,7 +41,7 @@ class Mallet extends Layer {
         this.currTarget   = new Coord(0, 0);
         this.nextTarget   = new Coord(0, 0);
         this.homeTarget   = new Coord(this.size.x, 0).scaleBy(this.pixelRatio);
-        this.bias         = new Coord(-125, -250).scaleBy(L.overallScale);
+        this.bias         = new Coord(-125, -250).scaleBy(L.overallScale).scaleBy(this.pixelRatio);
         this.startTime    = null;
         this.swooshSound  = null;
         this.hitSounds    = [];
@@ -69,6 +69,8 @@ class Mallet extends Layer {
                           image.width * image.width) / 2);
                     m.width =  Math.ceil(2 * diagonal * scaleFactor); 
                     m.height = 0.8 * m.width;
+                    m.classList.add('hidden');
+                    self.innerDoc.body.appendChild(m);
                     // draw sprite and append to sprite array
                     let ctx = m.getContext("2d");
                     ctx.imageSmoothingEnabled = false;
