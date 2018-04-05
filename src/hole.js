@@ -43,10 +43,7 @@ class Hole {
             let cssPos = new Coord(self.coordinate.x - offset.x, self.coordinate.y - offset.y);
             let cssScale = 1 / window.devicePixelRatio;
             if (window.devicePixelRatio !== 1) {
-                let scaled = Math.round(self.size / window.devicePixelRatio);
-                //self.canvas.style.width = `${scaled}px`;
-                //self.canvas.style.height = `${scaled}px`;
-                cssPos.scaleBy(1 / window.devicePixelRatio);
+                cssPos.scaleBy(cssScale);
             }
             cssPos.offsetBy(offset);
 
@@ -55,6 +52,12 @@ class Hole {
             self.container.body.appendChild(self.canvas);
             resolve();
         });
+    }
+    
+    clear() {
+        this.ctx.clearRect(0,0,this.size, this.size);
+        //this.canvas.width = this.canvas.width;
+        //this.ctx.fillStyle = this.hitColor;
     }
 
     occupy(actor) {
@@ -75,7 +78,6 @@ class Hole {
 
                 const reset = () => {
                     // clear existing
-                    self.ctx.clearRect(0, 0, self.size, self.size);
                     delta = 0;
                     A = self.currOccupant;
                     self.startTime = window.performance.now();
@@ -95,8 +97,6 @@ class Hole {
                 
                 const holeLoop = () => {
                     delta = window.performance.now() - self.startTime;
-                    self.ctx.beginPath();
-                    self.ctx.closePath();
                     let sprite = A.sprites.base; 
                     // pick which sprite to use - base, smirk, or shock
                     if (self.isHit) {
@@ -130,7 +130,8 @@ class Hole {
                             self.currOccupant = null;
                             self.nextOccupant = null;
                             // clear existing
-                            self.ctx.clearRect(0, 0, self.size, self.size);
+                            self.clear();
+                            //self.ctx.clearRect(0, 0, self.size, self.size);
                             return resolve();
                         }
                     } else if (delta > lingerLimit) { 
@@ -147,7 +148,7 @@ class Hole {
                 
 
                     // clear existing
-                    self.ctx.clearRect(0, 0, self.size, self.size);
+                    self.clear();
                     // draw sprite 
                     self.ctx.drawImage(sprite, 0, self.currPos);
                     // have we been hit?  apply a color overlay

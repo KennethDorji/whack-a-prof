@@ -40,7 +40,7 @@ class Mallet extends Layer {
         this.lastPos      = -1.0;
         this.currTarget   = new Coord(0, 0);
         this.nextTarget   = new Coord(0, 0);
-        this.homeTarget   = new Coord(this.size.x, 0);
+        this.homeTarget   = new Coord(this.size.x, 0).scaleBy(this.pixelRatio);
         this.bias         = new Coord(-125, -250).scaleBy(L.overallScale);
         this.startTime    = null;
         this.swooshSound  = null;
@@ -154,7 +154,6 @@ class Mallet extends Layer {
                     }
                     if (self.lastPos * self.currPos < 0) { // we "hit" 
                         self.hitSound.play();
-			window.navigator.vibrate(100);
                         self.hitTime = window.performance.now();
                         if (self.callback) {
                             self.callback(self.currTarget);

@@ -79,8 +79,11 @@ class Game extends Layer {
           self.ctx.scale(L.overallScale, L.overallScale); 
           self.ctx.drawImage(self.portal, 0, 0);
           self.ctx.restore();
+
+          // temporarily draw "hit circles"
           self.ctx.beginPath();
           self.ctx.arc(hole.hitCenter.x, hole.hitCenter.y, self.hitRadius, 0, 2*Math.PI);
+          self.ctx.closePath();
           self.ctx.stroke();
       });
 
@@ -96,10 +99,12 @@ class Game extends Layer {
               if (hole.hit()) {
                   // someone was hit - shock everyone
                   self.shockEveryone();
+
+                  if (typeof window.navigator.vibrate === 'function') {
+                      window.navigator.vibrate(100);
+                  }
+
                   hitSomeone = true;
-              } else {
-                  // missed - amuse everyone
-                  self.amuseEveryone();
               }
               // short circuit if we know we've hit a hole
               return true;    
