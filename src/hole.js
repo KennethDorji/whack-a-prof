@@ -24,11 +24,13 @@ class Hole {
             let w = self.game.width;
             let h = self.game.height;
             let dim = Math.min(self.game.width, self.game.height);
+            /*
             let offset = new Coord(
                 w > h ? (w - h) / 2 : 0,
                 h > w ? (h - w) / 2 : 0
             );
-
+            */
+            let offset = self.game.offset;
             self.coordinate.scaleBy(dim).offsetBy(offset);
 
             // "hit center" is biased 2/3rd of the way down
@@ -36,18 +38,22 @@ class Hole {
                 Math.round(self.coordinate.x - offset.x + (self.size / 2)),
                 Math.round(self.coordinate.y - offset.y + (2*self.size/3))
             );
+
             console.log(`Hole.init(): size: ${self.size} ofs: ${offset.x}, ${offset.y} loc: ${self.coordinate.x}, ${self.coordinate.y} hit: ${self.hitCenter.x}, ${self.hitCenter.y}`);
             self.canvas = self.container.createElement('canvas');
             self.canvas.height = self.size;
             self.canvas.width  = self.size;
             self.ctx = self.canvas.getContext('2d');
             self.ctx.fillStyle = self.hitColor;
+            let cssPos = new Coord(self.coordinate.x - offset.x, self.coordinate.y - offset.y);
             if (window.devicePixelRatio !== 1) {
                 let scaled = Math.round(self.size / window.devicePixelRatio);
                 self.canvas.style.width = `${scaled}px`;
                 self.canvas.style.height = `${scaled}px`;
+                cssPos.scaleBy(1 / window.devicePixelRatio);
             }
-            self.canvas.style.transform = 'translate(' + self.coordinate.x + 'px, ' + self.coordinate.y + 'px)';
+            cssPos.offsetBy(offset);
+            self.canvas.style.transform = `translate(${cssPos.x}px, ${cssPos.y}px)`;
             self.container.body.appendChild(self.canvas);
             resolve();
         });

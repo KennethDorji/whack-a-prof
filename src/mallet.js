@@ -108,6 +108,7 @@ class Mallet extends Layer {
 
     swing(target) {
         var self = this;
+        target.scaleBy(self.pixelRatio);
         console.log(`swing: ${target.x - self.offset.x}, ${target.y - self.offset.y}`);
         return new Promise((resolve, reject) => {
             if (self.startTime) { // a swing is already in progress
@@ -153,6 +154,7 @@ class Mallet extends Layer {
                     }
                     if (self.lastPos * self.currPos < 0) { // we "hit" 
                         self.hitSound.play();
+			window.navigator.vibrate(100);
                         self.hitTime = window.performance.now();
                         if (self.callback) {
                             self.callback(self.currTarget);

@@ -52,6 +52,7 @@ class Layer {
                     this.size.setTo(this.width, this.width);
                 } 
             }
+            
             console.log(`created ${this.size.x}x${this.size.y} canvas element at (${this.offset.x}, ${this.offset.y})`); 
         }
     }
@@ -63,27 +64,24 @@ class Layer {
 
         return new Promise((resolve, reject) => {
             self.canvas = self.innerDoc.createElement('canvas');
-            
+            if (self.squareCanvas) {
+                if (width > height) {
+                    width = height;
+                } else {
+                    height = width;
+                }
+            }
             if (self.pixelRatio !== 1) {
+                
                 self.canvas.style.width = `${width}px`;
                 self.canvas.style.height = `${height}px`;
                 width = width * self.pixelRatio;
                 height = height * self.pixelRatio;
             }
-                
-            if (self.squareCanvas) {
-                if (width > height) { // landscape
-                    self.canvas.width = height;
-                    self.canvas.height = height;
-                } else { // portrait
-                    self.canvas.width = width;
-                    self.canvas.height = width;
-                }
-            } else {
-                self.canvas.width = width;
-                self.canvas.height = height;
-                // this.offset doesn't need change
-            }
+            self.width = width;
+            self.height = height;    
+	    self.canvas.width = width;
+	    self.canvas.height = height;
             self.canvas.style.transform = `translate(${self.offset.x}px, ${self.offset.y}px)`;
             self.canvas.classList.add('bordered');
             self.ctx = self.canvas.getContext("2d");

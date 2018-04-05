@@ -68,6 +68,7 @@ class Game extends Layer {
 
   drawHoles() {
       let self = this;
+      
       self.ctx.clearRect(0, 0, self.ctx.width, self.ctx.height);
       self.holes.forEach(hole => {
           self.ctx.save();
@@ -89,7 +90,6 @@ class Game extends Layer {
   checkHit(loc) {
       let self = this;
       let hitSomeone = false;
-      self.drawHoles();
       self.holes.some(hole => {
           if (hole.hitCenter.distanceTo(loc) < self.hitRadius) {
               // we hit this hole
