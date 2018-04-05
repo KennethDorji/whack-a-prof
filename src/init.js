@@ -84,9 +84,10 @@ const doError = (message) => {
 
 /*
  * This is the javascript entrypoint from index.html body.onload()
- *
+ * 
+ * Use old school function() notation so IE doesn't shit too early
  */
-const init = () => {
+init = function() => {
     console.log("init()");
     document.ontouchmove = (e) => {
         e.preventDefault();
