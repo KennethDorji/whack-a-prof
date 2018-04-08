@@ -30,7 +30,7 @@ class Actor {
         this.imageUrl = {
             base:  `sprites/${this.id}/base.svg`,
             smirk: `sprites/${this.id}/smirk.svg`,
-            //shock: `sprites/${this.id}/shock.svg`,
+            shock: `sprites/${this.id}/shock.svg`,
             hit:   `sprites/${this.id}/hit.svg`
         }
     }
@@ -67,7 +67,7 @@ class Actor {
             Util.loadImage(self.imageUrl.base).then(image => generateOne(image, 0, 0)),
             Util.loadImage(self.imageUrl.hit).then(image => generateOne(image, 210, 0)),
             Util.loadImage(self.imageUrl.smirk).then(image => generateOne(image, 0, 210)),
-            //Util.loadImage(self.imageUrl.shock).then(image => self.sprites.shock = generateOne(image))
+            Util.loadImage(self.imageUrl.shock).then(image => generateOne(image, 210, 210))
         ]);
                 
     }

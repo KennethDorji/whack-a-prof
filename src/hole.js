@@ -85,6 +85,7 @@ class Hole {
                     self.currPos = self.lastPos = self.size.y;
                     self.isHit = false;
                     self.isAmused = false;
+                    self.isShocked = false;
                     raiseLimit  = A.duration.raise;
                     lingerLimit = raiseLimit + A.duration.linger;
                     lowerLimit  = lingerLimit + A.duration.lower;
@@ -101,18 +102,11 @@ class Hole {
                     let spriteOfs = new Coord(0,0);
                     // pick which sprite to use - base, smirk, or shock
                     if (self.isHit) {
-                        // definitely use shocked if hit
                         spriteOfs.setTo(210, 0).scaleBy(L.overallScale);;
-                        //sprite = A.sprites.hit;
-                        //sprite = A.sprites.base;
-                    } else if (self.isAmused) {
-                        // or use smirk if amused
-                        //sprite = A.sprites.smirk;
+                    } else if (self.isShocked) {
+                        spriteOfs.setTo(210, 210).scaleBy(L.overallScale);
+                    } else if (self.isAmused) { 
                         spriteOfs.setTo(0, 210).scaleBy(L.overallScale);
-                    } else { 
-                        // or just use base
-                        //self.sprite = A.sprites.base;
-                        
                     }
                     let height = 200;
                     if (delta > lowerLimit) {
@@ -186,13 +180,13 @@ class Hole {
     amuse() {
         let self = this;
         self.isAmused = true;
-        setTimeout(() => self.isAmused = false, 5000);
+        setTimeout(() => self.isAmused = false, 3000);
     } 
 
     shock() {
         let self = this;
         self.isShocked = true;
-        setTimeout(() => self.isShocked = false, 5000);
+        setTimeout(() => self.isShocked = false, 3000);
     }
 
     start(cast) {

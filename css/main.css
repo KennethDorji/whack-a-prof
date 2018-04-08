@@ -15,7 +15,7 @@ iframe { margin:0px; padding:0px; overflow:hidden; }
 }
 
 #error  { color:#EEEEDD; background-color:rgba(0,0,0,0.8); z-index:999;}
-#loading{ color:#EEEEDD; }
+#loading{ color:#EEEEDD; text-shadow: .05em .05em .15em #223322; }
 #mallet { z-index:998; }
 #menu   { z-index:997; }
 #game   { z-index:995; }
