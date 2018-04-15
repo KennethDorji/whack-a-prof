@@ -103,7 +103,7 @@ var init = function() {
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
 //    L.menu = new Menu();
-    L.mallet = new Mallet();
+    L.mallet = new Mallet(); 
     L.game = new Game();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
