@@ -38,6 +38,12 @@ class Util {
       const _cart = (a, b, ...c) => b ? _cart(_f(a, b), ...c) : a;
       return _cart(a, b, ...c);
     }
+
+    static vibrate(t) {
+        if (typeof window.navigator.vibrate === 'function') {
+            window.navigator.vibrate(t);
+        }
+    }
 }
 
 class Coord {

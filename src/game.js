@@ -85,19 +85,19 @@ class Game extends Layer {
               // we hit this hole
               let A = hole.hit();
               if (A) {
-                  console.log(A);
                   // someone was hit - shock everyone
                   self.shockEveryone();
 
-                  // vibrate if on a phone
-                  if (typeof window.navigator.vibrate === 'function') {
-                      window.navigator.vibrate(100);
-                  }
-
                   // play hit sound
                   L.mallet.hitSound.play();
+                  // vibrate if on a phone
+                  Util.vibrate(100);
+                  
                   if (A.blood) {
+                      // play blood explosion sound
                       L.mallet.bloodSound.play();
+                      // vibrate more if on a phone
+                      Util.vibrate(300);
                   }
                   hitSomeone = true;
               }
