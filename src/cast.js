@@ -10,9 +10,9 @@
 const Characters = ['professor', 'administrator', 'trustee'];
 
 const CharacterStats = {
-  professor:     { likelihood:3, hit:new Coord(1,   50), miss:new Coord(1,   0) },
-  administrator: { likelihood:2, hit:new Coord(1,  100), miss:new Coord(1, -50) },
-  trustee:       { likelihood:1, hit:new Coord(1.5,  0), miss:new Coord(0.5, 0) }
+    professor:     { likelihood:3, hit:new Coord(1,   50), miss:new Coord(1,   0), blood:false },
+  administrator: { likelihood:2, hit:new Coord(1,  100), miss:new Coord(1, -50), blood:false },
+  trustee:       { likelihood:1, hit:new Coord(1.5,  0), miss:new Coord(0.5, 0), blood:true }
 };
 
 class Cast {
@@ -22,7 +22,8 @@ class Cast {
             id:ch.join('/'),
             hit:CharacterStats[ch[0]].hit,
             miss:CharacterStats[ch[0]].miss,
-            likelihood:CharacterStats[ch[0]].likelihood
+            likelihood:CharacterStats[ch[0]].likelihood,
+            blood:CharacterStats[ch[0]].blood
         }));
         self.actors = [];
         self.pool = [];

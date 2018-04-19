@@ -83,23 +83,33 @@ class Game extends Layer {
       self.holes.some(hole => {
           if (hole.hitCenter.distanceTo(loc) < self.hitRadius) {
               // we hit this hole
-              if (hole.hit()) {
+              let A = hole.hit();
+              if (A) {
+                  console.log(A);
                   // someone was hit - shock everyone
                   self.shockEveryone();
 
+                  // vibrate if on a phone
                   if (typeof window.navigator.vibrate === 'function') {
                       window.navigator.vibrate(100);
                   }
 
+                  // play hit sound
+                  L.mallet.hitSound.play();
+                  if (A.blood) {
+                      L.mallet.bloodSound.play();
+                  }
                   hitSomeone = true;
               }
               // short circuit if we know we've hit a hole
               return true;    
           }
-          if (!hitSomeone) {
-              self.amuseEveryone();
-          }
       });
+      if (!hitSomeone) {
+          self.amuseEveryone();
+          // play miss sound
+          L.mallet.missSound.play();
+      }
   }
 
   amuseEveryone() {

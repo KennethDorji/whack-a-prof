@@ -30,6 +30,8 @@ class Mallet extends Layer {
             classes: ['hidden', 'fullscreen']
         });
         this.swingSound   = new Sound('sounds/swoosh.mp3');
+        this.missSound    = new Sound('sounds/miss_the_hit_laugh.mp3');
+        this.bloodSound   = new Sound('sounds/blood_explosion.mp3');
         this.hitSound     = new Sound([
                 'sounds/jab.mp3',
                 'sounds/left-hook.mp3',
@@ -92,6 +94,8 @@ class Mallet extends Layer {
         let self = this;
         return Promise.all([
                 self.swingSound.load(),
+                self.missSound.load(),
+                self.bloodSound.load(),
                 self.hitSound.load()]);
     }
 
@@ -156,7 +160,7 @@ class Mallet extends Layer {
                         y = self.currTarget.y + progress * (self.homeTarget.y - self.currTarget.y + self.bias.y) + self.bias.y;
                     }
                     if (self.lastPos * self.currPos < 0) { // we "hit" 
-                        self.hitSound.play();
+                        // don't play here - let game play the sound
                         self.hitTime = window.performance.now();
                         if (self.callback) {
                             self.callback(self.currTarget);

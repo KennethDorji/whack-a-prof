@@ -172,9 +172,9 @@ class Hole {
             // raise score, etc
             S.currentScore = A.hit(S.currentScore);
             console.log(`Hit ${A.id}`);
-            return true;
+            return A;
         }
-        return false;
+        return null;
     }
    
     amuse() {

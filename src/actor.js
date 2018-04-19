@@ -33,6 +33,8 @@ class Actor {
             shock: `sprites/${this.id}/shock.svg`,
             hit:   `sprites/${this.id}/hit.svg`
         }
+
+        this.blood = options.blood;
     }
 
     init(container) {
