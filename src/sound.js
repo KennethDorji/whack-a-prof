@@ -8,7 +8,8 @@ class Sound {
         } else {
             this.count = 0;
         }
-        this.src = url; 
+        this.src = url;
+        this.volume = 1.0; 
     }
     
     load() {
@@ -46,20 +47,69 @@ class Sound {
         });
     }
 
-    play() {
-        var self = this;
-        var playOne = (a) => {
-            if (a.readyState) {
+    play(loop = false) {
+        let self = this;
+        const playOne = (a) => {
+            if (loop) {
+                //a.loop = true;
+			    a.addEventListener('timeupdate', () => {
+					let buffer = .40; // pre-loop
+					if(a.currentTime > a.duration - buffer) {
+						a.currentTime = 0;
+						a.play();
+					}
+				}, false);
+            }
+            a.volume = self.volume;
+            if (a.paused) {
                 a.play();
-            } else {
+            } else { // start from beginning to "play again" if already playing
                 a.currentTime = 0;
             }
         };
+        let A = self.audio;
         if (self.count) {
-            var index = Util.uniform(self.count);
-            playOne(self.audio[index]);
+            A = self.audio[Util.uniform(self.count)];
+        } 
+        playOne(A);
+    }
+
+    pause() {
+        let self = this;
+        if (self.count) {
+            self.audio.forEach(audio => {
+				audio.pause();
+				audio.removeEventListener('timeupdate');
+			});
         } else {
-            playOne(self.audio);
+            self.audio.pause();
+			self.audio.removeEventListener('timeupdate');
         }
     }
+
+    fadeOut(time = 1000) {
+        let self = this;
+        let startVol = self.volume;
+        let step = startVol / time;
+
+        const stepDown = (vol) => {
+            return new Promise((resolve, reject) => {
+                if (vol < 0) {
+                    self.pause();
+                    resolve();
+                }
+                if (self.count) {
+                    self.audio.forEach(audio => audio.volume = vol);
+                } else {
+                    self.audio.volume = vol;
+                }
+                stepDown(vol - step).then(resolve);
+            });
+        }
+
+        return new Promise((resolve, reject) => {
+            stepDown(startVol).then(resolve);
+        });
+    }
+    
 }

@@ -33,6 +33,7 @@ class Game extends Layer {
     let self = this;
     self.hitRadius = HITRADIUS * L.overallScale;
     self.cast = new Cast();
+    self.music = new Sound('sounds/background_3_loop.mp3');
     self.holes = HoleLocations.map(loc => new Hole({
         game: self,
         coordinate: loc,
@@ -47,7 +48,8 @@ class Game extends Layer {
             return Promise.all([
                 self.cast.init(container),
                 ...self.holes.map(hole => hole.init(container)),
-                Util.loadImage('sprites/portal.svg').then(image => self.portal = image)
+                Util.loadImage('sprites/portal.svg').then(image => self.portal = image),
+                self.music.load()
             ]);
         }).then(resolve, reason => reject(reason));
     });
@@ -134,6 +136,7 @@ class Game extends Layer {
       self.holes.forEach(hole => {
           hole.start(self.cast);
       });
+      self.music.play(true); // parameter -> loop if true
   }
 
   pause() { 
