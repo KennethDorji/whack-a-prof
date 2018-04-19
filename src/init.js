@@ -89,10 +89,6 @@ const doError = (message) => {
  */
 var init = function() {
     console.log("init()");
-    document.ontouchmove = (e) => {
-        e.preventDefault();
-        return false;
-    }
 
     // fixes for IOS, Retina Mac, and Samsung phone devices
     //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
@@ -102,12 +98,18 @@ var init = function() {
     L.overallScale = L.trueSize / 960;
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
+//    L.instructions = new Instructions();
 //    L.menu = new Menu();
     L.mallet = new Mallet(); 
     L.game = new Game();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
 //            L.title.init(),
+//            L.instructions.init(),
+//            L.menu.init(),
+//            L.hud.init(),
+//            L.won.init(),
+//            L.lost.init(),
             L.mallet.init(),
             L.game.init(),
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)

@@ -7,9 +7,23 @@
 
 "use strict";
 
+const Characters = ['professor', 'administrator', 'trustee'];
+
+const CharacterStats = {
+  professor:     { likelihood:3, hit:new Coord(1,   50), miss:new Coord(1,   0) },
+  administrator: { likelihood:2, hit:new Coord(1,  100), miss:new Coord(1, -50) },
+  trustee:       { likelihood:1, hit:new Coord(1.5,  0), miss:new Coord(0.5, 0) }
+};
+
 class Cast {
-    constructor(actorStats = []) {
+    constructor() {
         let self = this;
+        const actorStats = Util.cartesian(Characters, [1,2,3,4]).map(ch => ({
+            id:ch.join('/'),
+            hit:CharacterStats[ch[0]].hit,
+            miss:CharacterStats[ch[0]].miss,
+            likelihood:CharacterStats[ch[0]].likelihood
+        }));
         self.actors = [];
         self.pool = [];
         self.totalLikelihood = 0;
