@@ -2,17 +2,30 @@
  * cast.js
  *
  * container for all the actors
- *
+ * 
  */
 
 "use strict";
 
 const Characters = ['professor', 'administrator', 'trustee'];
 
+/*
+ * CharacterStats containts data about each class of character.  The properties:
+ *
+ *     likelihood: represents how likely the character is to be randomly chosen. take this value 
+ *                 and divide it by the sum of all character likelihoods to get the probability 0..1.
+ *     hit:        a two-dimensional vector representing how the score is effected when this character
+ *                 is hit.  the first number (A) is how the existing score is scaled, and the second number
+ *                 (B) is a constant offset: newScore := A * oldScore + B
+ *     miss:       a two-dimensional vector representing how the score is effected when the chararacter
+ *                 "escapes" unhit. The value (1, 0) represents no change to score.
+ *     blood:      boolean, whether hitting this character causes the blood animation.
+ *
+ */
 const CharacterStats = {
     professor:     { likelihood:3, hit:new Coord(1,   50), miss:new Coord(1,   0), blood:false },
-  administrator: { likelihood:2, hit:new Coord(1,  100), miss:new Coord(1, -50), blood:false },
-  trustee:       { likelihood:1, hit:new Coord(1.5,  0), miss:new Coord(0.5, 0), blood:true }
+    administrator: { likelihood:2, hit:new Coord(1,  100), miss:new Coord(1, -50), blood:false },
+    trustee:       { likelihood:1, hit:new Coord(1.5,  0), miss:new Coord(0.5, 0), blood:true  }
 };
 
 class Cast {
