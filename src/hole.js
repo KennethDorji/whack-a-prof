@@ -114,7 +114,8 @@ class Hole {
                         //
                         if (self.isHit === false) { // beware javascript truthiness issues
                             // if there is a punishment for not hitting someone, apply it here
-                            A.miss();
+                            S.currentScore = A.miss(S.currentScore);
+                            // S.miss(A);
                         }
 
                         if (self.nextOccupant) {
@@ -171,6 +172,7 @@ class Hole {
             let A = self.currOccupant; // occupant may change before we can calc score
             // raise score, etc
             S.currentScore = A.hit(S.currentScore);
+            // S.hit(A);
             console.log(`Hit ${A.id}`);
             return A;
         }

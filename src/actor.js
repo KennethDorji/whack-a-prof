@@ -10,6 +10,7 @@
 class Actor {
     constructor(options = {}) {
         console.log(options);
+        this.type = options.type;
         this.id = options.id;
         
         this.sprites = {};

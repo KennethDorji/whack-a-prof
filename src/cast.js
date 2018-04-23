@@ -32,6 +32,7 @@ class Cast {
     constructor() {
         let self = this;
         const actorStats = Util.cartesian(Characters, [1,2,3,4]).map(ch => ({
+            type:ch[0],
             id:ch.join('/'),
             hit:CharacterStats[ch[0]].hit,
             miss:CharacterStats[ch[0]].miss,

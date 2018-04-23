@@ -16,6 +16,7 @@ const TransitionDelay = 250;
 const WatchInterval   = 30;
 
 // S contains the game meta state
+// var S = new Score();
 var S = {
     resourcesTotal:0,
     resourcesLoaded:0,

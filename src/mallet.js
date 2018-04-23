@@ -122,6 +122,10 @@ class Mallet extends Layer {
                 this.nextTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
             } else {   // no swing already
                 self.swingSound.play();
+
+                // count swing in score
+                // S.swing();
+                
                 self.startTime = window.performance.now();  // reset the swing start time
                 self.currPos = self.lastPos = -1;
                 this.currTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
@@ -142,6 +146,10 @@ class Mallet extends Layer {
                         self.currPos = self.lastPos = -1.0;
                         if (self.nextTarget.x != 0 && self.nextTarget.y != 0) { // there is another swing queued
                             self.swingSound.play();
+
+                            // count swing in score
+                            // S.swing();
+
                             self.currTarget.copy(self.nextTarget);
                             self.nextTarget.setTo(0,0);
                             self.startTime = window.performance.now();
