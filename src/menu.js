@@ -45,3 +45,13 @@ function doMenu() {
     }), WatchInterval);
 
 }
+
+
+function MenuSelected() 
+{ 
+    var x=new Audio('sounds/menu_select.mp3');
+    x.play(); 
+} 
+
+
+
