@@ -155,7 +155,7 @@ class Hole {
                         self.ctx.fillRect(0, 0, self.size, self.size);
                         self.ctx.globalCompositeOperation = "source-over";
                     }
-                    if (S.currentState === States.PLAYING) {
+                    if (currentState === States.PLAYING) {
                         window.requestAnimationFrame(holeLoop);
                     }
                 }
@@ -196,7 +196,7 @@ class Hole {
         let self = this;
         const hLoop = () => {
             let delay = Util.uniform(self.delay);
-            if (S.currentState === States.PLAYING) {   
+            if (currentState === States.PLAYING) {   
                 setTimeout(() => {
                     let A = cast.getRandom();
                     self.occupy(A).then(() => hLoop());

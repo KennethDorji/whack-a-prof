@@ -52,13 +52,13 @@ class Sound {
         const playOne = (a) => {
             if (loop) {
                 //a.loop = true;
-			    a.addEventListener('timeupdate', () => {
-					let buffer = .40; // pre-loop
-					if(a.currentTime > a.duration - buffer) {
-						a.currentTime = 0;
-						a.play();
-					}
-				}, false);
+                a.addEventListener('timeupdate', () => {
+                    let buffer = .40; // pre-loop
+                    if(a.currentTime > a.duration - buffer) {
+                        a.currentTime = 0;
+                        a.play();
+                    }
+                }, false);
             }
             a.volume = self.volume;
             if (a.paused) {
@@ -78,12 +78,12 @@ class Sound {
         let self = this;
         if (self.count) {
             self.audio.forEach(audio => {
-				audio.pause();
-				audio.removeEventListener('timeupdate');
-			});
+                audio.pause();
+                audio.removeEventListener('timeupdate');
+            });
         } else {
             self.audio.pause();
-			self.audio.removeEventListener('timeupdate');
+            self.audio.removeEventListener('timeupdate');
         }
     }
 

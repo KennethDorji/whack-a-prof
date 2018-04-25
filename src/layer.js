@@ -20,7 +20,10 @@
  *                and full width.
  *
  * example: var foo = new Layer({id:"foo"});
- *
+ * 
+ * methods defined:
+ * fadeIn()  - if this layer is hidden, it will fade it to visible over a second
+ * fadeOut() - if this layer is visible, it will fade it to hidden over a second 
  */
 
 "use strict";

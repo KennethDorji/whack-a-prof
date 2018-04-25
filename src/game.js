@@ -3,6 +3,24 @@
  *
  * the main game class
  *
+ * methods defined:
+ *
+ * game state change:
+ * start()   - enable game play
+ * pause()   - pause the game
+ * resume()  - resume from pause
+ * restart() - restart from end screen
+ *
+ * game maintenance:
+ * drawHoles() - renders the holes, or tables, portals, whatever
+ *
+ * game play:
+ * checkHit(loc)   - given a location, check if it hit a character.
+ *                   this will call hole.hit() which performs the score adjustment
+ * amuseEveryone() - if you miss a swing, make everyone (not already hit) smirk
+ * shockEveryone() - if you hit someone, make everyone else shocked
+ *
+ *
  */
 
 "use strict";
@@ -49,6 +67,7 @@ class Game extends Layer {
                 self.cast.init(container),
                 ...self.holes.map(hole => hole.init(container)),
                 Util.loadImage('sprites/portal.svg').then(image => self.portal = image),
+                //Util.loadImage('sprites/table.svg').then(image => self.table = image),
                 self.music.load()
             ]);
         }).then(resolve, reason => reject(reason));
@@ -84,7 +103,8 @@ class Game extends Layer {
       let hitSomeone = false;
       self.holes.some(hole => {
           if (hole.hitCenter.distanceTo(loc) < self.hitRadius) {
-              // we hit this hole
+              // we hit this hole - find out who we hit (A)
+              // hole.hit() will adjust the score
               let A = hole.hit();
               if (A) {
                   // someone was hit - shock everyone
@@ -130,7 +150,7 @@ class Game extends Layer {
 
   start() {
       console.log('Game.start()');
-      S.currentState = States.PLAYING;
+      currentState = States.PLAYING;
       let self = this;
       self.drawHoles();
       self.holes.forEach(hole => {
@@ -141,10 +161,19 @@ class Game extends Layer {
 
   pause() { 
       console.log("Game.pause()");
-      if (S.currentState === States.PLAYING) {
-          S.currentState = States.PAUSED;
-      } else if (S.currentState === States.PAUSED) {
-          S.currentState = States.PLAYING;
+      if (currentState === States.PLAYING) {
+          currentState = States.PAUSED;
+      } else if (currentState === States.PAUSED) {
+          currentState = States.PLAYING;
       }
+  }
+
+  resume() {
+      console.log("Game.resume()");
+   
+  }
+
+  restart() {
+
   }
 }

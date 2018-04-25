@@ -26,7 +26,7 @@ class Title extends Layer {
         var self = this;
         return new Promise((resolve, reject) => {
             console.log("Title.start()");
-            S.currentState = States.TITLE;
+            currentState = States.TITLE;
             
             self.ctx.font = `${Math.floor(50 * L.overallScale)}pt Homemade Apple`;
             self.ctx.lineWidth = 1;

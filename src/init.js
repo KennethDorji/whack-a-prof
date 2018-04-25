@@ -4,7 +4,24 @@
  * global variables
  * javascript entrypoint
  * basic functions required during initialization
+ * 
+ * There are two types of classes in the game:
+ * 1) 'Layers' - these are the major UI components of the game
+ *     a) Mallet  - The mallet has focus during gameplay and receives all input events
+ *     b) Game    - The playing field and blood effects
+ *     c) Menu    - a menu of choices - game start, settings, view scores, exit, etc
+ *     d) Hud     - on-screen statistics during gameplay
+ *     e) EndGame - after a game ends - with chance to restart and put your name for highscore list
+ *     f) Title   - beginning animation
+ *     g) Help    - a slideshow giving instructions
  *
+ * 2) model classes - things that don't have a direct on-screen presence
+ *     a) Actor - one specific character
+ *     b) Cast  - the ensemble of all Actors
+ *     c) Hole  - this manages how a character pops up and down
+ *     d) Sound - an audio or set of audio corresponding to one game 'sound effect'
+ *     e) Score - keeps statistics and deals with persistence
+ *     f) Util  - a bunch of various utility functions
  */
 
 "use strict";
@@ -15,15 +32,11 @@ const States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3,
 const TransitionDelay = 250;
 const WatchInterval   = 30;
 
-// S contains the game meta state
-// var S = new Score();
-var S = {
-    resourcesTotal:0,
-    resourcesLoaded:0,
-    currentState:States.LOADING,
-    highScore:0,
-    currentScore:0
-};
+// S contains the game score 
+var S = new Score();
+
+// as we transition through game states, change this variable
+var currentState = States.LOADING;
 
 // L contains the full-screen layers
 var L = {
@@ -99,14 +112,14 @@ var init = function() {
     L.overallScale = L.trueSize / 960;
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
-//    L.instructions = new Instructions();
+//    L.help = new Help();
 //    L.menu = new Menu();
     L.mallet = new Mallet(); 
     L.game = new Game();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
 //            L.title.init(),
-//            L.instructions.init(),
+//            L.help.init(),
 //            L.menu.init(),
 //            L.hud.init(),
 //            L.won.init(),

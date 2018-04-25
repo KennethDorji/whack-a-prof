@@ -74,11 +74,4 @@ class Actor {
         ]);
                 
     }
-
-    hit(score) {
-    }
-
-    miss(score) {
-
-    } 
 }
