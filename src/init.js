@@ -32,8 +32,8 @@ const States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3,
 const TransitionDelay = 250;
 const WatchInterval   = 30;
 
-// S contains the game score 
-var S = new Score();
+// S will contains the game score 
+var S = null;
 
 // as we transition through game states, change this variable
 var currentState = States.LOADING;
@@ -116,6 +116,7 @@ var init = function() {
 //    L.menu = new Menu();
     L.mallet = new Mallet(); 
     L.game = new Game();
+    S = new Score();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
 //            L.title.init(),
@@ -126,6 +127,7 @@ var init = function() {
 //            L.lost.init(),
             L.mallet.init(),
             L.game.init(),
+            S.init(),
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
     .then(() => fadeFrom('loading'))

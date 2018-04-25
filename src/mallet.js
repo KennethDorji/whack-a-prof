@@ -124,7 +124,7 @@ class Mallet extends Layer {
                 self.swingSound.play();
 
                 // count swing in score
-                // S.swing();
+                S.swing();
                 
                 self.startTime = window.performance.now();  // reset the swing start time
                 self.currPos = self.lastPos = -1;
@@ -148,7 +148,7 @@ class Mallet extends Layer {
                             self.swingSound.play();
 
                             // count swing in score
-                            // S.swing();
+                            S.swing();
 
                             self.currTarget.copy(self.nextTarget);
                             self.nextTarget.setTo(0,0);
