@@ -113,6 +113,7 @@ class Blood extends Layer {
         // initialize a new splatter animation
         // resolves when animation is done - then we can stain
         // the tables with the last frame
+        console.log(`Blood.splat(${loc.x}, ${loc.y})`);
         let self = this;
         const startTime = window.performance.now();
         const corner = new Coord(loc.x - self.spriteSize / 2,
@@ -127,6 +128,8 @@ class Blood extends Layer {
                     (now - startTime) * 
                     self.frames / self.speed);
                 if (current > self.frames) { // done
+                    self.ctx.clearRect(corner.x, corner.y,
+                            self.spriteSize, self.spriteSize);
                     resolve();
                 } else { // continue animation
                     if (current !== prior) {  // change frame
