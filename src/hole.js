@@ -171,6 +171,7 @@ class Hole {
             let A = self.currOccupant; // occupant may change before we can calc score
             // raise score, etc
             S.hit(A);
+
             return A;
         }
         return null;

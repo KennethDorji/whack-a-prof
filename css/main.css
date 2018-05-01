@@ -18,6 +18,7 @@ iframe { margin:0px; padding:0px; overflow:hidden; }
 #loading{ color:#EEEEDD; text-shadow: .05em .05em .15em #223322; }
 #mallet { z-index:998; }
 #menu   { z-index:997; }
+#blood  { z-index:996; }
 #game   { z-index:995; }
 #title  { z-index:994; }
 

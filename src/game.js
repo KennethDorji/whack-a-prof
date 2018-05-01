@@ -116,8 +116,8 @@ class Game extends Layer {
                   Util.vibrate(100);
                   
                   if (A.blood) {
-                      // play blood explosion sound
-                      L.mallet.bloodSound.play();
+                      // start blood animation
+                      L.blood.splat(hole.hitCenter);
                       // vibrate more if on a phone
                       Util.vibrate(300);
                   }
@@ -153,8 +153,15 @@ class Game extends Layer {
       currentState = States.PLAYING;
       let self = this;
       self.drawHoles();
-      self.holes.forEach(hole => {
-          hole.start(self.cast);
+      Promise.all([
+              L.game.fadeIn(),
+              L.mallet.fadeIn(),
+              L.blood.fadeIn()
+      ]).then(() => {
+          L.mallet.enable(loc => L.game.checkHit(loc));
+          self.holes.forEach(hole => {
+              hole.start(self.cast);
+          });
       });
       self.music.play(true); // parameter -> loop if true
   }
@@ -163,6 +170,7 @@ class Game extends Layer {
       console.log("Game.pause()");
       if (currentState === States.PLAYING) {
           currentState = States.PAUSED;
+          this.music.pause();
       } else if (currentState === States.PAUSED) {
           currentState = States.PLAYING;
       }

@@ -48,7 +48,7 @@ class Mallet extends Layer {
         this.swooshSound  = null;
         this.hitSounds    = [];
         this.frames       = Util.getProperty(options, 'frames',  11);
-        this.speed        = Util.getProperty(options, 'speed',   300);
+        this.speed        = Util.getProperty(options, 'speed',   500);
         this.donePos      = Util.getProperty(options, 'done',    1.5);
         this.initPos      = Util.getProperty(options, 'initial', 0.5);
     }
