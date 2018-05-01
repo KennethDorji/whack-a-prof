@@ -8,6 +8,28 @@
 
 
 class Hud extends Layer{
+	constructor() {
+      super({
+          id:'game',
+          hasCanvas:true,
+          squareCanvas:true,
+          classes:['hidden', 'fullscreen']
+          });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/*variable for pause button to be intially false
 	//Pause Button work in progress
 	var paused = false;
@@ -33,7 +55,7 @@ class Hud extends Layer{
 	}
 	*/
 
-	function scoreCounter()
+	scoreCounter()
 	{
 		//Function for score counter
 		//Based on specs, Trustees: 10	Professors: 5	Department Head: 8
@@ -42,7 +64,7 @@ class Hud extends Layer{
 
 	}
 
-	function clockTimer()
+	clockTimer()
 	{
 		//Function for Timer ticking down in Whack-A-Prof
 
