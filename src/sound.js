@@ -10,6 +10,15 @@ class Sound {
         }
         this.src = url;
         this.volume = 1.0; 
+        this.looping = false;
+        this.loopListener = (e) => {
+            let a = e.target;
+            let buffer = 0.40;
+            if (a.currentTime > a.duration - buffer) {
+                a.currentTime = 0;
+                a.play();
+            }
+        };
     }
     
     load() {
@@ -49,22 +58,18 @@ class Sound {
 
     play(loop = false) {
         let self = this;
+        self.loop = loop;
         const playOne = (a) => {
             if (loop) {
-                //a.loop = true;
-                a.addEventListener('timeupdate', () => {
-                    let buffer = .40; // pre-loop
-                    if(a.currentTime > a.duration - buffer) {
-                        a.currentTime = 0;
-                        a.play();
-                    }
-                }, false);
+                self.looping = true;
+                a.addEventListener('timeupdate', self.loopListener, false);
             }
             a.volume = self.volume;
             if (a.paused) {
                 a.play();
             } else { // start from beginning to "play again" if already playing
                 a.currentTime = 0;
+                a.play();
             }
         };
         let A = self.audio;
@@ -79,11 +84,17 @@ class Sound {
         if (self.count) {
             self.audio.forEach(audio => {
                 audio.pause();
-                audio.removeEventListener('timeupdate');
+                if (self.looping) {
+                    audio.removeEventListener('timeupdate',self.loopListener);
+                    self.looping = false;
+                }
             });
         } else {
             self.audio.pause();
-            self.audio.removeEventListener('timeupdate');
+            if (self.looping) {
+                self.audio.removeEventListener('timeupdate', self.loopListener);
+                self.looping = false;
+            }
         }
     }
 

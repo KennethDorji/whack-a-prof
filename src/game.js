@@ -175,7 +175,6 @@ class Game extends Layer {
           currentState = States.PAUSED;
           this.pausedTime = window.performance.now();
           this.music.pause();
-          //L.mallet.disable();
       } 
   }
 
@@ -196,7 +195,6 @@ class Game extends Layer {
           
           currentState = States.PLAYING;
           this.pausedTime = null;
-          L.mallet.enable(loc => L.game.checkHit(loc));
           this.holes.forEach(hole => {
               hole.start(this.cast);
           });
