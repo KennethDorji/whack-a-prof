@@ -44,7 +44,7 @@ class Score {
     miss(A) {
         this.currentScore = A.adjustment.miss.x * this.currentScore + A.adjustment.miss.y;  
         this.stats[A.type].miss++;
-        console.log(`${A.type} escaped! score: ${this.currentScore}`);
+        console.log(`${A.type} escaped at ${window.performance.now()}! score: ${this.currentScore}`);
 
     }
 
@@ -62,6 +62,6 @@ class Score {
     }
 
     reset() {
-        this.timeLeft = 
+        // stub
     }
 }

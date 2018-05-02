@@ -119,6 +119,10 @@ class Mallet extends Layer {
         target.scaleBy(self.pixelRatio);
         console.log(`swing: ${target.x - self.offset.x}, ${target.y - self.offset.y}`);
         return new Promise((resolve, reject) => {
+            if (currentState === States.PAUSED) {
+                resolve();
+                return;
+            }
             if (self.startTime) { // a swing is already in progress
                 this.nextTarget.setTo(target.x - self.offset.x, target.y - self.offset.y);
             } else {   // no swing already
@@ -212,7 +216,11 @@ class Mallet extends Layer {
                         self.swing(mousePosition);
                         break;
                     case 27: // escape
-                        L.game.pause();
+                        if (currentState === States.PLAYING) {
+                            L.game.pause();
+                        } else if (currentState === States.PAUSED) {
+                            L.game.resume();
+                        }
                         break;
                     default:
                         break;

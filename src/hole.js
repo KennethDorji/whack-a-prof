@@ -55,15 +55,19 @@ class Hole {
     }
     
     clear() {
-        this.startTime = null;
+        //this.startTime = null;
         this.ctx.clearRect(0,0,this.size, this.size);
         //this.canvas.width = this.canvas.width;
         //this.ctx.fillStyle = this.hitColor;
     }
 
     occupy(actor) {
-        var self = this;
+        let self = this;
         return new Promise((resolve, reject) => {
+            if (currentState === States.PAUSED) {
+                resolve();
+                return;
+            }  
             // if the hole is already occupied, queue up the next one else start a new one
             if (self.currOccupant) {
                 self.nextOccupant = actor;
@@ -89,6 +93,7 @@ class Hole {
                     raiseLimit  = A.duration.raise;
                     lingerLimit = raiseLimit + A.duration.linger;
                     lowerLimit  = lingerLimit + A.duration.lower;
+                    console.log(`Hole.occupy(${A.type}) at ${self.startTime} lowerLimit: ${lowerLimit}`);
                 }
 
                 reset();
@@ -98,67 +103,71 @@ class Hole {
                 // then once the animation is over it will resolve the promise
                 
                 const holeLoop = () => {
-                    delta = window.performance.now() - self.startTime;
-                    let spriteOfs = new Coord(0,0);
-                    // pick which sprite to use - base, smirk, or shock
-                    if (self.isHit) {
-                        spriteOfs.setTo(210, 0).scaleBy(L.overallScale);;
-                    } else if (self.isShocked) {
-                        spriteOfs.setTo(210, 210).scaleBy(L.overallScale);
-                    } else if (self.isAmused) { 
-                        spriteOfs.setTo(0, 210).scaleBy(L.overallScale);
-                    }
-                    let height = 200;
-                    if (delta > lowerLimit) {
-                        // done with occupation 
-                        //
-                        if (self.isHit === false) { // beware javascript truthiness issues
-                            // if there is a punishment for not hitting someone, apply it here
-                            S.miss(A);
-                        }
-
-                        if (self.nextOccupant) {
-                            // load the next queued occupant
-                            self.currOccupant = self.nextOccupant;
-                            self.nextOccupant = null;
-                            reset();
-                        } else {
-                            // end occupation
-                            self.currOccupant = null;
-                            self.nextOccupant = null;
-                            // clear existing
-                            self.clear();
-                            //self.ctx.clearRect(0, 0, self.size, self.size);
-                            return resolve();
-                        }
-                    } else if (delta > lingerLimit) { 
-                        // lower back down
-                        self.currPos = self.size - Math.floor(self.size*Math.cos(Math.PI * (lingerLimit - delta) / (A.duration.lower*2)));
-                    } else if (delta < A.duration.raise) { 
-                        // still rising
-                        self.currPos = self.size - Math.floor(self.size*Math.sin(Math.PI * delta / (2*A.duration.raise)));
-                    } else {
-                        // lingering
-                        // no change to currPos
-
-                    }
-                
-
-                    // clear existing
-                    self.clear();
-                    // draw sprite 
-                    self.ctx.drawImage(self.currOccupant.sprites, spriteOfs.x, spriteOfs.y, self.size, self.size, 0, self.currPos, self.size, self.size);
-                    // have we been hit?  apply a color overlay
-                    if (self.isHit) {
-                        self.ctx.globalCompositeOperation = "source-atop";
-                        self.ctx.fillRect(0, 0, self.size, self.size);
-                        self.ctx.globalCompositeOperation = "source-over";
-                    }
-                    if (currentState === States.PLAYING) {
+                    if (currentState === States.PAUSED) {
+                        // we need to continue loop but do nothing
                         window.requestAnimationFrame(holeLoop);
+                    } else {
+                        delta = window.performance.now() - self.startTime;
+                        let spriteOfs = new Coord(0,0);
+                        // pick which sprite to use - base, smirk, or shock
+                        if (self.isHit) {
+                            spriteOfs.setTo(210, 0).scaleBy(L.overallScale);
+                        } else if (self.isShocked) {
+                            spriteOfs.setTo(210, 210).scaleBy(L.overallScale);
+                        } else if (self.isAmused) { 
+                            spriteOfs.setTo(0, 210).scaleBy(L.overallScale);
+                        }
+                        let height = 200;
+                        if (delta > lowerLimit) {
+                            // done with occupation 
+                            //
+                            if (self.isHit === false) { // beware javascript truthiness issues
+                                // if there is a punishment for not hitting someone, apply it here
+                                S.miss(A);
+                            }
+
+                            if (self.nextOccupant) {
+                                // load the next queued occupant
+                                self.currOccupant = self.nextOccupant;
+                                self.nextOccupant = null;
+                                reset();
+                            } else {
+                                // end occupation
+                                self.currOccupant = null;
+                                self.nextOccupant = null;
+                                // clear existing
+                                self.clear();
+                                //self.ctx.clearRect(0, 0, self.size, self.size);
+                                return resolve();
+                            }
+                        } else if (delta > lingerLimit) { 
+                            // lower back down
+                            self.currPos = self.size - Math.floor(self.size*Math.cos(Math.PI * (lingerLimit - delta) / (A.duration.lower*2)));
+                        } else if (delta < A.duration.raise) { 
+                            // still rising
+                            self.currPos = self.size - Math.floor(self.size*Math.sin(Math.PI * delta / (2*A.duration.raise)));
+                        } else {
+                            // lingering
+                            // no change to currPos
+
+                        }
+                    
+
+                        // clear existing
+                        self.clear();
+                        // draw sprite 
+                        self.ctx.drawImage(self.currOccupant.sprites, spriteOfs.x, spriteOfs.y, self.size, self.size, 0, self.currPos, self.size, self.size);
+                        // have we been hit?  apply a color overlay
+                        if (self.isHit) {
+                            self.ctx.globalCompositeOperation = "source-atop";
+                            self.ctx.fillRect(0, 0, self.size, self.size);
+                            self.ctx.globalCompositeOperation = "source-over";
+                        }
+                        if (currentState === States.PLAYING) {
+                            window.requestAnimationFrame(holeLoop);
+                        }
                     }
                 }
-
                 holeLoop();
             }
         });
@@ -205,6 +214,7 @@ class Hole {
     } 
 
     adjustTime(delta) {
+        console.log(`hole.adjustTime(${delta})`);
         if (this.startTime) {
             this.startTime = this.startTime + delta;
         }

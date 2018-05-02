@@ -170,31 +170,37 @@ class Game extends Layer {
   }
 
   pause() { 
-      console.log("Game.pause()");
       if (currentState === States.PLAYING) {
+          console.log("Game.pause()");
           currentState = States.PAUSED;
           this.pausedTime = window.performance.now();
           this.music.pause();
-      } else if (currentState === States.PAUSED) {
-          currentState = States.PLAYING;
-      }
+          //L.mallet.disable();
+      } 
   }
 
   resume() {
-      console.log("Game.resume()");
-      if (this.pausedTime) { // the game had been paused
+      if (currentState === States.PAUSED && this.pausedTime) { // the game had been paused
+          console.log("Game.resume()");
           // calculated duration of pause
           let delta = window.performance.now() - this.pausedTime;
-
+          
           // adjust the times of everything
           this.startTime = this.startTime + delta;
           L.mallet.adjustTime(delta);
           L.blood.adjustTime(delta);
           
-          self.holes.forEach(hole => {
+          this.holes.forEach(hole => {
               hole.adjustTime(delta);
           });
           
+          currentState = States.PLAYING;
+          this.pausedTime = null;
+          L.mallet.enable(loc => L.game.checkHit(loc));
+          this.holes.forEach(hole => {
+              hole.start(this.cast);
+          });
+          this.music.play(true);
 
       } 
    
