@@ -37,6 +37,7 @@ class Layer {
         this.style      = Util.getProperty(options, 'style',   null);
         this.delay      = Util.getProperty(options, 'delay',   250);
         this.hasCanvas  = options && options.hasCanvas ? true : false;
+        this.visible    = !this.classes.includes('hidden');
         this.innerDoc   = null;
         this.iframe     = null;
         this.pixelRatio = window.devicePixelRatio || 1;
@@ -93,24 +94,34 @@ class Layer {
     fadeOut() {
         let self = this;
         return new Promise((resolve, reject) => {
-            self.iframe.setAttribute('fading', 'fade-out');
-            setTimeout(() => {
-                self.iframe.classList.add('hidden');
-                self.iframe.removeAttribute('fading');
+            if (visible) {
+                self.iframe.setAttribute('fading', 'fade-out');
+                setTimeout(() => {
+                    self.iframe.classList.add('hidden');
+                    self.iframe.removeAttribute('fading');
+                    self.visible = false;
+                    resolve();
+                }, self.delay);
+            } else { // already hidden - nothing to do
                 resolve();
-            }, self.delay);
+            }
         });    
     }
 
     fadeIn() {
         let self = this;
         return new Promise((resolve, reject) => {
-            self.iframe.setAttribute('fading', 'fade-in');
-            self.iframe.classList.remove('hidden');
-            setTimeout(() => {
-                self.iframe.removeAttribute('fading');
+            if (self.visible) { // already visible - nothing to do
                 resolve();
-            }, self.delay);
+            } else { 
+                self.iframe.setAttribute('fading', 'fade-in');
+                self.iframe.classList.remove('hidden');
+                self.visible = true;
+                setTimeout(() => {
+                    self.iframe.removeAttribute('fading');
+                    resolve();
+                }, self.delay);
+            }
         });
     }
 
@@ -135,5 +146,11 @@ class Layer {
             };
             document.body.appendChild(self.iframe);
         });
+    }
+
+    adjustTime(delta) {
+        if (this.startTime) {
+            this.startTime = this.startTime + delta;
+        }
     }
 }

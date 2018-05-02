@@ -3,6 +3,13 @@
  *
  * the container for all game score data
  *
+ * hit(A)  -> increases score for hitting an actor of type A
+ * miss(A) -> decreases score for an actor of type A eluding us
+ *
+ * swing() -> increases swing count. 
+ * note that swing() returns true if it exhausts the available swings and false otherwise.
+ *
+ * reset() -> resets the score for a new game
  */
 
 "use strict";
@@ -16,6 +23,8 @@ class Score {
             trustee:       { hit: 0, miss: 0 }
         }
         this.malletSwings = 0;
+        this.maxTime  = options.maxTime || null;
+        this.maxSwing = options.maxSwing || null;
 
     }
 
@@ -41,6 +50,18 @@ class Score {
 
     swing() {
         this.malletSwings++;
-        console.log(`you swung ${this.malletSwings} times`);
+        if (this.swingsLeft > 0) {
+            this.swingsLeft--;
+            console.log(`${this.swingsLeft} swings remain.`);
+        }
+        if (this.swingsLeft === 0) { 
+            return true;
+        }
+        return false;
+        
+    }
+
+    reset() {
+        this.timeLeft = 
     }
 }

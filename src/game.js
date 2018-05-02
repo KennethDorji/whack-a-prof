@@ -41,7 +41,7 @@ const HoleLocations = [
 ];
 
 class Game extends Layer {
-  constructor() {
+  constructor(options = {}) {
       super({
           id:'game',
           hasCanvas:true,
@@ -49,6 +49,8 @@ class Game extends Layer {
           classes:['hidden', 'fullscreen']
       });
     let self = this;
+    self.maxTime = options.maxTime || 60;
+    self.startTime = null;
     self.hitRadius = HITRADIUS * L.overallScale;
     self.cast = new Cast();
     self.music = new Sound('sounds/background_3_loop.mp3');
@@ -152,6 +154,7 @@ class Game extends Layer {
       console.log('Game.start()');
       currentState = States.PLAYING;
       let self = this;
+      self.startTime = window.performance.now();
       self.drawHoles();
       Promise.all([
               L.game.fadeIn(),
@@ -170,6 +173,7 @@ class Game extends Layer {
       console.log("Game.pause()");
       if (currentState === States.PLAYING) {
           currentState = States.PAUSED;
+          this.pausedTime = window.performance.now();
           this.music.pause();
       } else if (currentState === States.PAUSED) {
           currentState = States.PLAYING;
@@ -178,10 +182,28 @@ class Game extends Layer {
 
   resume() {
       console.log("Game.resume()");
+      if (this.pausedTime) { // the game had been paused
+          // calculated duration of pause
+          let delta = window.performance.now() - this.pausedTime;
+
+          // adjust the times of everything
+          this.startTime = this.startTime + delta;
+          L.mallet.adjustTime(delta);
+          L.blood.adjustTime(delta);
+          
+          self.holes.forEach(hole => {
+              hole.adjustTime(delta);
+          });
+          
+
+      } 
    
   }
 
   restart() {
-
+      if (this.startTime && currentState === States.PLAYING) { // game in progress - stop it
+          this.pause();
+      }
+      this.start();
   }
 }

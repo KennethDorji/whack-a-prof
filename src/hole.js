@@ -49,13 +49,13 @@ class Hole {
 
             self.canvas.style.transform = `translate(${cssPos.x}px, ${cssPos.y}px) scale(${cssScale})`;
             self.canvas.style['transform-origin'] = '0 0';
-            //self.canvas.style['image-rendering'] = 'pixelated';
             self.container.body.appendChild(self.canvas);
             resolve();
         });
     }
     
     clear() {
+        this.startTime = null;
         this.ctx.clearRect(0,0,this.size, this.size);
         //this.canvas.width = this.canvas.width;
         //this.ctx.fillStyle = this.hitColor;
@@ -203,4 +203,10 @@ class Hole {
         }
         hLoop();
     } 
+
+    adjustTime(delta) {
+        if (this.startTime) {
+            this.startTime = this.startTime + delta;
+        }
+    }
 }    

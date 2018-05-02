@@ -51,6 +51,7 @@ class Mallet extends Layer {
         this.speed        = Util.getProperty(options, 'speed',   500);
         this.donePos      = Util.getProperty(options, 'done',    1.5);
         this.initPos      = Util.getProperty(options, 'initial', 0.5);
+        this.enabled      = false;
     }
 
     generateSprites() {
@@ -187,36 +188,39 @@ class Mallet extends Layer {
     enable(callback = null) {
         let self = this;
         self.callback = callback;
-        const swingHandler = (e) => {
-            e.preventDefault();
-            self.swing(new Coord(e.clientX, e.clientY));
-        };
-        self.canvas.addEventListener('mousedown', swingHandler, true); 
+        if (!self.enabled) {
+            const swingHandler = (e) => {
+                e.preventDefault();
+                self.swing(new Coord(e.clientX, e.clientY));
+            };
+            self.canvas.addEventListener('mousedown', swingHandler, true); 
 
-        self.canvas.addEventListener('mousemove', (e) => {
-            mousePosition.setTo(e.clientX, e.clientY);
-        }, true);  
+            self.canvas.addEventListener('mousemove', (e) => {
+                mousePosition.setTo(e.clientX, e.clientY);
+            }, true);  
 
-        self.canvas.setAttribute('tabindex', 0);
+            self.canvas.setAttribute('tabindex', 0);
 
-        self.canvas.addEventListener('mouseover', (e) => {
+            self.canvas.addEventListener('mouseover', (e) => {
+                self.canvas.focus();
+            });
+
+            self.canvas.addEventListener('keydown', (e) => {
+                console.log(`key hit: ${e.keyCode}`);
+                switch (e.keyCode) {
+                    case 32: // spacebar
+                        self.swing(mousePosition);
+                        break;
+                    case 27: // escape
+                        L.game.pause();
+                        break;
+                    default:
+                        break;
+                }
+            }, true);
             self.canvas.focus();
-        });
-
-        self.canvas.addEventListener('keydown', (e) => {
-            console.log(`key hit: ${e.keyCode}`);
-            switch (e.keyCode) {
-                case 32: // spacebar
-                    self.swing(mousePosition);
-                    break;
-                case 27: // escape
-                    L.game.pause();
-                    break;
-                default:
-                    break;
-            }
-        }, true);
-        self.canvas.focus();
+            self.enabled = true;
+        } 
     }
 
     disable() {
