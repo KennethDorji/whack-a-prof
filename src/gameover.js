@@ -18,6 +18,7 @@ class Gameover extends Layer {
             super.init().then(() => {
                 console.log("Gameover.init()");
                 self.offset.scaleBy(self.pixelRatio);
+                self.scoreBox = self.innerDoc.getElementById('finalScore');
                 return Promise.all([ // load in parallel
                     
                 ]);   
@@ -25,4 +26,11 @@ class Gameover extends Layer {
         });
     }
 
+    gameOver() {
+        self.scoreBox.innerHTML = L.score.a;
+    }
+
+    retry(){
+        L.game.restart();
+    }
 }

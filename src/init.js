@@ -49,6 +49,7 @@ var L = {
     won:null,
     lost:null,
     blood:null,
+    gameover:null
 };
 
 
@@ -118,6 +119,7 @@ var init = function() {
     L.mallet = new Mallet(); 
     L.game = new Game();
     L.blood = new Blood();
+    L.gameover = new Gameover();
     S = new Score();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
@@ -130,6 +132,7 @@ var init = function() {
             L.mallet.init(),
             L.game.init(),
             L.blood.init(),
+            L.gameover.init(),
             S.init(),
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
