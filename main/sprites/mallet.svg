@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="6.9e2" width="4.6e2" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 460 6.9e+02" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <defs>
+  <linearGradient id="linearGradient2104" y2="5.5e2" gradientUnits="userSpaceOnUse" x2="2.6e2" gradientTransform="matrix(0.7,0,0,1.4,-42,-210)" y1="5.2e2" x1="2.3e2">
+   <stop stop-color="#7e3600" offset="0"/>
+   <stop stop-color="#d55e12" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient2870" x1="3e2" xlink:href="#linearGradient2104" gradientUnits="userSpaceOnUse" x2="2.2e2" gradientTransform="matrix(1.1 .05 .15 .75 -46 55)" y1="1.6e2" y2="3.4e2">
+   <stop stop-color="#cf8e63" offset="0"/>
+   <stop stop-color="#bd7442" offset=".13"/>
+   <stop stop-color="#c97e4b" offset=".24"/>
+   <stop stop-color="#b2622c" offset=".48"/>
+   <stop stop-color="#823906" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient2898" y2="2.1e2" gradientUnits="userSpaceOnUse" x2="3.6e2" gradientTransform="matrix(.72 .03 .21 1.1 -41 57)" y1="1.2e2" x1="4.3e2">
+   <stop stop-color="#994306" offset="0"/>
+   <stop stop-color="#73330a" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient5342" y2="5.5e2" xlink:href="#linearGradient2104" gradientUnits="userSpaceOnUse" x2="2.6e2" gradientTransform="matrix(0.7,0,0,1.4,-3.1,-230)" y1="5.2e2" x1="2.3e2"/>
+ </defs>
+ <g transform="translate(-43,-120)">
+  <g id="mallet">
+   <g id="shaft" stroke="#000" stroke-width="4" fill-rule="evenodd">
+    <path d="m2.5e2 3.1e2s-1.5e2 3.8e2-1.7e2 4.1e2c-35 40-31 60-31 60-4 30 24 40 32 20l2e2-4.6e2 10-30h-40z" fill="url(#linearGradient5342)"/>
+    <path opacity=".46" d="m2.8e2 3.1e2s-10 10-10 20c-10 30-2e2 4.7e2-2e2 4.7e2-3 0-6 10-10 10 8 0 17 0 22-10l2e2-4.6e2c10-20 10-30 10-30h-10zm10 0z"/>
+   </g>
+   <g id="head" transform="matrix(.8 0 0 .8 45 63)">
+    <g transform="translate(33,-21)">
+     <g fill-rule="evenodd">
+      <path d="m33 1.6e2c-22 40-21 90 2 1.1e2 1 10 4 10 8 10h5 8c44 10 1.3e2 40 1.8e2 60 40 10 1.2e2 40 1.8e2 80 40 30 1.4e2-2e2 90-1.9e2 10 0-3e2-1.4e2-4.1e2-1.3e2-27-2-46 30-57 60z" stroke="#000" stroke-width="5" fill="url(#linearGradient2870)"/>
+      <path opacity=".44" d="m4.9e2 2.3e2c-20 60-80 1.6e2-1e2 1.4e2-60-40-1.3e2-80-1.8e2-90-40-20-1.4e2-50-1.9e2-60-9 30 11 60 24 60 42 0 1.5e2 30 2e2 60 40 10 1.2e2 40 1.8e2 80 40 30 1.4e2-2e2 90-1.9e2h-20z" fill="#f68b41"/>
+      <path opacity=".5" d="m2.3e2 3.3e2 30 10c-20-20 10-1.5e2 70-1.8e2-10-10-40 10-40 0-10-10-90 1.2e2-60 1.7e2z" stroke="#000" stroke-width="3.5" fill="#0d0b06"/>
+      <path d="m2.2e2 3.3e2c10 0 20 10 40 10-20-20 0-1.5e2 70-1.8e2-10-10-30-10-40-20-30-10-1e2 1.1e2-70 1.9e2z" stroke="#000" stroke-width="3.5" fill="url(#linearGradient2898)"/>
+     </g>
+     <path d="m5.2e2 3.5e2c-30 50-70 90-1e2 80-40-20-40-70-20-1.3e2 30-60 80-90 1.2e2-70 20 10 20 60 0 1.2e2z" stroke="#000" stroke-linecap="round" stroke-width="5" fill="#cc895c"/>
+     <ellipse rx="57" ry="1.1e2" transform="rotate(24)" cy="1.1e2" cx="5.5e2" fill="#cf8e63"/>
+     <ellipse rx="51" ry="93" transform="matrix(.92 .39 -.41 .91 0 0)" cy="1.3e2" cx="5.5e2" fill="#c77c4a"/>
+     <ellipse rx="38" ry="68" transform="matrix(.92 .39 -.41 .91 0 0)" cy="1.3e2" cx="5.5e2" fill="#b06736"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <cc:license rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:publisher>
+     <cc:Agent rdf:about="http://openclipart.org/">
+      <dc:title>Openclipart</dc:title>
+     </cc:Agent>
+    </dc:publisher>
+    <dc:title/>
+   </cc:Work>
+   <cc:License rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+    <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+    <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+    <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+   </cc:License>
+  </rdf:RDF>
+ </metadata>
+</svg>

@@ -1,0 +1,39 @@
+html, body { height:100%; margin:0px; padding:0px; 
+             background:radial-gradient(circle, olivedrab 5%, darkgreen 70%, black 140%);
+             overflow:hidden;
+         }
+iframe { margin:0px; padding:0px; overflow:hidden; }
+* { -webkit-tap-highlight-color:rgba(0,0,0,0); }
+
+@keyframes fade-out {
+    0%   { opacity:1; }
+    100% { opacity:0; }
+}
+@keyframes fade-in {
+    0%   { opacity:0; }
+    100% { opacity:1; }
+}
+
+#error  { color:#EEEEDD; background-color:rgba(0,0,0,0.8); z-index:999;}
+#loading{ color:#EEEEDD; text-shadow: .05em .05em .15em #223322; }
+#mallet { z-index:998; }
+#menu   { z-index:997; }
+#blood  { z-index:996; }
+#game   { z-index:995; }
+#title  { z-index:994; }
+
+.hidden { display: none; }
+.container { position:relative; height:100%; }
+.centered { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+.fullscreen { position:fixed; overflow:hidden; border:none;
+         top:0px; left:0px; bottom:0px; right:0px;
+         padding:0; margin:0; width:100%; height:100%;
+     }
+
+iframe[fading="fade-out"] {
+    animation: fade-out 0.25s;
+}
+iframe[fading="fade-in"] {
+    animation: fade-in 0.25s;
+}
+

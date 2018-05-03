@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="manifest" href="manifest.json">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-title" content="Whack-a-Prof"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <title>Whack-a-Prof</title>
+    </head>
+    <body onload="init();">
+        <div id="loading" class="fullscreen">
+            <div class="container">
+                <div class="centered">
+                  <h1>Loading...</h1>
+                </div>
+            </div>
+        </div>
+        <div id="error" class="fullscreen hidden">
+            <div class="container">
+                <div class="centered">
+                    <h1>Error!</h1>
+                    <div id="error_cause"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional iframes will be loaded here via AJAX -->
+        <script>
+            let ua = window.navigator.userAgent;
+            if (ua.indexOf('MSIE') > 0 || ua.indexOf('Trident') > 0) {
+                document.getElementById('error_cause').innerHTML = '<p>Internet Explorer is not supported.</p>';
+                document.getElementById('error').classList.remove('hidden');
+            }
+        </script>
+        <!--<script type="text/javascript" src="src/dep/hidpi-canvas.min.js" defer></script>-->
+        <script type="text/javascript" src="src/init.js" defer></script>
+        <script type="text/javascript" src="src/util.js" defer></script>
+        <script type="text/javascript" src="src/layer.js" defer></script>
+        <script type="text/javascript" src="src/sound.js" defer></script>
+        <script type="text/javascript" src="src/title.js" defer></script>
+        <script type="text/javascript" src="src/mallet.js" defer></script>
+        <script type="text/javascript" src="src/hole.js" defer></script>
+        <script type="text/javascript" src="src/score.js" defer></script>
+        <script type="text/javascript" src="src/actor.js" defer></script>
+        <script type="text/javascript" src="src/cast.js" defer></script>
+        <script type="text/javascript" src="src/game.js" defer></script>
+        <script type="text/javascript" src="src/blood.js" defer></script>
+        <script type="text/javascript" src="src/gameover.js" defer></script>
+    </body>
+</html>
