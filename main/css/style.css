@@ -9,3 +9,27 @@ body {
   background: linear-gradient(to right, #292e49, #536976);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+#start_button {
+  padding: 15px 55px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #292e49;
+  background-color: white;
+  border: none;
+  border-radius: 100px;
+  box-shadow: 0 9px #292e49;
+  opacity: 0.85;
+  display: none;
+}
+
+#start_button:hover {
+  background-color: grey;
+}
+
+#start_button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
