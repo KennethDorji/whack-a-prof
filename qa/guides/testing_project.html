@@ -46,40 +46,42 @@
     </header>
 
     <!-- Main Body -->
+    <div class="container col-10">
 
-    <!-- Guide -->
-    <div class="container jumbotron col-8">
-        <h1 class="display-4">Testing the Project</h1>
-        <hr class="my-2">
-        <p>
-            <span style="font-weight: bold; text-decoration: underline;">Purpose</span>: This document will guide you through setting up a web server in order to test the files in your
-            local repository. You cannot run them individually and must setup a server.
-        </p>
-        <hr>
-        <p>
-            <span style="font-weight: bold; text-decoration: underline;">Linux</span>
-            <br> I’m assuming you know what you’re doing so I won’t make a guide unless it's completely necessary. Any Youtube
-            video should suffice. Basically, you will setup an Apache server and redirect the
-            <span style="font-style: italic;">Document Root</span> to your local repository folder.
-        </p>
-        <p>
-            <span style="font-weight: bold; text-decoration: underline;">Windows / Mac</span>
-            <br>
-            <ol>
-                <li>Go to the
-                    <a href="https://www.mamp.info/en/downloads/">MAMP website</a> and download then install the latest version of MAMP.
-                </li>
-                <li>After installing MAMP, run it and go into the settings. Under the Web-Server tab, click on the little folder
-                    icon with the dots next to the Document Root option and select the path where your local
-                    <span style="font-style: italic;">group2repo</span> folder is setup. In my case, it's in the Downloads folder. Click "OK" after you’re
-                    done.
-                </li>
-                <li>Run the Apache server in MAMP by clicking the “Start Servers” button. </li>
-                <li>It should automatically open a webpage upon starting the servers. Click on the “My Website” option in the
-                    navigation bar to view the project. If it doesn’t, simply go
-                    <a href="http://localhost:8888">here</a> to run the website.</li>
-            </ol>
-        </p>
+        <!-- Guide -->
+        <div class="container jumbotron">
+            <h1 class="display-4">Testing the Project</h1>
+            <hr class="my-2">
+            <p>
+                <span style="font-weight: bold; text-decoration: underline;">Purpose</span>: This document will guide you through setting up a web server in order to test the files in
+                your local repository. You cannot run them individually and must setup a server.
+            </p>
+            <hr>
+            <p>
+                <span style="font-weight: bold; text-decoration: underline;">Linux</span>
+                <br> I’m assuming you know what you’re doing so I won’t make a guide unless it's completely necessary. Any Youtube
+                video should suffice. Basically, you will setup an Apache server and redirect the
+                <span style="font-style: italic;">Document Root</span> to your local repository folder.
+            </p>
+            <p>
+                <span style="font-weight: bold; text-decoration: underline;">Windows / Mac</span>
+                <br>
+                <ol>
+                    <li>Go to the
+                        <a href="https://www.mamp.info/en/downloads/">MAMP website</a> and download then install the latest version of MAMP.
+                    </li>
+                    <li>After installing MAMP, run it and go into the settings. Under the Web-Server tab, click on the little
+                        folder icon with the dots next to the Document Root option and select the path where your local
+                        <span style="font-style: italic;">group2repo</span> folder is setup. In my case, it's in the Downloads folder. Click "OK" after you’re
+                        done.
+                    </li>
+                    <li>Run the Apache server in MAMP by clicking the “Start Servers” button. </li>
+                    <li>It should automatically open a webpage upon starting the servers. Click on the “My Website” option in
+                        the navigation bar to view the project. If it doesn’t, simply go
+                        <a href="http://localhost:8888">here</a> to run the website.</li>
+                </ol>
+            </p>
+        </div>
     </div>
 
     <!-- End of Main Body -->
