@@ -81,30 +81,30 @@
                 </li>
             </ol>
         </div>
-    </div>
-    <div class="container jumbotron">
-        <!-- SSH Keys Guide -->
-        <h1 class="display-6">Setup Authorized SSH Keys (Optional)</h1>
-        <hr>
-        <span style="font-weight: bold; text-decoration: underline;">Purpose</span>: If you would like to setup a seamless way of getting access to your WEB account without having to
-        input your password on select commands, then this is what you want to setup.
-        <hr>
-        <!-- Steps -->
-        <span style="font-weight: bold; text-decoration: underline;">Steps</span>
-        <br>
-        <ol>
-            <li>Run the command
-                <span style="font-style: italic">ssh-keygen</span> on your machine (in the Terminal), and just hit enter when asked for a password. This will
-                generate both a private and a public key.
-                <ul>
-                    <li>Private Key path = ~/.ssh/id_rsa</li>
-                    <li>Public Key path = ~/.ssh/id_rsa.pub</li>
-                </ul>
-            </li>
-            <li>In a new tab, connect to the remote WEB server with your credentials.</li>
-            <li>Copy and paste the contents of the public key file (id_rsa.pub) from your local machine into ~/.ssh/authorized_keys
-                on the remote server.</li>
-        </ol>
+        <div class="container jumbotron">
+            <!-- SSH Keys Guide -->
+            <h1 class="display-6">Setup Authorized SSH Keys (Optional)</h1>
+            <hr>
+            <span style="font-weight: bold; text-decoration: underline;">Purpose</span>: If you would like to setup a seamless way of getting access to your WEB account without having
+            to input your password on select commands, then this is what you want to setup.
+            <hr>
+            <!-- Steps -->
+            <span style="font-weight: bold; text-decoration: underline;">Steps</span>
+            <br>
+            <ol>
+                <li>Run the command
+                    <span style="font-style: italic">ssh-keygen</span> on your machine (in the Terminal), and just hit enter when asked for a password. This
+                    will generate both a private and a public key.
+                    <ul>
+                        <li>Private Key path = ~/.ssh/id_rsa</li>
+                        <li>Public Key path = ~/.ssh/id_rsa.pub</li>
+                    </ul>
+                </li>
+                <li>In a new tab, connect to the remote WEB server with your credentials.</li>
+                <li>Copy and paste the contents of the public key file (id_rsa.pub) from your local machine into ~/.ssh/authorized_keys
+                    on the remote server.</li>
+            </ol>
+        </div>
     </div>
 
     <!-- End of Main Body -->
