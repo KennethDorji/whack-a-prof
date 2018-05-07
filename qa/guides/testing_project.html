@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="../../main/css/style.css">
+
+    </style>
+    <title> Guides - Testing the Project - Whack-A-Prof</title>
+</head>
+
+<body>
+    <header id="navbar">
+        <!-- Navigation Bar -->
+        <nav id="main_navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="../../index.html" style="font-size: 35px">Whack-A-Prof</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../main/index.html">Game</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../specs/srs.html">Specifications</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Guides</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Body -->
+
+    <!-- Guide -->
+    <div class="container jumbotron col-8">
+        <h1 class="display-4">Testing the Project</h1>
+        <hr class="my-2">
+        <p>
+            <span style="font-weight: bold; text-decoration: underline;">Purpose</span>: This document will guide you through setting up a web server in order to test the files in your
+            local repository. You cannot run them individually and must setup a server.
+        </p>
+        <hr>
+        <p>
+            <span style="font-weight: bold; text-decoration: underline;">Linux</span>
+            <br> I’m assuming you know what you’re doing so I won’t make a guide unless it's completely necessary. Any Youtube
+            video should suffice. Basically, you will setup an Apache server and redirect the
+            <span style="font-style: italic;">Document Root</span> to your local repository folder.
+        </p>
+        <p>
+            <span style="font-weight: bold; text-decoration: underline;">Windows / Mac</span>
+            <br>
+            <ol>
+                <li>Go to the
+                    <a href="https://www.mamp.info/en/downloads/">MAMP website</a> and download then install the latest version of MAMP.
+                </li>
+                <li>After installing MAMP, run it and go into the settings. Under the Web-Server tab, click on the little folder
+                    icon with the dots next to the Document Root option and select the path where your local
+                    <span style="font-style: italic;">group2repo</span> folder is setup. In my case, it's in the Downloads folder. Click "OK" after you’re
+                    done.
+                </li>
+                <li>Run the Apache server in MAMP by clicking the “Start Servers” button. </li>
+                <li>It should automatically open a webpage upon starting the servers. Click on the “My Website” option in the
+                    navigation bar to view the project. If it doesn’t, simply go
+                    <a href="http://localhost:8888">here</a> to run the website.</li>
+            </ol>
+        </p>
+    </div>
+
+    <!-- End of Main Body -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

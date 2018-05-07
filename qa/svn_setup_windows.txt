@@ -1,9 +1,0 @@
-﻿Purpose: This guide is meant to help get SVN setup for those of you using Windows since it does not have native support.
-Steps
-1. Download and install MobaXterm (https://mobaxterm.mobatek.net/). 
-2. After install, open it and click on the “Packages” option in the menu. (My mouse is hovering over it in picture #1)    
-3. Search svn in the search bar and install git-svn (mine is green because it is already installed in picture #2).  
-4. After git-svn installs, start a local terminal session in MobaXterm (my mouse is pointing to it in the picture #3) and setup using this guide (https://goo.gl/J2jfQa).   
-
-
-Note: By default, your group2repo directory will be located under your “C:\Users\Your_Username\Documents\MobaXterm\home”.

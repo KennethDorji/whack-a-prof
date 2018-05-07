@@ -10,16 +10,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="../main/css/style.css">
-    <style>
-        #guide_button {
-            width: 300px;
-            height: 200px;
-            border-radius: 10px;
-            font-size: 20px;
-        }
+    <link rel="stylesheet" href="../../main/css/style.css">
+
     </style>
-    <title> Whack-A-Prof - Guides </title>
+    <title> Guides - SVN Setup (Windows) - Whack-A-Prof</title>
 </head>
 
 <body>
@@ -27,7 +21,7 @@
         <!-- Navigation Bar -->
         <nav id="main_navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="../index.html" style="font-size: 35px">Whack-A-Prof</a>
+                <a class="navbar-brand" href="../../index.html" style="font-size: 35px">Whack-A-Prof</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,13 +29,15 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../main/index.html">Game</a>
+                            <a class="nav-link" href="../../main/index.html">Game</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="../specs/srs.html">Specifications</a>
+                            <a class="nav-link" href="../../specs/srs.html">Specifications</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Guides</a>
+                            <a class="nav-link" href="../index.html">Guides</a>
                         </li>
                     </ul>
                 </div>
@@ -50,37 +46,39 @@
     </header>
 
     <!-- Main Body -->
-    <div class="container col-10">
-        <!-- Guides Description -->
-        <div class="container jumbotron">
-            <h1 class="display-4">Guides</h1>
-            <hr class="my-2">
-            <p>A list of guides to help get you up and running with the project.
-                <br>
-                <span style="float: right; padding-right: 10px">-Q.A. Team</span>
-            </p>
-        </div>
 
-        <!-- Guides Grid -->
-        <div class="container" style="text-align: center;">
-            <div class="row">
-                <div class="col-sm" style="padding-top: 50px;">
-                    <button id="guide_button" type="button" class="btn btn-primary" onclick="window.open('guides/svn_repo_setup.html','_self')">SVN Repository Setup</button>
-                </div>
-                <div class="col-sm" style="padding-top: 50px;">
-                    <button id="guide_button" type="button" class="btn btn-success" onclick="window.open('guides/svn_setup_windows.html','_self')">SVN Setup (Windows)</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm" style="padding-top: 50px;">
-                    <button id="guide_button" type="button" class="btn btn-danger" onclick="window.open('guides/testing_project.html','_self')">Testing the Project</button>
-                </div>
-                <div class="col-sm" style="padding-top: 50px; padding-bottom: 50px">
-                    <button id="guide_button" type="button" class="btn btn-info" onclick="window.open('guides/svn_commands.html','_self')">SVN Commands List</button>
-                </div>
-            </div>
+    <!-- Guide -->
+    <div class="container col-10">
+        <div class="container jumbotron">
+            <h1 class="display-4">SVN Setup (Windows)</h1>
+            <hr class="my-2">
+            <span style="font-weight: bold; text-decoration: underline;">Purpose</span>: This guide is meant to help get SVN setup for those of you using Windows since it does not have
+            native support.
+            <hr>
+            <span style="font-weight: bold; text-decoration: underline;">Steps</span>
+            <br>
+            <ol>
+                <li>Download and install
+                    <a href="https://mobaxterm.mobatek.net">MobaXterm</a>.
+                </li>
+                <li>After install, open it and click on the “Packages” option in the menu.
+                    <!--(My mouse is hovering over it in the
+                    picture)-->
+                </li>
+                <li>Search svn in the search bar and install git-svn.
+                    <!--(mine is green because it is already installed)-->
+                </li>
+                <li>After git-svn installs, start a local terminal session in MobaXterm
+                    <!--(my mouse is pointing to it in the picture)-->
+                    and setup using this
+                    <a href="svn_repo_setup.html">guide</a>.</li>
+            </ol>
+            <hr>
+            <span style="font-weight: bold; text-decoration: underline">Note</span>:
+            <br>By default, your group2repo directory will be located under “C:\Users\Username\Documents\MobaXterm\home”.
         </div>
     </div>
+
     <!-- End of Main Body -->
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

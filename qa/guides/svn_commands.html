@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="../../main/css/style.css">
+
+    </style>
+    <title> Guides - SVN Commands - Whack-A-Prof</title>
+</head>
+
+<body>
+    <header id="navbar">
+        <!-- Navigation Bar -->
+        <nav id="main_navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="../../index.html" style="font-size: 35px">Whack-A-Prof</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../main/index.html">Game</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../specs/srs.html">Specifications</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Guides</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Body -->
+
+    <!-- Guide -->
+    <div class="container col-10">
+        <div class="container jumbotron">
+            <h1 class="display-4">SVN Commands</h1>
+            <hr class="my-2">
+            <ul>
+                <li>
+                    <span style="font-weight: bold">add</span> - If you create a new file in the SVN repo on your local machine, you must run this command
+                    to add the file to the queue for the next svn commit.
+                    <br>e.g. -
+                    <span style="font-style: italic">svn add hello_world.html</span>
+                </li>
+                <li>
+                    <span style="font-weight: bold">delete</span> - If you want to remove a certain file, use this command.
+                    <span style="color: red">USE WITH CAUTION!</span>
+                    <br> e.g. -
+                    <span style="font-style: italic">svn delete hello_world.html</span>
+                </li>
+                <li>
+                    <span style="font-weight: bold">commit</span> - Commits your changes to the remote repository.
+                    <br> e.g. -
+                    <span style="font-style: italic">svn commit -m “Added a new file, index.html”</span>
+                </li>
+                <li>
+                    <span style="font-weight: bold">update</span> - Updates your working copy by bringing changes from the remote repository.
+                    <br> e.g. -
+                    <span style="font-style: italic">svn update group2repo</span>
+                </li>
+                <li>
+                    <span style="font-weight: bold">log</span> - Shows log messages from the repository. If no arguments are supplied, svn log shows the
+                    log messages for all files and directories inside (and including) the current working directory of your
+                    working copy. You can refine the results by specifying a path, one or more revisions, or any combination
+                    of the two. The default revision range for a local path is BASE:1.
+                    <br> e.g. -
+                    <span style="font-style: italic">svn log group2repo</span>
+                    <br>&emsp;&emsp;
+                    <span style="font-weight: bold">with refinement:</span>
+                    <span style="font-style: italic">svn log -r 1:5 group2repo (Shows you the log from commit 1 to 5)</span>
+                </li>
+            </ul>
+        </div>
+        <div class="container jumbotron">
+            <h1 class="display-6">QA Members Only</h1>
+            <hr>
+            <ul>
+                <li>
+                    <span style="font-weight: bold">svnadmin hotcopy</span> - Used to create a full backup of a designated repository. Arguments are path
+                    of repository being backed up and location of backup.
+                    <br> e.g. -
+                    <span style="font-style: italic">svnadmin hotcopy /users1/st/sheliu/group2repo /users1/st/sheliu/repo_backup</span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- End of Main Body -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
