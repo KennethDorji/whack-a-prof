@@ -17,11 +17,11 @@ class Blood extends Layer {
         });
         this.splatSound = new Sound('sounds/blood_explosion.mp3');
         this.screamSound = new Sound('sounds/Wilhelm-Scream.mp3');
-        this.spriteSize = options.spriteSize || Math.round(300 * L.overallScale);
+        this.spriteSize = options.spriteSize || Math.round(600 * L.overallScale);
         this.frames = options.frames || 12;
-        this.spread = options.spread || 3 * L.overallScale;
-        this.scale  = options.scale  || 1 * L.overallScale; 
-        this.speed  = options.speed  || 300; // one second 
+        this.spread = options.spread || 6 * L.overallScale;
+        this.scale  = options.scale  || 2 * L.overallScale; 
+        this.speed  = options.speed  || 500; // one second 
     }
 
     init() {
