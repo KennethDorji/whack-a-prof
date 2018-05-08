@@ -1,6 +1,9 @@
 
 "use strict";
 
+const allSounds = [];
+var   soundMuted = false;
+
 class Sound {
     constructor(url) {
         if (Array.isArray(url)) {
@@ -35,6 +38,7 @@ class Sound {
                 }
                 a.load();
                 document.body.appendChild(a);
+                allSounds.push(self);
             });
         };
 
@@ -119,4 +123,15 @@ class Sound {
         });
     }
     
+    static toggleMute() {
+        if (soundMuted) { // already muted - restore
+            soundMuted = false;
+            allSounds.forEach(sound => sound.volume = 1.0);
+        } else {          // mute all sounds
+            soundMuted = true;
+            allSounds.forEach(sound => sound.volume = 0.0);
+        }
+
+    }
+
 }
