@@ -1,57 +1,44 @@
-function menuInit() {
-    console.log("menuInit()");
-    
-    // load menu iframe
-    createIFrame('menu');
-}
+/*
+ * menu.js
+ *
+ * Methods Defined:
+ *Start()- When user click "Start Game" button, the game will start.
+*
+ *Score()- Showing the highest score of this game.  
+ */
 
-function waitForMenu(callback) {
-    
-}
+"use strict";
 
-function doMenu() {
-    gameState.currentState = States.MENU;
-    
-    transitionTo('mallet', () => { enableMallet(); });
+class menu extends Layer {
 
-    var intervalM = setInterval(watchProperty(gameState, "currentState", (oldval, newval) => {
-        if (oldval != newval) {
-            clearInterval(intervalM);
-            switch(newval) {
-                case States.PLAYING:
-                    nextState = 'playing';
-                    nextAction = doPlaying;
-                    break;
-                case States.HELP:
-                    nextState = 'help';
-                    nextAction = doHelp;
-                    break;
-                case States.QUIT:
-                    nextState = 'quit';
-                    nextAction = doQuit;
-                    break;
-                default:
-                    nextState = 'menu';
-                    nextAction = doMenu;
-                    break;
-            }
+    constructor(options = {}) {
+        super({
+        id:'menu',
+        hasCanvas:true,
+        squareCanvas:true,
+        classes:['hidden', 'fullscreen']
+       });
+    this.menuSound = new Sound('sounds/menu_select.mp3');
+    }
 
-            transitionFrom('menu', () => {
-                transitionTo(nextState, () => {
-                    nextAction();
-            });});
+    init() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            super.init().then(() => {
+                let container = self.innerDoc;
+                return Promise.all([
+                self.cast.init(),
+                self.menuSound.load()
+                ]);
+            }).then(resolve, reason => reject(reason));
+        });
+    }
 
-        }
-    }), WatchInterval);
+
+    Start(){
+	this.menuSound.play();
+    /* super.L.game.init() ;**/
+  }
 
 }
-
-
-function MenuSelected() 
-{ 
-    var x=new Audio('sounds/menu_select.mp3');
-    x.play(); 
-} 
-
-
 
