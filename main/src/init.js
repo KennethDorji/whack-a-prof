@@ -31,7 +31,9 @@ const States = Object.freeze({"LOADING":0, "TITLE":1, "MENU":2, "PLAYING":3,
 
 const TransitionDelay = 250;
 const WatchInterval   = 30;
-
+/*time to be at 60seconds
+const time = 60
+*/
 // S will contains the game score 
 var S = null;
 

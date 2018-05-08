@@ -15,12 +15,23 @@ class Hud extends Layer{
           squareCanvas:true,
           classes:['hidden', 'fullscreen']
           });
+  	}
+
+	init() 
+	{
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
+    }
 
 
-
-
-
-
+	/*clockTimer(time)
+	{
+		//Function for Timer ticking down in Whack-A-Prof
+		const currentTime = time;
+		setInterval()
+	}
+*/
 
 
 
@@ -53,7 +64,7 @@ class Hud extends Layer{
 			gamePaused();
 		}
 	}
-	*/
+	
 
 	scoreCounter()
 	{
@@ -64,12 +75,7 @@ class Hud extends Layer{
 
 	}
 
-	clockTimer()
-	{
-		//Function for Timer ticking down in Whack-A-Prof
-
-		
-	}
+	*/
 
 
 
