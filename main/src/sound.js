@@ -65,12 +65,8 @@ class Sound {
                 a.addEventListener('timeupdate', self.loopListener, false);
             }
             a.volume = self.volume;
-            if (a.paused) {
-                a.play();
-            } else { // start from beginning to "play again" if already playing
-                a.currentTime = 0;
-                a.play();
-            }
+            a.currentTime = 0;
+            a.play();
         };
         let A = self.audio;
         if (self.count) {

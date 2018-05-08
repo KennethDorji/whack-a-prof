@@ -94,7 +94,7 @@ class Layer {
     fadeOut() {
         let self = this;
         return new Promise((resolve, reject) => {
-            if (visible) {
+            if (self.visible) {
                 self.iframe.setAttribute('fading', 'fade-out');
                 setTimeout(() => {
                     self.iframe.classList.add('hidden');

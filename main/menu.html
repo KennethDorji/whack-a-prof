@@ -1,14 +1,12 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<link href="css/iframe.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
-      <script type="text/javascript" src="src/init.js"></script>
-      <script type="text/javascript" src="src/util.js"></script>
-      <script type="text/javascript" src="src/Layer.js"></script>
-      <script type="text/javascript" src="src/sound.js"></script>
-      <script type="text/javascript" src="src/menu.js"></script>
-
+    <script>
+        var M = parent.L.menu;
+    </script>
 </head>
 	
 <body>
@@ -17,13 +15,11 @@
 	
 	<!--buttons-->
 	<h1>WELCOME</h1>
-	<button id="StartGame" onclick="parent.L.menu.Start()" >Start Game</button>
-<!--
-	<button id="Difficulty" onclick="MenuSelected()" >Difficulty</button>
-	<button id="Sound" onclick="MenuSelected()" >Sound</button>
--->
-	<button id="HighestScore" onclick="MenuSelected()" >Highest Score</button>
-	<button id="Help" onclick="MenuSelected()">Help</button>
+	<button type="button" id="StartGame" onclick="M.clickStart()" >Start Game</button>
+	<button id="Difficulty" onclick="M.clickDifficulty()" >Difficulty</button>
+	<button id="Sound" onclick="M.clickSound()" >Sound</button>
+	<button id="HighestScore" onclick="M.clickScore()" >Highest Score</button>
+	<button id="Help" onclick="M.clickHelp()">Help</button>
 
 	</div>
 	</div>

@@ -115,9 +115,9 @@ var init = function() {
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
 //    L.help = new Help();
-//    L.menu = new Menu();
     L.mallet = new Mallet(); 
     L.game = new Game();
+    L.menu = new Menu();
     L.blood = new Blood();
     L.gameover = new Gameover();
     S = new Score();
@@ -125,12 +125,12 @@ var init = function() {
     Promise.all([
 //            L.title.init(),
 //            L.help.init(),
-//            L.menu.init(),
+            L.menu.init(),
 //            L.hud.init(),
 //            L.won.init(),
 //            L.lost.init(),
-            L.mallet.init(),
             L.game.init(),
+            L.mallet.init(),
             L.blood.init(),
             L.gameover.init(),
             S.init(),
@@ -141,6 +141,6 @@ var init = function() {
 //    .then(() => L.title.start())
 //    .then(() => L.title.fadeOut())
     // menu will go here instead of mallet
-    .then(() => L.game.start())
+    .then(() => L.menu.start())
     .catch(reason => doError(reason)); 
 }

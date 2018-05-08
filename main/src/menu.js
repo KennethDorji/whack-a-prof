@@ -9,13 +9,12 @@
 
 "use strict";
 
-class menu extends Layer {
+class Menu extends Layer {
 
     constructor(options = {}) {
         super({
         id:'menu',
-        hasCanvas:true,
-        squareCanvas:true,
+        hasCanvas:false,
         classes:['hidden', 'fullscreen']
        });
     this.menuSound = new Sound('sounds/menu_select.mp3');
@@ -25,9 +24,7 @@ class menu extends Layer {
         let self = this;
         return new Promise((resolve, reject) => {
             super.init().then(() => {
-                let container = self.innerDoc;
                 return Promise.all([
-                self.cast.init(),
                 self.menuSound.load()
                 ]);
             }).then(resolve, reason => reject(reason));
@@ -35,10 +32,13 @@ class menu extends Layer {
     }
 
 
-    Start(){
-	this.menuSound.play();
-    /* super.L.game.init() ;**/
-  }
+    start(){
+        this.fadeIn();
+    }
 
+    clickStart() {
+        console.log('menu.clickStart()');
+        this.fadeOut().then(() => L.game.start());
+    }
 }
 
