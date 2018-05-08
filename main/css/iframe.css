@@ -53,3 +53,9 @@ button:active {
 }
 .bordered { border:3px solid black; }
 .hidden { display:none; }
+
+.menuButton-group{
+    text-align:center; 
+    width:300px;
+    display:block; /* Make the buttons appear below each other */
+}

@@ -2,9 +2,11 @@
  * menu.js
  *
  * Methods Defined:
- *Start()- When user click "Start Game" button, the game will start.
-*
- *Score()- Showing the highest score of this game.  
+ * clickStart()- When user click "Play Game" button, the game will start.
+ * clickDifficulty() - Set the difficulty of game.
+ * clickSound()- Mute or unmuted sound of game.
+ * clickScore()- Showing the highest score of this game.  
+ * clickInstruction() - Showing the instruction of game.
  */
 
 "use strict";
@@ -36,9 +38,36 @@ class Menu extends Layer {
         this.fadeIn();
     }
 
+    //When user click "Play Game" button, the game will start.
     clickStart() {
         console.log('menu.clickStart()');
+        this.menuSound.play();
         this.fadeOut().then(() => L.game.start());
     }
+    /*
+    //Set the difficulty of game.
+    clickDifficulty(){
+        console.log('menu.clickDifficulty');
+        this.menuSound.play();
+    }
+
+    //Mute or unmuted sound of game.
+    clickSound(){
+        console.log('menu.clickSound()');
+        this.menuSound.play(); 
+    }**/
+
+    //Showing the highest score of this game.
+    clickScore(){
+        console.log('menu.clickScore()');
+        this.menuSound.play();
+    }
+
+    //Showing the instruction of game.
+    clickHelp(){
+        console.log('menu.clickInstruction()');
+        this.menuSound.play();
+    }
+
 }
 

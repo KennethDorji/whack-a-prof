@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<link href="css/iframe.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="css/iframe.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
     <script>
         var M = parent.L.menu;
     </script>
-	<script defer src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384 Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous"></script>
 </head>
 	
 <body>
@@ -16,11 +16,17 @@
 	
 	<!--buttons-->
 	<h1>WELCOME</h1>
-    <button type="button" class="button" id="StartGame" onclick="M.clickStart()">Start Game</button>
+
+        <div class = menuButton-group>
+        <button type="button" class="button" id="StartGame" onclick="M.clickStart()">Play Game</button>
+
+        <!--
 	<button id="Difficulty" onclick="M.clickDifficulty()" >Difficulty</button>
 	<button id="Sound" onclick="M.clickSound()" >Sound</button>
-	<button id="HighestScore" onclick="M.clickScore()" >Highest Score</button>
-	<button id="Help" onclick="M.clickHelp()">Help</button>
+        -->
+	<button id="HighestScore" onclick="M.clickScore()" >Top Score</button>
+	<button id="Help" onclick="M.clickInstruction()">Instruction</button>
+        </div>
 
 	</div>
 	</div>
