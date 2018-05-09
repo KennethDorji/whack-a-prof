@@ -105,6 +105,7 @@ class Mallet extends Layer {
         return new Promise((resolve, reject) => {
             super.init().then(() => {
                 console.log("Mallet.init()");
+                self.pauseButton = self.innerDoc.getElementById('pause');
                 self.offset.scaleBy(self.pixelRatio);
                 return Promise.all([ // load in parallel
                         self.generateSprites(),
@@ -216,11 +217,7 @@ class Mallet extends Layer {
                         self.swing(mousePosition);
                         break;
                     case 27: // escape
-                        if (currentState === States.PLAYING) {
-                            L.game.pause();
-                        } else if (currentState === States.PAUSED) {
-                            L.game.resume();
-                        }
+                        self.togglePause();
                         break;
                     default:
                         break;
@@ -237,5 +234,15 @@ class Mallet extends Layer {
 
     setAction(action) {
         // stub
+    }
+
+    togglePause() {
+        if (currentState === States.PLAYING) {
+            this.pauseButton.innerHTML = "RESUME";
+            L.game.pause();
+        } else {
+            this.pauseButton.innerHTML = "PAUSE";
+            L.game.resume();
+        }
     }
 }

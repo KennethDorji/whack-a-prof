@@ -35,6 +35,13 @@ p { font-size: 1em;
     font-family:"Script";
 }
 
+@keyframes bloom-in {
+   0%  { transform: scale(0); }
+  75%  { transform: scale(1.05); }
+  87%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+ }
+
 button { border:none; 
          padding: 0.5em;
          margin: 0.5em;
@@ -43,6 +50,7 @@ button { border:none;
          font-size:2em; 
          color: #EEEEDD; 
          transition: transform 0.2s; 
+         animation: 0.7s ease-in 0s 1 bloom-in;
 }
 button:hover { 
     transform: scale(1.25);
@@ -51,6 +59,10 @@ button:hover {
 button:active {
     background-color: Red;
 }
+
+button:focus {
+    outline:none;
+}
 .bordered { border:3px solid black; }
 .hidden { display:none; }
 
@@ -58,4 +70,16 @@ button:active {
     text-align:center; 
     width:300px;
     display:block; /* Make the buttons appear below each other */
+}
+
+.hudButton {
+    border:none;
+    padding:0.75em 0.75em;
+    position:fixed;
+    top:0.5em;
+    left:0.5em;
+    background-color:DarkGreen;
+    border-radius:0.25em;
+    font-size:1em;
+    color: #EEEEDD;
 }

@@ -139,10 +139,6 @@ var init = function() {
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
     .then(() => fadeFrom('loading'))
-//    .then(() => L.title.fadeIn())
-//    .then(() => L.title.start())
-//    .then(() => L.title.fadeOut())
-    // menu will go here instead of mallet
     .then(() => L.menu.start())
     .catch(reason => doError(reason)); 
 }
