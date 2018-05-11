@@ -106,6 +106,7 @@ class Mallet extends Layer {
             super.init().then(() => {
                 console.log("Mallet.init()");
                 self.pauseButton = self.innerDoc.getElementById('pause');
+                self.pauseButton.style = `left:${self.offset.x}px; z-index:1000`;
                 self.offset.scaleBy(self.pixelRatio);
                 return Promise.all([ // load in parallel
                         self.generateSprites(),
@@ -195,8 +196,10 @@ class Mallet extends Layer {
         self.callback = callback;
         if (!self.enabled) {
             const swingHandler = (e) => {
-                e.preventDefault();
-                self.swing(new Coord(e.clientX, e.clientY));
+                if (e.clientY > 100) {
+                    e.preventDefault();
+                    self.swing(new Coord(e.clientX, e.clientY));
+                }
             };
             self.canvas.addEventListener('mousedown', swingHandler, true); 
 
