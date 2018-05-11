@@ -75,9 +75,9 @@ button:focus {
 .hudButton {
     border:none;
     padding:0.75em 0.75em;
-    position:fixed;
-    top:0.5em;
-    left:0.5em;
+    margin:0.75em;
+    position:absolute;
+    display:inline-block;
     background-color:DarkGreen;
     border-radius:0.25em;
     font-size:1em;
