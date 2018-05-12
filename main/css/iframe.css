@@ -33,16 +33,20 @@ h1 { font-size: 3em;
  }
 
 h2 { font-size: 2.5em;
+     text-align:center; 
      font-weight: normal;
      font-family:"Homemade Apple";
      color: #EEEEDD;
      text-shadow: .05em .05em .15em #223322;
+    pointer-events:none;
  }
-p { font-size: 1em;
+p { font-size: 1.5em;
     color: #EEEEDD;
     font-family:"Script";
+    pointer-events:none;
 }
 
+img { height:150px;}
 @keyframes bloom-in {
    0%  { transform: scale(0); }
   75%  { transform: scale(1.05); }
@@ -50,7 +54,7 @@ p { font-size: 1em;
   100% { transform: scale(1); }
  }
 
-button { border:none; 
+.menuButton { border:none; 
          padding: 0.5em;
          margin: 0.5em;
          background-color:DarkRed;
@@ -60,6 +64,7 @@ button { border:none;
          transition: transform 0.2s; 
          animation: 0.7s ease-in 0s 1 bloom-in;
 }
+
 button:hover { 
     transform: scale(1.25);
 }
@@ -72,6 +77,10 @@ button:focus {
     outline:none;
 }
 
+button:disabled {
+    background-color: DarkGray;
+    color: Gray;
+}
 path { fill:transparent;}
 
 .bordered { border:3px solid black; }
@@ -94,3 +103,24 @@ path { fill:transparent;}
     font-size:1em;
     color: #EEEEDD;
 }
+
+.panel {
+    display:block;
+    margin: 10% auto;
+    padding:2em;
+    background-color:DarkGreen;
+    border-radius:0.25em;
+    box-shadow: 1em 1em .5em #223322;
+}
+
+.helpButton {
+    border:none;
+    padding:0.5em;
+    margin:0.5em;
+    background-color:DarkRed;
+    border-radius:0.25em;
+    font-size:2em;
+    color:#EEEEDD;
+}
+
+

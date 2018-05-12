@@ -58,10 +58,13 @@ class Background extends Layer {
       let ydelta = (self.canvas.height - ystart) / self.maxGrass;
       let ypos;
       let xpos;
-      self.ctx.fillStyle = "#8cc53e";
-      self.ctx.shadowColor = "#3c851e";
-      self.ctx.shadowBlur = 10;
-      self.ctx.shadowOffsetY = -10;
+      const setShadow = (ctx) => {
+          ctx.fillStyle = "#8cc53e";
+          ctx.shadowColor = "#3c851e";
+          ctx.shadowBlur = 10;
+          ctx.shadowOffsetY = -10;
+      }
+          setShadow(self.ctx);
       for (ypos = ystart; ypos < self.canvas.height; ypos += ydelta) {
           let xofs = -Util.uniform(self.grass.width);
           for (xpos = 0; xpos + xofs < self.canvas.width; xpos += self.grass.width) {

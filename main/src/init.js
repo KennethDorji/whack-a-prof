@@ -52,7 +52,8 @@ var L = {
     lost:null,
     blood:null,
     gameover:null,
-    background:null
+    background:null,
+    help:null
 };
 
 
@@ -117,7 +118,7 @@ var init = function() {
     L.overallScale = L.trueSize / 960;
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
-//    L.help = new Help();
+    L.help = new Help();
     L.mallet = new Mallet(); 
     L.game = new Game();
     L.menu = new Menu();
@@ -128,7 +129,7 @@ var init = function() {
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
 //            L.title.init(),
-//            L.help.init(),
+            L.help.init(),
             L.menu.init(),
 //            L.hud.init(),
 //            L.won.init(),

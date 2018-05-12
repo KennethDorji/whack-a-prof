@@ -78,8 +78,9 @@ class Menu extends Layer {
 
     //Showing the instruction of game.
     clickHelp(){
-        console.log('menu.clickInstruction()');
+        console.log('menu.clickHelp()');
         this.menuSound.play();
+        L.help.start();
     }
 
 }
