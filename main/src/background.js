@@ -13,7 +13,7 @@ class Background extends Layer {
             squareCanvas:true,
             classes:['hidden', 'fullscreen']
         });
-        this.maxGrass = options.maxGrass || 7;
+        this.maxGrass = options.maxGrass || 10;
     }
 
   init() {
@@ -54,21 +54,20 @@ class Background extends Layer {
 
       // draw blades of grass
 
-      self.ctx.globalCompositeOperation = "color-burn";
-      self.ctx.globalCompositeOperation = "lighter";
-      let ystart = -self.grass.height/2 + self.canvas.width / ratio;
+      let ystart = -self.grass.height/4 + self.canvas.width / ratio;
       let ydelta = (self.canvas.height - ystart) / self.maxGrass;
       let ypos;
       let xpos;
       self.ctx.fillStyle = "#8cc53e";
+      self.ctx.shadowColor = "#3c851e";
+      self.ctx.shadowBlur = 10;
+      self.ctx.shadowOffsetY = -10;
       for (ypos = ystart; ypos < self.canvas.height; ypos += ydelta) {
           let xofs = -Util.uniform(self.grass.width);
-          for (xpos = 0; xpos + xofs< self.canvas.width; xpos += self.grass.width) {
+          for (xpos = 0; xpos + xofs < self.canvas.width; xpos += self.grass.width) {
               self.ctx.drawImage(self.grass, xpos + xofs, ypos);
           }
-          self.ctx.fillRect(0, ypos + self.grass.height - 1, self.canvas.width, self.canvas.height);
       }
-      self.ctx.globalCompositeOperation = "source-over";
   }  
 
   start() {
