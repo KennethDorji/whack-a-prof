@@ -83,5 +83,8 @@ class Menu extends Layer {
         L.help.start();
     }
 
+    clickQuit() {
+        window.history.back();
+    }
 }
 
