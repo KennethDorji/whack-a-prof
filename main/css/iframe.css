@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Homemade+Apple|Fredericka+the+Great");
-.loader .outer { position:relative; }
+.loader .outer { position:relative; background:transparent;}
 .loader .inner {
+  background:transparent;
   position:absolute;
   top:50%;
   left:50%;
@@ -16,6 +17,13 @@
 * { -webkit-tap-highlight-color:rgba(0,0,0,0); }
 
 canvas { position:fixed; top:0; left:0; cursor:crosshair; }
+
+#titleArc { font-size: 4em;
+	font-family:"Fredericka the Great";
+	color: #EEEEDD;
+	width: 100%;
+}
+
 h1 { font-size: 3em;
      font-weight: normal;
      letter-spacing: .2em;
@@ -45,7 +53,7 @@ p { font-size: 1em;
 button { border:none; 
          padding: 0.5em;
          margin: 0.5em;
-         background-color:DarkGreen;
+         background-color:DarkRed;
          border-radius:0.5em; 
          font-size:2em; 
          color: #EEEEDD; 
@@ -63,6 +71,9 @@ button:active {
 button:focus {
     outline:none;
 }
+
+path { fill:transparent;}
+
 .bordered { border:3px solid black; }
 .hidden { display:none; }
 

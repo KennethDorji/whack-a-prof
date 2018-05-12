@@ -51,7 +51,8 @@ var L = {
     won:null,
     lost:null,
     blood:null,
-    gameover:null
+    gameover:null,
+    background:null
 };
 
 
@@ -111,7 +112,7 @@ var init = function() {
     // fixes for IOS, Retina Mac, and Samsung phone devices
     //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
     document.ontouchmove = (e) => { e.preventDefault(); }
-
+    console.log(`pixelRatio: ${window.devicePixelRatio} Width: ${document.body.clientWidth} Height: ${document.body.clientHeight}`);
     L.trueSize = window.devicePixelRatio * Math.min(document.body.clientWidth, document.body.clientHeight);
     L.overallScale = L.trueSize / 960;
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
@@ -122,6 +123,7 @@ var init = function() {
     L.menu = new Menu();
     L.blood = new Blood();
     L.gameover = new Gameover();
+    L.background = new Background();
     S = new Score();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
@@ -135,10 +137,12 @@ var init = function() {
             L.mallet.init(),
             L.blood.init(),
             L.gameover.init(),
+            L.background.init(),
             S.init(),
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
     .then(() => fadeFrom('loading'))
+    .then(() => L.background.start())
     .then(() => L.menu.start())
     .catch(reason => doError(reason)); 
 }

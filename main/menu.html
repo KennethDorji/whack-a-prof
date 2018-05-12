@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link href="css/iframe.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
     <script>
         var M = parent.L.menu;
     </script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384 Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous"></script>
 </head>
 	
 <body>
@@ -15,17 +13,33 @@
 	<div class="loader inner">
 	
 	<!--buttons-->
-	<h1>WELCOME</h1>
-
+	<svg id="titleArc" viewBox="0 0 500 180" style="transform:scale(3);pointer-events:none;">
+		<defs>
+			<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+				<feGaussianBlur stdDeviation="2 2" result="shadow"/><feOffset dx="4" dy="4"/>
+			</filter>
+		</defs>
+		<path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
+		<text width="500" fill="#333322" style="filter:url(#shadow);">
+			<textPath xlink:href="#curve" text-anchor:"bottom">
+        		Whack-a-Prof
+      		</textPath>
+		</text>
+		<text width="500" fill="#EEEEDD">
+			<textPath xlink:href="#curve" text-anchor:"bottom">
+        		Whack-a-Prof
+      		</textPath>
+		</text>
+	</svg>
         <div class = menuButton-group>
-        <button type="button" class="button" id="StartGame" onclick="M.clickStart()">Play Game</button>
+            <button id="menuStartGame" onclick="M.clickStart()">Play Game</button>
 
         <!--
 	<button id="Difficulty" onclick="M.clickDifficulty()" >Difficulty</button>
-	<button id="Sound" onclick="M.clickSound()" >Sound</button>
         -->
-	<button id="HighestScore" onclick="M.clickScore()" >Top Score</button>
-	<button id="Help" onclick="M.clickInstruction()">Instruction</button>
+            <button id="menuSound" onclick="M.clickSound()" >Mute Sound</button>
+            <button id="menuHighestScore" onclick="M.clickScore()" >Top Score</button>
+            <button id="menuHelp" onclick="M.clickInstruction()">Instruction</button>
         </div>
 
 	</div>

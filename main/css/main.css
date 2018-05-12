@@ -21,6 +21,7 @@ iframe { margin:0px; padding:0px; overflow:hidden; }
 #blood  { z-index:996; }
 #game   { z-index:995; }
 #title  { z-index:994; }
+#background { z-index:990; }
 
 .hidden { display: none; }
 .container { position:relative; height:100%; }

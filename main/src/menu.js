@@ -26,6 +26,7 @@ class Menu extends Layer {
         let self = this;
         return new Promise((resolve, reject) => {
             super.init().then(() => {
+                self.muteButton = self.innerDoc.getElementById('menuSound');
                 return Promise.all([
                 self.menuSound.load()
                 ]);
@@ -35,7 +36,12 @@ class Menu extends Layer {
 
 
     start(){
-        this.fadeIn();
+        let self = this;
+        return new Promise((resolve, reject) => {
+            self.fadeIn()
+                .then(resolve)
+                .catch(reason => reject(reason));
+        });
     }
 
     //When user click "Play Game" button, the game will start.
@@ -44,7 +50,7 @@ class Menu extends Layer {
         this.menuSound.play();
         this.fadeOut().then(() => L.game.start());
     }
-    /*
+    
     //Set the difficulty of game.
     clickDifficulty(){
         console.log('menu.clickDifficulty');
@@ -54,8 +60,15 @@ class Menu extends Layer {
     //Mute or unmuted sound of game.
     clickSound(){
         console.log('menu.clickSound()');
+
+        Sound.toggleMute();
+        if (soundMuted) {
+            this.muteButton.innerHTML = 'Enable Sound';
+        } else {
+            this.muteButton.innerHTML = 'Mute Sound';
+        }
         this.menuSound.play(); 
-    }**/
+    }
 
     //Showing the highest score of this game.
     clickScore(){
