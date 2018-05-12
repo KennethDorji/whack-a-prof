@@ -23,9 +23,9 @@ const Characters = ['professor', 'administrator', 'trustee'];
  *
  */
 const CharacterStats = {
-    professor:     { likelihood:3, hit:new Coord(1,   50), miss:new Coord(1,   0), blood:false },
-    administrator: { likelihood:2, hit:new Coord(1,  100), miss:new Coord(1, -50), blood:false },
-    trustee:       { likelihood:1, hit:new Coord(1.5,  0), miss:new Coord(0.5, 0), blood:true  }
+    professor:     { likelihood:3, hit:new Coord(1,   5), miss:new Coord(1,   0), blood:false },
+    administrator: { likelihood:2, hit:new Coord(1,  10), miss:new Coord(1,   0), blood:false },
+    trustee:       { likelihood:1, hit:new Coord(1,  20), miss:new Coord(1, -10), blood:true  }
 };
 
 class Cast {

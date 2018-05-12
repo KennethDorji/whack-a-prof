@@ -105,8 +105,10 @@ class Mallet extends Layer {
         return new Promise((resolve, reject) => {
             super.init().then(() => {
                 console.log("Mallet.init()");
+				self.hudDiv = self.innerDoc.getElementById('hud');
                 self.pauseButton = self.innerDoc.getElementById('pause');
-                self.pauseButton.style = `left:${self.offset.x}px; z-index:1000`;
+                self.quitButton = self.innerDoc.getElementById('quit');
+                self.hudDiv.style = `left:${self.offset.x}px; z-index:1000`;
                 self.offset.scaleBy(self.pixelRatio);
                 return Promise.all([ // load in parallel
                         self.generateSprites(),
@@ -194,6 +196,7 @@ class Mallet extends Layer {
     enable(callback = null) {
         let self = this;
         self.callback = callback;
+		this.pauseButton.innerHTML = "PAUSE";
         if (!self.enabled) {
             const swingHandler = (e) => {
                 if (e.clientY > 100) {
@@ -232,7 +235,11 @@ class Mallet extends Layer {
     }
 
     disable() {
-        // stub
+		// get rid of all event listeners
+		let old_element = this.canvas;
+		let new_element = old_element.cloneNode(true);
+		old_element.parentNode.replaceChild(new_element, old_element);
+		this.enabled = false;
     }
 
     setAction(action) {
@@ -248,4 +255,18 @@ class Mallet extends Layer {
             L.game.resume();
         }
     }
+
+    clickQuit() {
+        L.game.pause();
+
+		Promise.all([
+			L.mallet.fadeOut(),
+			L.blood.fadeOut(),
+			L.game.fadeOut()
+		])
+		.then(() => {
+			L.menu.fadeIn();
+		});
+	}
+
 }

@@ -63,6 +63,7 @@ img { height:150px;}
          color: #EEEEDD; 
          transition: transform 0.2s; 
          animation: 0.7s ease-in 0s 1 bloom-in;
+        cursor: pointer;
 }
 
 button:hover { 
@@ -93,10 +94,10 @@ path { fill:transparent;}
 }
 
 .hudButton {
+    cursor:pointer;
     border:none;
     padding:0.75em 0.75em;
-    margin:0.75em;
-    position:absolute;
+    margin:0;
     display:inline-block;
     background-color:DarkGreen;
     border-radius:0.25em;
@@ -114,6 +115,7 @@ path { fill:transparent;}
 }
 
 .helpButton {
+    cursor:pointer;
     border:none;
     padding:0.5em;
     margin:0.5em;
@@ -123,4 +125,8 @@ path { fill:transparent;}
     color:#EEEEDD;
 }
 
-
+.hud {
+    position:absolute;
+    display:inline-block;
+    padding:0.5em;
+}

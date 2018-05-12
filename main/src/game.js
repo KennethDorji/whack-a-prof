@@ -153,6 +153,7 @@ class Game extends Layer {
 
   start() {
       console.log('Game.start()');
+	  S.reset();
       currentState = States.PLAYING;
       let self = this;
       self.startTime = window.performance.now();
@@ -162,7 +163,7 @@ class Game extends Layer {
               L.mallet.fadeIn(),
               L.blood.fadeIn()
       ]).then(() => {
-          L.mallet.enable(loc => L.game.checkHit(loc));
+		  L.mallet.enable(loc => L.game.checkHit(loc));
           self.holes.forEach(hole => {
               hole.start(self.cast);
           });

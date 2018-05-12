@@ -16,18 +16,12 @@
 
 class Score {
     constructor(options = {}) {
-        this.currentScore = 0;
-        this.stats = {
-            professor:     { hit: 0, miss: 0 },
-            administrator: { hit: 0, miss: 0 },
-            trustee:       { hit: 0, miss: 0 }
-        }
-        this.malletSwings = 0;
         this.maxTime  = options.maxTime || null;
         this.maxSwing = options.maxSwing || null;
-
+        this.reset();
     }
 
+    
     init() {
         return new Promise((resolve, reject) => {
             resolve();
@@ -62,6 +56,12 @@ class Score {
     }
 
     reset() {
-        // stub
+        this.currentScore = 0;
+        this.stats = {
+            professor:     { hit: 0, miss: 0 },
+            administrator: { hit: 0, miss: 0 },
+            trustee:       { hit: 0, miss: 0 }
+        }
+        this.malletSwings = 0;
     }
 }
