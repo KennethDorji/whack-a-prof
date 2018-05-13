@@ -53,12 +53,11 @@ class Score {
         let self = this;
         return new Promise((resolve, reject) => {
             if (Score.storageAvailable()) {
-                self.storage = window.localStorage;
+                self.storage = localStorage;
                 navigator.storage.persist();
                 console.log('localStorage available');
                 self.keepHighScores = true;
-                self.HighScores = self.storage.getItem('highScores');
-                self.lowestHighScore = self.storage.getItem('lowestHighScore') || 0;
+                self.loadScores();
             } 
             resolve();
         });
@@ -123,6 +122,12 @@ class Score {
                this.currentScore > this.lowestHighScore;
     }
 
+    loadScores() {
+        if (this.keepHighScores) {
+            this.highScores = JSON.parse(localStorage['WAM.highScores'] || '[]');
+            this.lowestHighScore = localStorage['WAM.lowestHighScore'];
+        }
+    }
     gameOver(score) {
         const sorter = (a, b) => {
             if (a.score > b.score) 
@@ -133,7 +138,7 @@ class Score {
         };
         if (this.keepHighScores) {
             if (this.isHighScore()) {
-                console.log('recording high score');
+                console.log(`recording high score ${score.score}`);
                 this.highScores.sort(sorter);
                 if (this.highScores.length > this.maxStores)
                     this.highScores.pop();
@@ -141,10 +146,10 @@ class Score {
                 this.highScores.sort(sorter);
                 console.log(this.highScores);
                 this.lowestHighScore = this.highScores[this.highScores.length - 1].score;
-                this.storage.setItem('highScores', this.highScores);
-                this.storage.setItem('lowestHighScore', this.lowestHighScore);
-                this.storage.getItem('highScores');
-                this.storage.getItem('lowestHighScore');
+                localStorage['WAM.highScores'] = JSON.stringify(this.highScores);
+                localStorage['WAM.lowestHighScore'] = this.lowestHighScore;
+                localStorage.getItem('WAM.highScores');
+                localStorage.getItem('WAM.lowestHighScore');
             }
         }
     }

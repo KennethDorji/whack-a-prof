@@ -32,8 +32,9 @@ class Highscore extends Layer {
     }
 
     display() {
+        S.loadScores();
         let scoreTags = S.highScores.map(score => 
-            `<p>Score: ${score.score}  &nbsp; Date: ${score.date} Time: ${score.time}</p`);
+            `<p>Score: <span style="font-size:2em; display:inline-block; width: 2em">${score.score}</span> on ${score.date} at ${score.time}</p>`);
         if (scoreTags.length > 0)
             this.contentDiv.innerHTML = scoreTags.join(' ');
         else 
