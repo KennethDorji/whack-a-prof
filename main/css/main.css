@@ -24,6 +24,7 @@ iframe { margin:0px; padding:0px; overflow:hidden; }
 #title  { z-index:994; }
 #hud    { z-index:998; }
 #gameover   { z-index:997; }
+#highscore  { z-index:998; }
 #background { z-index:990; }
 
 .hidden { display: none; }

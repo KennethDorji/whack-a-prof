@@ -18,12 +18,48 @@ class Score {
     constructor(options = {}) {
         this.maxTime  = options.maxTime || null;
         this.maxSwing = options.maxSwing || null;
+        this.maxScores = options.maxScores || 10;
+        this.keepHighScores = false;
+        this.highScores = [];
+        this.lowestHighScore = 0;
         this.reset();
     }
 
+    static storageAvailable() {
+        try {
+            var storage = window['localStorage'],
+                x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
+        }
+        catch(e) {
+            return e instanceof DOMException && (
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // acknowledge QuotaExceededError only if there's something already stored
+                storage.length !== 0;
+        }
+    }
     
     init() {
+        let self = this;
         return new Promise((resolve, reject) => {
+            if (Score.storageAvailable()) {
+                self.storage = window.localStorage;
+                navigator.storage.persist();
+                console.log('localStorage available');
+                self.keepHighScores = true;
+                self.HighScores = self.storage.getItem('highScores');
+                self.lowestHighScore = self.storage.getItem('lowestHighScore') || 0;
+            } 
             resolve();
         });
     }
@@ -79,6 +115,37 @@ class Score {
             this.updated = true;
             this.currentTime = time;
             this.timeLeft = this.maxTime - time;
+        }
+    }
+
+    isHighScore() {
+        return this.highScores.length < this.maxScores ||
+               this.currentScore > this.lowestHighScore;
+    }
+
+    gameOver(score) {
+        const sorter = (a, b) => {
+            if (a.score > b.score) 
+                return -1;
+            if (a.score < b.score)
+                return 1;
+            return 0;
+        };
+        if (this.keepHighScores) {
+            if (this.isHighScore()) {
+                console.log('recording high score');
+                this.highScores.sort(sorter);
+                if (this.highScores.length > this.maxStores)
+                    this.highScores.pop();
+                this.highScores.push(score);
+                this.highScores.sort(sorter);
+                console.log(this.highScores);
+                this.lowestHighScore = this.highScores[this.highScores.length - 1].score;
+                this.storage.setItem('highScores', this.highScores);
+                this.storage.setItem('lowestHighScore', this.lowestHighScore);
+                this.storage.getItem('highScores');
+                this.storage.getItem('lowestHighScore');
+            }
         }
     }
 }

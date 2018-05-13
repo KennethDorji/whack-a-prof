@@ -74,6 +74,7 @@ class Menu extends Layer {
     clickScore(){
         console.log('menu.clickScore()');
         this.menuSound.play();
+        L.highscore.start();
     }
 
     //Showing the instruction of game.

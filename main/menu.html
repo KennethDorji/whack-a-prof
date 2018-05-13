@@ -38,9 +38,16 @@
 	<button id="Difficulty" onclick="M.clickDifficulty()" >Difficulty</button>
         -->
             <button class="menuButton" id="menuSound" onclick="M.clickSound()" >Mute Sound</button>
-            <button class="menuButton" id="menuHighestScore" onclick="M.clickScore()" >Top Score</button>
+            <button class="menuButton" id="menuHighestScore" onclick="M.clickScore()" >High Scores</button>
             <button class="menuButton" id="menuHelp" onclick="M.clickHelp()">Help</button>
             <button class="menuButton" id="menuQuit" onclick="M.clickQuit()">Quit</button>
+        </div>
+
+        <div class="hidden" id="highScores">
+            <div class="panel">
+                <div id="highScoreContent"></div>
+                <button class="panelBtn" onclick="M.dismissHighScore()">OK</button>
+            </div>
         </div>
 
 	</div>

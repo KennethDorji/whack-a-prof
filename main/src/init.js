@@ -53,7 +53,8 @@ var L = {
     blood:null,
     gameover:null,
     background:null,
-    help:null
+    help:null,
+    highscore:null
 };
 
 
@@ -120,6 +121,7 @@ var init = function() {
                          Math.floor((document.body.clientHeight - L.trueSize)/2));;
 
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
+    S = new Score();
     L.title = new Title();
     L.help = new Help();
     L.mallet = new Mallet(); 
@@ -129,10 +131,11 @@ var init = function() {
     L.blood = new Blood();
     L.gameover = new Gameover();
     L.background = new Background();
-    S = new Score();
+    L.highscore  = new Highscore();
     // use Promise.all() to run in parallel - all() expects an array of promises (returned from functions)
     Promise.all([
 //            L.title.init(),
+            S.init(),
             L.help.init(),
             L.menu.init(),
             L.hud.init(),
@@ -143,7 +146,7 @@ var init = function() {
             L.blood.init(),
             L.gameover.init(),
             L.background.init(),
-            S.init(),
+            L.highscore.init()
     ]) // chained events run serially - then() expects a function, not a promise (so wrap function invocations)
     .catch(reason => doError(reason))
     .then(() => fadeFrom('loading'))
