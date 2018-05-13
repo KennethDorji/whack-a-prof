@@ -48,7 +48,7 @@ class Mallet extends Layer {
         this.swooshSound  = null;
         this.hitSounds    = [];
         this.frames       = Util.getProperty(options, 'frames',  11);
-        this.speed        = Util.getProperty(options, 'speed',   500);
+        this.speed        = Util.getProperty(options, 'speed',   400);
         this.donePos      = Util.getProperty(options, 'done',    1.5);
         this.initPos      = Util.getProperty(options, 'initial', 0.5);
         this.enabled      = false;
@@ -106,6 +106,7 @@ class Mallet extends Layer {
             super.init().then(() => {
                 console.log("Mallet.init()");
 				self.hudDiv = self.innerDoc.getElementById('hud');
+				self.scoreBox = self.innerDoc.getElementById('scoreBox');
                 self.pauseButton = self.innerDoc.getElementById('pause');
                 self.quitButton = self.innerDoc.getElementById('quit');
                 self.hudDiv.style = `left:${self.offset.x}px; z-index:1000`;
@@ -262,11 +263,12 @@ class Mallet extends Layer {
 		Promise.all([
 			L.mallet.fadeOut(),
 			L.blood.fadeOut(),
-			L.game.fadeOut()
+			L.game.fadeOut(),
+            L.hud.fadeOut()
 		])
 		.then(() => {
 			L.menu.fadeIn();
 		});
 	}
-
+    
 }

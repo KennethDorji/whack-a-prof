@@ -28,9 +28,14 @@ class Score {
         });
     }
         
+    display() {
+        this.updated = false;
+    }
+
     hit(A) {
         this.currentScore = A.adjustment.hit.x * this.currentScore + A.adjustment.hit.y;  
         this.stats[A.type].hit++;
+        this.updated = true;
         console.log(`hit ${A.type}! score: ${this.currentScore}`);
 
     }
@@ -38,12 +43,14 @@ class Score {
     miss(A) {
         this.currentScore = A.adjustment.miss.x * this.currentScore + A.adjustment.miss.y;  
         this.stats[A.type].miss++;
+        this.updated = true;
         console.log(`${A.type} escaped at ${window.performance.now()}! score: ${this.currentScore}`);
 
     }
 
     swing() {
         this.malletSwings++;
+        this.updated = true;
         if (this.swingsLeft > 0) {
             this.swingsLeft--;
             console.log(`${this.swingsLeft} swings remain.`);
@@ -57,11 +64,21 @@ class Score {
 
     reset() {
         this.currentScore = 0;
+        this.currentTime  = this.maxTime;
+        this.updated = true;
         this.stats = {
             professor:     { hit: 0, miss: 0 },
             administrator: { hit: 0, miss: 0 },
             trustee:       { hit: 0, miss: 0 }
         }
         this.malletSwings = 0;
+    }
+
+    setTime(time) {
+        if (time !== this.currentTime) {
+            this.updated = true;
+            this.currentTime = time;
+            this.timeLeft = this.maxTime - time;
+        }
     }
 }

@@ -10,77 +10,43 @@
 class Hud extends Layer{
 	constructor() {
       super({
-          id:'game',
-          hasCanvas:true,
-          squareCanvas:true,
+          id:'hud',
+          hasCanvas:false,
           classes:['hidden', 'fullscreen']
           });
   	}
 
-	init() 
-	{
+	init() {
+        let self = this;
         return new Promise((resolve, reject) => {
-            resolve();
+            super.init().then(() => {
+                self.div = self.innerDoc.getElementById('hudDiv');
+                self.div.style = `top:${L.offset.y}px; left:${L.offset.x}px; width:${L.trueSize / window.devicePixelRatio}px`; 
+                self.scoreGroup = self.innerDoc.getElementById('scoreGroup');
+                self.scoreBox = self.innerDoc.getElementById('scoreBox');
+                self.timeBox = self.innerDoc.getElementById('timeBox');
+                resolve();
+            });
         });
     }
 
-
-	/*clockTimer(time)
-	{
-		//Function for Timer ticking down in Whack-A-Prof
-		const currentTime = time;
-		setInterval()
-	}
-*/
-
-
-
-
-
-
-
-
-
-	/*variable for pause button to be intially false
-	//Pause Button work in progress
-	var paused = false;
-	function gamePaused()
-	{
-		if(!paused)
-		{
-			paused = true;
-		}
-		else if(paused)
-		{
-			paused = false;
-		}
-	}
-	window.addEventListener('keydown',function(e))
-	{
-		//Char codes to identify Pause button, 'p' key is == 80
-		var key = e.keyCode;
-		if(key == 80)
-		{
-			gamePaused();
-		}
-	}
-	
-
-	scoreCounter()
-	{
-		//Function for score counter
-		//Based on specs, Trustees: 10	Professors: 5	Department Head: 8
-
-
-
-	}
-
-	*/
-
-
-
-
-
-
+    start() {
+        let self = this;
+        const hudLoop = () => {
+            if (currentState === States.PLAYING) {
+                if (S.updated) {
+                    self.scoreBox.innerHTML = `${S.currentScore}`;
+                    self.timeBox.innerHTML  = `${S.currentTime}`;
+                    S.display();
+                }
+                
+                window.requestAnimationFrame(hudLoop);
+            }
+        };
+        return new Promise((resolve, reject) => {
+            hudLoop();
+            resolve();
+        }); 
+    }
 
 }

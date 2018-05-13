@@ -116,12 +116,16 @@ var init = function() {
     console.log(`pixelRatio: ${window.devicePixelRatio} Width: ${document.body.clientWidth} Height: ${document.body.clientHeight}`);
     L.trueSize = window.devicePixelRatio * Math.min(document.body.clientWidth, document.body.clientHeight);
     L.overallScale = L.trueSize / 960;
+    L.offset = new Coord(Math.floor((document.body.clientWidth - L.trueSize)/2),
+                         Math.floor((document.body.clientHeight - L.trueSize)/2));;
+
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     L.title = new Title();
     L.help = new Help();
     L.mallet = new Mallet(); 
     L.game = new Game();
     L.menu = new Menu();
+    L.hud  = new Hud();
     L.blood = new Blood();
     L.gameover = new Gameover();
     L.background = new Background();
@@ -131,7 +135,7 @@ var init = function() {
 //            L.title.init(),
             L.help.init(),
             L.menu.init(),
-//            L.hud.init(),
+            L.hud.init(),
 //            L.won.init(),
 //            L.lost.init(),
             L.game.init(),

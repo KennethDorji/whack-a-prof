@@ -16,12 +16,13 @@ iframe { margin:0px; padding:0px; overflow:hidden; }
 
 #error  { color:#EEEEDD; background-color:rgba(0,0,0,0.8); z-index:999;}
 #loading{ color:#EEEEDD; text-shadow: .05em .05em .15em #223322; }
-#mallet { z-index:998; }
+#mallet { z-index:999; }
 #menu   { z-index:997; }
 #help   { z-index:998; }
 #blood  { z-index:996; }
 #game   { z-index:995; }
 #title  { z-index:994; }
+#hud    { z-index:998; }
 #background { z-index:990; }
 
 .hidden { display: none; }

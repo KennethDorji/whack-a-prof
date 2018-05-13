@@ -158,15 +158,28 @@ class Game extends Layer {
       let self = this;
       self.startTime = window.performance.now();
       self.drawHoles();
+      const updateTimer = () => {
+          let current = self.maxTime - Math.floor((window.performance.now() - self.startTime) / 1000);
+          S.setTime(current);
+          if (current < 0) {
+              self.gameOver();
+          } else {
+              setTimeout(updateTimer, 1000);
+          }
+      };
+
+      L.hud.start().then(
       Promise.all([
               L.game.fadeIn(),
               L.mallet.fadeIn(),
-              L.blood.fadeIn()
-      ]).then(() => {
+              L.blood.fadeIn(),
+              L.hud.fadeIn()
+      ])).then(() => {
 		  L.mallet.enable(loc => L.game.checkHit(loc));
           self.holes.forEach(hole => {
               hole.start(self.cast);
           });
+          updateTimer();
       });
       self.music.play(true); // parameter -> loop if true
   }
@@ -190,13 +203,13 @@ class Game extends Layer {
           this.startTime = this.startTime + delta;
           L.mallet.adjustTime(delta);
           L.blood.adjustTime(delta);
-          
           this.holes.forEach(hole => {
               hole.adjustTime(delta);
           });
           
           currentState = States.PLAYING;
           this.pausedTime = null;
+          L.hud.start(); 
           this.holes.forEach(hole => {
               hole.start(this.cast);
           });
@@ -212,4 +225,16 @@ class Game extends Layer {
       }
       this.start();
   }
+
+  gameOver() {
+      this.pause();
+      return new Promise((resolve, reject) => {
+          Promise.all([
+              L.hud.fadeOut(),
+              L.blood.fadeOut(),
+              L.mallet.fadeOut(),
+              L.game.fadeOut()
+          ]).then(() => L.menu.start()).then(resolve);
+      });
+  }  
 }

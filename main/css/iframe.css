@@ -128,5 +128,14 @@ path { fill:transparent;}
 .hud {
     position:absolute;
     display:inline-block;
-    padding:0.5em;
+    width:100%;
+    padding:0.25em;
 }
+#scoreGroup {
+    float:right;
+    font-size:3em;
+    text-align:left;
+    color:#EEEEDD;
+}
+.hudBox   { display:inline-block; width: 2em;}
+.hudLabel { display:inline-block; width: 3em;}

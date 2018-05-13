@@ -6,25 +6,14 @@
 	</head>
 
 	<body>
-		<div>
-			<!--<h1 id = "time">Time</h1>-->
-			<!--<button id = "paused" onclick="gamePaused()">Pause</button>-->
-
-		</div>
-		<!--Display Score Statistics-->
-		<div>
-			<div class="Score">
-				<h1>Total Swings:</h1>
-				<h2>Professors Hit:</h2>
-				<h3>Administrators Hit:</h3>
-				<h4>Trustees Hit:</h4>
-			</div>
-
-			<div class="Score">
-				<h1>Professors Missed:</h1>
-				<h2>Administrators Missed:</h2>
-				<h3>Trustees Missed:</h3>
-			</div>
+		<div class="hud" id="hudDiv">
+            <span id="scoreGroup">
+                <span class="hudLabel" id="scoreLabel">Score:</span>
+                <span class="hudBox" id="scoreBox">0</span>
+                <br>
+                <span class="hudLabel" id="timeLabel">Time:</span>
+                <span class="hudBox" id="timeBox"></span>
+            </span>
 		</div>
 	</body>
 </html>
