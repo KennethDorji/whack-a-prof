@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/main.css">
-		<link href="css/iframe.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="css/iframe.css" rel="stylesheet">
+    <script>
+        var GO = parent.L.gameover;
+    </script>
 </head>
 <body>
-    <div class="fullscreen">
-        <div class="centered">
-            <h1>Game Over</h1>
-            <h3>Final Score: </h3>
-            <div id="finalScore">0</div>
-            <button id="endRetryButton" onclick="L.gameover.retry()">
-                    Retry
-            </button>
+    <div class="loader outer">
+        <div class="loader inner">
+            <div class="panel">
+                <div id="gameoverContent"></div>
+                <button class="panelBtn" onclick="GO.clickRetry()">Retry</button>
+                <button class="panelBtn" onclick="GO.clickMenu()">Quit</button>
+            </div>
         </div>
     </div>
-
 </body>
 </html>

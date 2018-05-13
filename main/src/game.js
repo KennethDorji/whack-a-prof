@@ -234,7 +234,7 @@ class Game extends Layer {
               L.blood.fadeOut(),
               L.mallet.fadeOut(),
               L.game.fadeOut()
-          ]).then(() => L.menu.start()).then(resolve);
+          ]).then(() => L.gameover.start()).then(resolve);
       });
   }  
 }
