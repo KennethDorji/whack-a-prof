@@ -102,8 +102,6 @@
                 <a href="#section_2_5">2.5&emsp;Design and Implementation Constraints</a>
                 <br>
                 <a href="#section_2_6">2.6&emsp;User Documentation</a>
-                <br>
-                <a href="#section_2_7">2.7&emsp;Assumptions and Dependencies</a>
             </h5>
             <hr>
             <!--Section 3-->
@@ -118,8 +116,6 @@
                 <a href="#section_3_3">3.3&emsp;Software Interfaces</a>
                 <br>
                 <a href="#section_3_4">3.4&emsp;Communications Interfaces</a>
-                <br>
-                <a href="#section_3_4">3.5&emsp;User Registration</a>
             </h5>
             <hr>
             <!--Section 4-->
@@ -127,45 +123,11 @@
                 <a href="#section_4">4. System Features</a>
             </h3>
             <h5>
-                <a href="#section_4_1">4.1&emsp; System Feature 1</a>
+                <a href="#section_4_1">4.1&emsp; Safety Requirements</a>
                 <br>
-                <a href="#section_4_2">4.2&emsp;System Feature 2 (and so on)</a>
+                <a href="#section_4_2">4.2&emsp;Software Quality Attributes</a>
                 <br>
-
             </h5>
-            <hr>
-            <!--Section 5-->
-            <h3>
-                <a href="#section_5">5. Other Nonfunctional Requirements</a>
-            </h3>
-            <h5>
-                <a href="#section_5_1">5.1&emsp; Performance Requirements</a>
-                <br>
-                <a href="#section_5_2">5.2&emsp;Safety Requirements</a>
-                <br>
-                <a href="#section_5_3">5.3&emsp;Security Requirements</a>
-                <br>
-                <a href="#section_5_4">5.4&emsp;Software Quality Attributes</a>
-                <br>
-                <a href="#section_5_5">5.5&emsp;Business Rules</a>
-            </h5>
-            <hr>
-            <!--Section 6-->
-            <h3>
-                <a href="#section_6">6. Other Requirements</a>
-            </h3>
-            <hr>
-            <h3>
-                <a href="#appendix_a">Appendix A: Glossary</a>
-            </h3>
-            <hr>
-            <h3>
-                <a href="#appendix_b">Appendix B: Analysis Models</a>
-            </h3>
-            <hr>
-            <h3>
-                <a href="#appendix_c">Appendix C: To Be Determined List</a>
-            </h3>
             <hr>
         </div>
 
@@ -588,7 +550,7 @@
         <!--Section 2 - Overall Description-->
         <div class="container jumbotron">
             <h1 class="text-center" id="section_2">Overall Description</h1>
-            <h4 id="section_2_1">2.1&emsp;Product Perspective</h4>
+            <h4 id="section_2_1">2.1&emsp;Product Overview</h4>
             <p class="container">
                 This game is a play on a classic carnival game called Whack-a-mole. In the image above one can see 7 holes for a mole to
                 come out and a mallet/hammer.
@@ -604,24 +566,43 @@
                         <span style="font-weight: bold; text-decoration: underline">Mallet/hammer</span> - Used to hit a mole when it comes out from one for the 7 holes in the image.
                         In Whack-A-Prof the mallet will be used to hit professors, dept heads, and trustees
                     </li>
+                    <li>
+                        <span style="font-weight: bold; text-decoration: underline">Point System</span>:
+                        <ul>
+                            <li>Trustees - 10</li>
+                            <li>Department head - 8</li>
+                            <li>Professors - 5</li>
+                        </ul>
+                        <li>
+                            The relative occurrence rate of Professors : Department head : Trustees is 3 : 2 : 1
+                        </li>
+                        <li>
+                            The time limit of the game is 60 seconds
+                        </li>
+                    </li>
                 </ul>
             </p>
             <br>
-            <h4 id="section_2_2">2.2&emsp;Product Functions</h4>
+            <h4 id="section_2_2">2.2&emsp;Product Animations</h4>
             <ul>
                 <li>
-                    <span style="font-weight: bold; text-decoration: underline">Mole</span> - The targets smoothly show up and hide in “holes”
+                    <span style="font-weight: bold; text-decoration: underline">Mole</span>
+                    <ul>
+                        <li>The targets smoothly show up and hide in “holes”</li>
+                        <li>If a target is “trustee” and if the mallet hits the trustee there should be blood splatter</li>
+                    </ul>
                 </li>
                 <li>
                     <span style="font-weight: bold; text-decoration: underline">Mallet</span>
                     <ul>
                         <li>Move downwards when attempting to hit something and back upwards afterwards</li>
                         <li>Show contact animation when mallet hits something</li>
+                        <li>Speed of the mallet should be 250 ms</li>
                     </ul>
                 </li>
             </ul>
             <br>
-            <h4 id="section_2_3">2.3&emsp;User Classes and Characteristics</h4>
+            <h4 id="section_2_3">2.3&emsp;Product Controls</h4>
             <p class="container">
                 The Whack-A-Prof game will use Player class only. There will not be Administrator class.
             </p>
@@ -643,12 +624,19 @@
             <br>
             <h4 id="section_2_5">2.5&emsp;Design and Implementation Constraints</h4>
             <p class="container">
-                The Whack-A-Prof game should run in a internet browser (i.e. - Google Chrome, Mozilla Firefox, etc.). The game is to be coded
-                in Javascript, the animations to be made in CSS, and the window should be built in HTML5 canvas. Sounds will
-                uses HTML5 audio. Screen size should be 800 by 600 pixels.
+                The Whack-A-Prof game should run in a internet browser i.e. Google Chrome, Mozilla Firefox, etc. The game is to be coded
+                in Javascript, the in-game animations to be made in HTML5 canvas, meta animation (such as start menu, game
+                over, high score) in CSS, and the window should be built in HTML5 canvas. Sounds will uses HTML5 audio. Local
+                data (such as high score) should be stored in browser local storage. Play area depends on size of a browser
+                window. The area is square, size of the square's edge depends on height or width (which one is smaller) a
+                browser window. Eventually, the play area is 960 by 960 virtual pixels.
+
             </p>
             <h4 id="section_2_6">2.6&emsp;User Documentation</h4>
-            <h4 id="section_2_7">2.7&emsp;Assumptions and Dependencies</h4>
+            <p class="container">
+                The game start screen should contain a “How to play” button. After hitting the “How to play” button, the instructions screen
+                should appear.
+            </p>
         </div>
 
         <!--Section 3 - External Interface Requirements-->
@@ -686,65 +674,18 @@
             </p>
             <br>
             <h4 id="section_3_4">3.4&emsp;Communications Interfaces</h4>
-            <h4 id="section_3_5">3.5&emsp;User Registration</h4>
-            <p>
-
-            </p>
         </div>
 
         <!--Section 4 - System Features-->
         <div class="container jumbotron">
             <h1 class="text-center" id="section_4">System Features</h1>
-            <h4 id="section_4_1">4.1&emsp; System Feature 1</h4>
-            <h4 id="section_4_2">4.2&emsp;System Feature 2 (and so on)</h4>
-        </div>
-
-        <!--Section 5 - Other Nonfunctional Requirements-->
-        <div class="container jumbotron">
-            <h1 class="text-center" id="section_5">Other Nonfunctional Requirements</h1>
-            <h4 id="section_5_1">5.1&emsp; Performance Requirements</h4>
-            <h4 id="section_5_2">5.2&emsp;Safety Requirements</h4>
-            <p class="container">
-                The game should warn the user to take a break after every two hours of continuous playing to prevent eye strain.
-            </p>
-            <h4 id="section_5_3">5.3&emsp;Security Requirements</h4>
-            <h4 id="section_5_4">5.4&emsp;Software Quality Attributes</h4>
-            <p class="container">
-                <b>Maintainability</b> - All code should be fully documented. Each function should be commented with pre-conditions
-                and post-conditions. All program files should include comments concerning authorship and date of last change.
-                <br>
-                <b>Reliability</b> - The game should not crash, unless as the result of an operating system error.
-            </p>
-            <h4 id="section_5_5">5.5&emsp;Business Rules</h4>
-        </div>
-
-        <!--Section 6 - Other Requirements-->
-        <div class="container jumbotron">
-            <h1 class="text-center" id="section_6">Other Requirements</h1>
-            <div class="container">
-                <b>Point System</b>
-                <br>
-                <ul>
-                    <li>Trustees = 10</li>
-                    <li>Professors = 5</li>
-                    <li>Department Head = 8</li>
-                </ul>
-            </div>
+            <h4 id="section_4_1">4.1&emsp; Safety Requirements</h4>
+            <h4 id="section_4_2">4.2&emsp;Software Quality Attributes</h4>
         </div>
 
         <!--Appendix A - Glossary-->
         <div class="container jumbotron">
             <h1 class="text-center" id="appendix_a">Appendix A: Glossary</h1>
-        </div>
-
-        <!--Appendix B - Analysis Models-->
-        <div class="container jumbotron">
-            <h1 class="text-center" id="appendix_b">Appendix B: Analysis Models</h1>
-        </div>
-
-        <!--Appendix C - To Be Determined List-->
-        <div class="container jumbotron">
-            <h1 class="text-center" id="appendix_c">Appendix C: To Be Determined List</h1>
         </div>
 
         <!--Button that appears once the user scrolls 1500px down the screen-->
