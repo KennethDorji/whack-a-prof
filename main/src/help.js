@@ -29,7 +29,7 @@ class Help extends Layer {
         return new Promise((resolve, reject) => {
             self.displayPage1();
             self.fadeIn()
-                .then(resolve)
+                .then(() => resolve())
                 .catch(reason => reject(reason));
         });
     }
