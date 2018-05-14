@@ -18,7 +18,7 @@ class Score {
     constructor(options = {}) {
         this.maxTime  = options.maxTime || null;
         this.maxSwing = options.maxSwing || null;
-        this.maxScores = options.maxScores || 10;
+        this.maxScores = options.maxScores || 5;
         this.keepHighScores = false;
         this.highScores = [];
         this.lowestHighScore = 0;
