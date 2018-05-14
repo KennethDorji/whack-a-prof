@@ -187,13 +187,15 @@ class Game extends Layer {
       self.startTime = window.performance.now();
       self.drawHoles();
       const updateTimer = () => {
-          let current = self.maxTime - Math.floor((window.performance.now() - self.startTime) / 1000);
-          S.setTime(current);
-          if (current < 0) {
-              self.gameOver();
-          } else {
-              setTimeout(updateTimer, 1000);
-          }
+          if (currentState === States.PLAYING) {
+              let current = self.maxTime - Math.floor((window.performance.now() - self.startTime) / 1000);
+              S.setTime(current);
+              if (current < 0) {
+                  self.gameOver();
+                  return;
+              }
+          } 
+          setTimeout(updateTimer, 1000);
       };
 
       L.hud.start().then(
