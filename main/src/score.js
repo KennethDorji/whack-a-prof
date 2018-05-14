@@ -54,7 +54,8 @@ class Score {
         return new Promise((resolve, reject) => {
             if (Score.storageAvailable()) {
                 self.storage = localStorage;
-                navigator.storage.persist();
+                if (navigator.storage && navigator.storage.persist)
+                    navigator.storage.persist();
                 console.log('localStorage available');
                 self.keepHighScores = true;
                 self.loadScores();
