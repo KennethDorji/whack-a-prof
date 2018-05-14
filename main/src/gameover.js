@@ -16,6 +16,8 @@ class Gameover extends Layer {
         return new Promise((resolve, reject) => {
             super.init().then(() => {
                 console.log("Gameover.init()");
+                self.panel = self.innerDoc.getElementById('gameover1');
+                self.panel.style = `margin:auto;transform:scale(${1/window.devicePixelRatio})`;
                 self.content = self.innerDoc.getElementById('gameoverContent');
                 resolve();
             }).then(resolve, reason => reject(reason));
