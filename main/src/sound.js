@@ -25,8 +25,8 @@ class Sound {
     }
     
     load() {
-        var self = this;
-        var loadOne = (u) => {
+        let self = this;
+        const loadOne = (u) => {
             return new Promise((resolve, reject) => {
                 var a = new Audio(u);
                 a.onloadeddata = () => {
@@ -68,8 +68,9 @@ class Sound {
                 self.looping = true;
                 a.addEventListener('timeupdate', self.loopListener, false);
             }
-            a.volume = self.volume;
+            a.volume = self.volume || 1;
             a.currentTime = 0;
+            a.load();
             a.play();
         };
         let A = self.audio;
