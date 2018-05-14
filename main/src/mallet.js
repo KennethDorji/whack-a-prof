@@ -109,7 +109,10 @@ class Mallet extends Layer {
 				self.scoreBox = self.innerDoc.getElementById('scoreBox');
                 self.pauseButton = self.innerDoc.getElementById('pause');
                 self.quitButton = self.innerDoc.getElementById('quit');
-                self.hudDiv.style = `left:${self.offset.x}px; width:${self.size.x}px; z-index:1000`;
+                let ofsleft = self.offset.x / window.devicePixelRatio;
+                let ofstop  = self.offset.y / window.devicePixelRatio;
+                let width   = self.size.x / window.devicePixelRatio;
+                self.hudDiv.style = `left:${ofsleft}px; top:${ofstop}px; width:${width}px; z-index:1000`;
                 self.offset.scaleBy(self.pixelRatio);
                 return Promise.all([ // load in parallel
                         self.generateSprites(),
