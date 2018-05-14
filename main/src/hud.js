@@ -20,8 +20,9 @@ class Hud extends Layer{
         let self = this;
         return new Promise((resolve, reject) => {
             super.init().then(() => {
+                let scale = window.devicePixelRatio;
                 self.div = self.innerDoc.getElementById('hudDiv');
-                self.div.style = `top:${L.offset.y}px; left:${L.offset.x}px; width:${L.trueSize / window.devicePixelRatio}px`; 
+                self.div.style = `transform:scale(${1/scale}); transform-origin:0 0; top:${L.offset.y}px; left:${L.offset.x}px; width:${scale*(document.body.clientWidth - 2*L.offset.x)}px`; 
                 self.scoreGroup = self.innerDoc.getElementById('scoreGroup');
                 self.scoreBox = self.innerDoc.getElementById('scoreBox');
                 self.timeBox = self.innerDoc.getElementById('timeBox');

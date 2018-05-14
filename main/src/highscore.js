@@ -16,6 +16,8 @@ class Highscore extends Layer {
             super.init().then(() => {
                 self.contentDiv = self.innerDoc.getElementById('hsContent');
                 self.okButton = self.innerDoc.getElementById('okButton');
+                self.panel = self.innerDoc.getElementById('highscore');
+                self.panel.style = `margin:auto;transform:scale(${1/window.devicePixelRatio})`;
                 resolve();
             }, reason => reject(reason));
         });

@@ -115,11 +115,11 @@ var init = function() {
     //document.body.style.fontSize = (document.body.offsetWidth * .282) + '%'; 
     document.ontouchmove = (e) => { e.preventDefault(); }
     console.log(`pixelRatio: ${window.devicePixelRatio} Width: ${document.body.clientWidth} Height: ${document.body.clientHeight}`);
-    L.trueSize = window.devicePixelRatio * Math.min(document.body.clientWidth, document.body.clientHeight);
+    L.trueSize = Math.min(document.body.clientWidth, document.body.clientHeight);
+    L.offset = new Coord(Math.max(0, Math.floor((document.body.clientWidth - L.trueSize)/2)),
+                         Math.max(0, Math.floor((document.body.clientHeight - L.trueSize)/2)));
+    L.trueSize = window.devicePixelRatio * L.trueSize;
     L.overallScale = L.trueSize / 960;
-    L.offset = new Coord(Math.floor((document.body.clientWidth - L.trueSize)/2),
-                         Math.floor((document.body.clientHeight - L.trueSize)/2));;
-
     console.log(`trueSize: ${L.trueSize} overallScale: ${L.overallScale}`);
     S = new Score();
     L.title = new Title();

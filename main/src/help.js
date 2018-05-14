@@ -14,6 +14,8 @@ class Help extends Layer {
         let self = this;
         return new Promise((resolve, reject) => {
             super.init().then(() => {
+                self.panel = self.innerDoc.getElementById('help1');
+                self.panel.style = `margin:auto;transform:scale(${1/window.devicePixelRatio})`;
                 self.contentDiv = self.innerDoc.getElementById('helpContent');
                 self.nextButton = self.innerDoc.getElementById('nextButton');
                 self.prevButton = self.innerDoc.getElementById('prevButton');

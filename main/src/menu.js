@@ -27,6 +27,9 @@ class Menu extends Layer {
         return new Promise((resolve, reject) => {
             super.init().then(() => {
                 self.muteButton = self.innerDoc.getElementById('menuSound');
+                self.highScores = self.innerDoc.getElementById('highScores');
+                self.menuOuter = self.innerDoc.getElementById('menuOuter');
+                self.menuOuter.style = `transform:scale(${1/window.devicePixelRatio})`;
                 return Promise.all([
                 self.menuSound.load()
                 ]);
