@@ -50,6 +50,7 @@ class Game extends Layer {
       });
     let self = this;
     self.maxTime = options.maxTime || 60;
+    self.bloodSpread = options.bloodSpread || 5;
     self.startTime = null;
     self.hitRadius = HITRADIUS * L.overallScale;
     self.cast = new Cast();
@@ -69,6 +70,15 @@ class Game extends Layer {
                 self.cast.init(container),
                 ...self.holes.map(hole => hole.init(container)),
                 Util.loadImage('sprites/table.svg').then(image => self.portal = image),
+                Promise.all([
+                    Util.loadImage('sprites/blood/blood1.svg'),
+                    Util.loadImage('sprites/blood/blood2.svg'),
+                    Util.loadImage('sprites/blood/blood3.svg'),
+                    Util.loadImage('sprites/blood/blood5.svg'),
+                    Util.loadImage('sprites/blood/blood6.svg'),
+                    Util.loadImage('sprites/blood/blood10.svg'),
+                    Util.loadImage('sprites/blood/blood14.svg'),
+                ]).then(images => self.bloodImages = images),
                 self.music.load()
             ]);
         }).then(resolve, reason => reject(reason));
@@ -101,6 +111,24 @@ class Game extends Layer {
 
   }
 
+  bloodStain(loc) {
+      let self = this;
+      self.ctx.save();
+      self.ctx.translate(loc.x, loc.y);
+      self.ctx.globalCompositeOperation = 'source-atop';
+      self.bloodImages.forEach(image => {
+         self.ctx.save();
+         let xofs = Util.uniform(self.bloodSpread);
+         let yofs = Util.uniform(self.bloodSpread);
+         let angle = Util.uniform(360) * Math.PI / 180;
+         self.ctx.translate(xofs, yofs);
+         self.ctx.rotate(angle);
+         self.ctx.drawImage(image, 0, 0);
+         self.ctx.restore();
+      });
+      self.ctx.restore();
+  }
+
   checkHit(loc) {
       let self = this;
       let hitSomeone = false;
@@ -120,7 +148,7 @@ class Game extends Layer {
                   
                   if (A.blood) {
                       // start blood animation
-                      L.blood.splat(hole.hitCenter);
+                      L.blood.splat(hole.hitCenter).then(() => self.bloodStain(loc));;
                       // vibrate more if on a phone
                       Util.vibrate(300);
                   }

@@ -159,14 +159,18 @@ class Blood extends Layer {
             };
 
             const bloodLoop = () => {
+                let resolved = false;
                 now = window.performance.now();
                 current = Math.floor(self.frames * Math.sin(
                     (now - startTime) * Math.PI / self.speed
                 ));
+                if (!resolved && now > startTime + self.speed / 2) {
+                    resolve();
+                    resolved = true;
+                }
                 if (now > startTime + self.speed) { // done
                     self.ctx.clearRect(corner.x, corner.y,
                             self.spriteSize, self.spriteSize);
-                    resolve();
                 } else { // continue animation
                     if (current !== prior) {  // change frame
                         drawFrame(current);
