@@ -45,12 +45,12 @@ body {
   list-style-type: none;
 }
 
-#demo-render{
-  height: 400px;
-  width: 60%;
+#whack_a_mole {
+  height: 200px;
+  width: 30%;
 }
 
-.img-center{
+.img-center {
   display: block;
   margin: 0 auto;
 }
