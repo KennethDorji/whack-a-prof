@@ -44,3 +44,13 @@ body {
 #list_of_names {
   list-style-type: none;
 }
+
+#demo-render{
+  height: 400px;
+  width: 60%;
+}
+
+.img-center{
+  display: block;
+  margin: 0 auto;
+}

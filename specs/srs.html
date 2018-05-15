@@ -123,9 +123,11 @@
                 <a href="#section_4">4. System Features</a>
             </h3>
             <h5>
-                <a href="#section_4_1">4.1&emsp; Safety Requirements</a>
+                <a href="#section_4_1">4.1&emsp; Performance Requirements</a>
                 <br>
-                <a href="#section_4_2">4.2&emsp;Software Quality Attributes</a>
+                <a href="#section_4_2">4.2&emsp; Safety Requirements</a>
+                <br>
+                <a href="#section_4_3">4.3&emsp;Software Quality Attributes</a>
                 <br>
             </h5>
         </div>
@@ -549,8 +551,14 @@
         <!--Section 2 - Overall Description-->
         <div class="container jumbotron">
             <h1 class="text-center" id="section_2">Overall Description</h1>
+            
             <h4 id="section_2_1">2.1&emsp;Product Overview</h4>
+            <br>
+            <img class="img-center" id="demo-render" src="./img/gamedemo.png"> <br>
+            
+            <div class="text-center" >The image above is an illustration of the game. </div><br><br>
             <p class="container">
+                
                 This game is a play on a classic carnival game called Whack-a-mole. In the image above one can see 7 holes for a mole to
                 come out and a mallet/hammer.
                 <ul>
@@ -643,6 +651,21 @@
             <h1 class="text-center" id="section_3">External Interface Requirements</h1>
             <h4 id="section_3_1">3.1&emsp;User Interfaces</h4>
             <p class="container">
+                
+                <br>
+                <b>The game start screen</b><br><br>
+                The first viewable screen upon starting the game should contain the game name - "Whack-A-Prof",
+                "Play" button, “Difficulty”, “Sound”, “Highest Score” and "How to play". This screen player would
+                 see each time upon playing the game.<br><br><br>
+
+                <b>The pause screen</b><br><br>
+                The player should be able to pause anytime during the game-play by pressing the esc-button (2.3 Product Controls).
+                The paused screen prompts the player with two options: "End game" and "Resume game". The "End game" option must 
+                return the player back to the game start screen. The "Resume" option must continue the game where the user left
+                 off without any changes from the moment of the pause action. 
+                </b><br><br>
+
+                <b>The game over screen.</b><br><br>
                 The game over screen should have the "Final score" sign as the first line with the actual score below it. Below the score
                 number should be the breakdown of the points earned. Each next line below the score should have the image
                 of the character with number of points it's worth to the right of the image followed by "X" (multiplied by)
@@ -673,13 +696,35 @@
             </p>
             <br>
             <h4 id="section_3_4">3.4&emsp;Communications Interfaces</h4>
+            <p class="container">
+                The project implies to use HTTP protocol for client-server communication. However, there are no communications interfaces within
+                the project. The project is completely on client side.
+                </p>
+                <br>
         </div>
 
         <!--Section 4 - System Features-->
         <div class="container jumbotron">
             <h1 class="text-center" id="section_4">System Features</h1>
-            <h4 id="section_4_1">4.1&emsp; Safety Requirements</h4>
-            <h4 id="section_4_2">4.2&emsp;Software Quality Attributes</h4>
+           
+            <h4 id="section_4_1">4.1&emsp; Performance Requirements</h4>
+            <p class="container">
+                    The game should respond to each user input within 1 seconds. There are no other performance requirements.
+                </p>
+            <br>
+            <h4 id="section_4_2">4.2&emsp; Safety Requirements</h4>
+            <p class="container">
+                    The game should warn the user to take a break after every two hours of continuous playing to prevent eye strain. 
+                </p>
+            <br>
+            <h4 id="section_4_3">4.3&emsp;Software Quality Attributes</h4>
+            <p class="container">
+                    <b>Maintainability.</b> All code should be fully documented. Each function should be commented with pre- and post-conditions.
+                    All program files should include comments concerning authorship and date of last change. <br><br>
+                
+                    <b>Reliability.</b> The game should not crash or hang, unless as the result of an operating system error.
+                </p>
+            <br>
         </div>
 
         <!--
