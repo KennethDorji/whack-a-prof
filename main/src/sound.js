@@ -64,14 +64,16 @@ class Sound {
         let self = this;
         self.loop = loop;
         const playOne = (a) => {
-            if (loop) {
-                self.looping = true;
-                a.addEventListener('timeupdate', self.loopListener, false);
+            if (!soundMuted) {
+                if (loop) {
+                    self.looping = true;
+                    a.addEventListener('timeupdate', self.loopListener, false);
+                }
+                a.currentTime = 0;
+                a.load();
+                a.volume = self.volume;
+                a.play();
             }
-            a.volume = self.volume || 1;
-            a.currentTime = 0;
-            a.load();
-            a.play();
         };
         let A = self.audio;
         if (self.count) {
