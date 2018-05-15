@@ -65,7 +65,7 @@ img { height:150px;}
 .menuButton { border:none; 
          padding: 0.5em;
          margin: 0.5em;
-         background-color:DarkRed;
+         background-color:FireBrick;
          border-radius:0.5em; 
          font-size:2em; 
          color: #EEEEDD; 
@@ -107,7 +107,7 @@ path { fill:transparent;}
     padding:0.75em 0.75em;
     margin:0;
     display:inline-block;
-    background-color:DarkGreen;
+    background-color:FireBrick;
     border-radius:0.25em;
     font-size:1em;
     color: #EEEEDD;
@@ -117,7 +117,7 @@ path { fill:transparent;}
     display:block;
     margin: 10% auto;
     padding:2em;
-    background-color:DarkGreen;
+    background-color:SlateGray;
     border-radius:0.25em;
     box-shadow: 1em 1em .5em #223322;
 }
@@ -127,7 +127,7 @@ path { fill:transparent;}
     border:none;
     padding:0.5em;
     margin:0.5em;
-    background-color:DarkRed;
+    background-color:FireBrick;
     border-radius:0.25em;
     font-size:2em;
     color:#EEEEDD;

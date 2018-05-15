@@ -42,7 +42,7 @@ class Help extends Layer {
         this.nextButton.disabled = false;
         this.contentDiv.innerHTML = `<h2>Instructions</h2> 
         <p>Welcome to Whack-a-Prof! The goal of the game is to whack as many people as you can. Don't let trustees get away!</p>
-        <h2>How to play</h2>
+        <h3>How to play</h3>
         <p>With a mouse, simply point your cursor to whomever you want to whack, and left-click or press spacebar.</p>
         <p>With a touchscreen, simply touch whomever you want to whack.</p>
         `;
@@ -59,7 +59,7 @@ class Help extends Layer {
             <img src='sprites/professor/3/base.svg'></img>
             <img src='sprites/professor/4/base.svg'></img>
         </div>
-        <p>Professors are worth 5 points.</p>    
+        <p>Professors are worth 5 points.</p><p>They very commonly appear.</p>
             `;
     }
 
@@ -74,7 +74,7 @@ class Help extends Layer {
             <img src='sprites/administrator/3/base.svg'></img>
             <img src='sprites/administrator/4/base.svg'></img>
         </div>
-        <p>Administrators are worth 10 points.</p>    
+        <p>Administrators are worth 10 points.</p><p>They more rarely appear.</p>
             `;
     }
     
@@ -90,7 +90,7 @@ class Help extends Layer {
             <img src='sprites/trustee/4/base.svg'></img>
         </div>
         <p>Trustees are worth 20 points, and explode when you hit them!</p>
-        <p>If you let a trustee escape, you loose 10 points!</p>    
+        <p>If you let a trustee escape, you lose 10 points!</p>    
             `;
     }
 
