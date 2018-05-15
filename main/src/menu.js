@@ -20,6 +20,7 @@ class Menu extends Layer {
         classes:['hidden', 'fullscreen']
        });
     this.menuSound = new Sound('sounds/menu_select.mp3');
+    this.menuMusic = new Sound('sounds/background_1.mp3');
     }
 
     init() {
@@ -31,7 +32,8 @@ class Menu extends Layer {
                 self.menuOuter = self.innerDoc.getElementById('menuOuter');
                 self.menuOuter.style = `transform:scale(${1/window.devicePixelRatio})`;
                 return Promise.all([
-                self.menuSound.load()
+                self.menuSound.load(),
+                self.menuMusic.load()
                 ]);
             }).then(resolve, reason => reject(reason));
         });
@@ -45,6 +47,16 @@ class Menu extends Layer {
                 .then(resolve)
                 .catch(reason => reject(reason));
         });
+    }
+
+    fadeIn() {
+        this.menuMusic.play(true);
+        return super.fadeIn();
+    }
+
+    fadeOut() {
+        this.menuMusic.pause();
+        return super.fadeOut();
     }
 
     //When user click "Play Game" button, the game will start.
