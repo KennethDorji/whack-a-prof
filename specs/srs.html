@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Josefin+Sans" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="../main/css/style.css">
-
+    <link rel="shortcut icon" type="image/png" href="../logo.png" />
 
     <style>
         /*
@@ -22,7 +22,7 @@
         }
         */
     </style>
-    <title> Whack-A-Mole - Specifications </title>
+    <title> Whack-A-Prof - Specifications </title>
 </head>
 
 <body>
@@ -516,8 +516,8 @@
             <h1 class="text-center" id="section_1">Introduction</h1>
             <h4 id="section_1_1">1.1&emsp;Purpose</h4>
             <p class="container">
-                The purpose of this document is to provide a description of the CISC 3140 group project, the Whack-A-Prof game. This document
-                will cover the games features, where and how it will run, an overview of the game window, and desired graphics
+                The purpose of this document is to provide a description of the CISC 3140 group project, Whack-A-Prof. This document will
+                cover the game's features, where and how it will run, an overview of the game window, and desired graphics
                 for the game.
             </p>
             <br>
@@ -535,8 +535,8 @@
             <br>
             <h4 id="section_1_4">1.4&emsp;Project Scope</h4>
             <p class="container">
-                The Whack-A-Prof game is a browser based game that has the play style similar to that of Whack-A-Mole. The game play of Whack-A-Mole
-                is described by the Wikipedia page in
+                Whack-A-Prof is a browser based game that has a play style similar to that of Whack-A-Mole. For more information on Whack-A-Mole,
+                please refer to
                 <a href="#section_1_5">References</a>.
             </p>
             <br>
@@ -551,27 +551,30 @@
         <!--Section 2 - Overall Description-->
         <div class="container jumbotron">
             <h1 class="text-center" id="section_2">Overall Description</h1>
-            
+
             <h4 id="section_2_1">2.1&emsp;Product Overview</h4>
             <br>
-            <img class="img-center" id="demo-render" src="./img/gamedemo.png"> <br>
-            
-            <div class="text-center" >The image above is an illustration of the game. </div><br><br>
+            <img class="img-center" id="demo-render" src="./img/gamedemo.png">
+            <br>
+
+            <div class="text-center">The image above is an illustration of Whack-a-Mole. </div>
+            <br>
+            <br>
             <p class="container">
-                
-                This game is a play on a classic carnival game called Whack-a-mole. In the image above one can see 7 holes for a mole to
+
+                This game is a play on a classic carnival game called Whack-a-mole. In the image above, you can see 7 holes for a mole to
                 come out and a mallet/hammer.
                 <ul>
                     <li>
                         <span style="font-weight: bold; text-decoration: underline">Hole</span> - A location for the mole to hide and come out of at random times
                     </li>
                     <li>
-                        <span style="font-weight: bold; text-decoration: underline">Mole</span> - A target to be hit with a mallet. In Whack-A-prof the targets will be professors, dept
-                        heads, and trustees
+                        <span style="font-weight: bold; text-decoration: underline">Mole</span> - A target to be hit with a mallet. (In Whack-A-Prof, the targets will be professors,
+                        department heads, and trustees)
                     </li>
                     <li>
                         <span style="font-weight: bold; text-decoration: underline">Mallet/hammer</span> - Used to hit a mole when it comes out from one for the 7 holes in the image.
-                        In Whack-A-Prof the mallet will be used to hit professors, dept heads, and trustees
+                        (In Whack-A-Prof, the mallet will be used to hit professors, dept heads, and trustees)
                     </li>
                     <li>
                         <span style="font-weight: bold; text-decoration: underline">Point System</span>:
@@ -596,13 +599,13 @@
                     <span style="font-weight: bold; text-decoration: underline">Mole</span>
                     <ul>
                         <li>The targets smoothly show up and hide in “holes”</li>
-                        <li>If a target is “trustee” and if the mallet hits the trustee there should be blood splatter</li>
+                        <li>If a target is a “trustee", then there should be blood splatter when hitting the target</li>
                     </ul>
                 </li>
                 <li>
                     <span style="font-weight: bold; text-decoration: underline">Mallet</span>
                     <ul>
-                        <li>Move downwards when attempting to hit something and back upwards afterwards</li>
+                        <li>Comes down when clicking the mouse, goes back to resting position after click</li>
                         <li>Show contact animation when mallet hits something</li>
                         <li>Speed of the mallet should be 250 ms</li>
                     </ul>
@@ -631,12 +634,12 @@
             <br>
             <h4 id="section_2_5">2.5&emsp;Design and Implementation Constraints</h4>
             <p class="container">
-                The Whack-A-Prof game should run in a internet browser i.e. Google Chrome, Mozilla Firefox, etc. The game is to be coded
-                in Javascript, the in-game animations to be made in HTML5 canvas, meta animation (such as start menu, game
-                over, high score) in CSS, and the window should be built in HTML5 canvas. Sounds will uses HTML5 audio. Local
-                data (such as high score) should be stored in browser local storage. Play area depends on size of a browser
-                window. The area is square, size of the square's edge depends on height or width (which one is smaller) a
-                browser window. Eventually, the play area is 960 by 960 virtual pixels.
+                The Whack-A-Prof game should run in a internet browser (i.e. Google Chrome, Mozilla Firefox, etc.). The game is to be coded
+                in Javascript, the in-game animations and window to be made in HTML5 canvas and the meta animations (e.g.
+                - start menu, game over, high score) in CSS. Sounds will uses HTML5 audio. Local data (such as high score)
+                should be stored in browser local storage. Play area depends on size of a browser window. The area is square,
+                size of the square's edge depends on height or width (which one is smaller) a browser window. Eventually,
+                the play area is 960 by 960 virtual pixels.
 
             </p>
             <h4 id="section_2_6">2.6&emsp;User Documentation</h4>
@@ -651,25 +654,33 @@
             <h1 class="text-center" id="section_3">External Interface Requirements</h1>
             <h4 id="section_3_1">3.1&emsp;User Interfaces</h4>
             <p class="container">
-                
+
                 <br>
-                <b>The game start screen</b><br><br>
-                The first viewable screen upon starting the game should contain the game name - "Whack-A-Prof",
-                "Play" button, “Difficulty”, “Sound”, “Highest Score” and "How to play". This screen player would
-                 see each time upon playing the game.<br><br><br>
+                <b>The game start screen</b>
+                <br>
+                <br> The first viewable screen upon starting the game should contain the game name - "Whack-A-Prof", "Play" button,
+                “Difficulty”, “Sound”, “Highest Score” and "How to play". This screen player would see each time upon playing
+                the game.
+                <br>
+                <br>
+                <br>
 
-                <b>The pause screen</b><br><br>
-                The player should be able to pause anytime during the game-play by pressing the esc-button (2.3 Product Controls).
-                The paused screen prompts the player with two options: "End game" and "Resume game". The "End game" option must 
-                return the player back to the game start screen. The "Resume" option must continue the game where the user left
-                 off without any changes from the moment of the pause action. 
-                </b><br><br>
+                <b>The pause screen</b>
+                <br>
+                <br> The player should be able to pause anytime during the game-play by pressing the esc-button (2.3 Product
+                Controls). The paused screen prompts the player with two options: "End game" and "Resume game". The "End
+                game" option must return the player back to the game start screen. The "Resume" option must continue the
+                game where the user left off without any changes from the moment of the pause action.
+                </b>
+                <br>
+                <br>
 
-                <b>The game over screen.</b><br><br>
-                The game over screen should have the "Final score" sign as the first line with the actual score below it. Below the score
-                number should be the breakdown of the points earned. Each next line below the score should have the image
-                of the character with number of points it's worth to the right of the image followed by "X" (multiplied by)
-                the number of times the character was hit. Do not calculate.
+                <b>The game over screen.</b>
+                <br>
+                <br> The game over screen should have the "Final score" sign as the first line with the actual score below it.
+                Below the score number should be the breakdown of the points earned. Each next line below the score should
+                have the image of the character with number of points it's worth to the right of the image followed by "X"
+                (multiplied by) the number of times the character was hit. Do not calculate.
                 <br> List the characters from highest worth to lowest.
                 <br>
                 <br>
@@ -697,34 +708,38 @@
             <br>
             <h4 id="section_3_4">3.4&emsp;Communications Interfaces</h4>
             <p class="container">
-                The project implies to use HTTP protocol for client-server communication. However, there are no communications interfaces within
-                the project. The project is completely on client side.
-                </p>
-                <br>
+                The project implies to use HTTP protocol for client-server communication. However, there are no communications interfaces
+                within the project. The project is completely on client side.
+            </p>
+            <br>
         </div>
 
         <!--Section 4 - System Features-->
         <div class="container jumbotron">
             <h1 class="text-center" id="section_4">System Features</h1>
-           
+
             <h4 id="section_4_1">4.1&emsp; Performance Requirements</h4>
             <p class="container">
-                    The game should respond to each user input within 1 seconds. There are no other performance requirements.
-                </p>
+                The game should respond to each user input within 1 seconds. There are no other performance requirements.
+            </p>
             <br>
             <h4 id="section_4_2">4.2&emsp; Safety Requirements</h4>
             <p class="container">
-                    The game should warn the user to take a break after every two hours of continuous playing to prevent eye strain. 
-                </p>
+                The game should warn the user to take a break after every two hours of continuous playing to prevent eye strain.
+            </p>
             <br>
             <h4 id="section_4_3">4.3&emsp;Software Quality Attributes</h4>
-            <p class="container">
-                    <b>Maintainability.</b> All code should be fully documented. Each function should be commented with pre- and post-conditions.
-                    All program files should include comments concerning authorship and date of last change. <br><br>
-                
-                    <b>Reliability.</b> The game should not crash or hang, unless as the result of an operating system error.
-                </p>
-            <br>
+            <ul>
+                <li>
+                    <b>Maintainability</b>
+                    <br>All code should be fully documented. Each function should be commented with pre- and post-conditions.
+                    All program files should include comments concerning authorship and date of last change.
+                </li>
+                <li>
+                    <b>Reliability</b>
+                    <br>The game should not crash or hang, unless as the result of an operating system error.
+                </li>
+            </ul>
         </div>
 
         <!--
@@ -740,11 +755,9 @@
         <footer>
             <div class="container jumbotron text-center">
                 <h3>
-                    Version 1.0 approved
-                    <br>
-                    <br>
                     <div class="container">
-                        Prepared by Group 2 Specifications:
+                        CISC 3140
+                        <hr> Prepared by Group 2 Specifications:
                         <br>
                         <ul id="list_of_names">
                             <li>Aleksandra Churnosova</li>
@@ -753,10 +766,9 @@
                             <li>Mohammad Haque</li>
                             <li>Ruslan Radetskiy</li>
                         </ul>
-                        <br>
+                        <hr>
+                        <span>HTML version created by: Ahmad Raza</span>
                     </div>
-                    CISC 3140 - Group 2
-                    <br> Thursday, March 8, 2018
                 </h3>
             </div>
         </footer>
