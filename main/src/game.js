@@ -69,7 +69,7 @@ class Game extends Layer {
             return Promise.all([
                 self.cast.init(container),
                 ...self.holes.map(hole => hole.init(container)),
-                Util.loadImage('sprites/table.svg').then(image => self.portal = image),
+                Util.loadImage('sprites/table9.svg').then(image => self.portal = image),
                 Promise.all([
                     Util.loadImage('sprites/blood/blood1.svg'),
                     Util.loadImage('sprites/blood/blood2.svg'),
@@ -92,10 +92,10 @@ class Game extends Layer {
       self.holes.forEach(hole => {
           self.ctx.save();
           self.ctx.translate(
-              hole.coordinate.x - this.offset.x, // - 40*L.overallScale, 
+              hole.coordinate.x - this.offset.x - 40, // - 40*L.overallScale, 
               hole.coordinate.y + hole.size - this.offset.y // - 100*L.overallScale
           );
-          self.ctx.scale(L.overallScale, L.overallScale); 
+          self.ctx.scale(L.overallScale*0.7, L.overallScale); 
           self.ctx.drawImage(self.portal, 0, 0);
           self.ctx.restore();
 
